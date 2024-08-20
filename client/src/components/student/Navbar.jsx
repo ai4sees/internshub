@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import logo from "../../images/nav_logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,6 +10,16 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
+  const navigate=useNavigate();
+  const handleLogout = () => {
+    // Clear the token from localStorage
+    localStorage.removeItem('token');
+
+    // Navigate to the login page
+    navigate('/student/login');
+  };
+
+
   return (
     <nav className="bg-white fixed top-0 w-[100vw] shadow-md z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
@@ -113,7 +124,7 @@ const Navbar = () => {
                   <Link to='/student/resume'>Resume</Link>
                 </li>
                 <li className="py-2 px-4 hover:bg-gray-100">
-                  <Link to='/student/logout'>Logout</Link>
+                  <button onClick={handleLogout}>Logout</button>
                 </li>
               </ul>
             </div>

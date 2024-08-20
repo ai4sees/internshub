@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faEye,faEyeSlash} from "@fortawesome/free-solid-svg-icons";
@@ -18,6 +18,13 @@ function Signup() {
   const [passwordError, setPasswordError] = useState('');
   const [nameError, setNameError] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/student/dashboard');
+    }
+  }, []);
 
   const handlePasswordToggle = () => {
     setShowPassword(!showPassword);
@@ -41,14 +48,18 @@ function Signup() {
     setEmailError('');
     try {
       // Send a POST request to the backend
-      const response = await axios.post('https://localhost://4000/student/signup', {
+      const response = await axios.post('http://localhost://4000/student/signup', {
+        firstname,
+        lastname,
         email,
         password,
       });
 
       // Handle success
       console.log(response.data.message);
-      navigate('/signedIn');
+      localStorage.setItem('token', response.data.token); // Store token if needed
+      console.log(response.data.token);
+      navigate('/student/dashboard');
     } catch (error) {
       // Handle error
       console.error('There was an error!', error.response.data.message);

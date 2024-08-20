@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 
 import { Link } from 'react-router-dom'
 
@@ -15,6 +15,15 @@ function Login() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/student/dashboard');
+    }
+  }, []);
+
+  
+
   const handlePasswordToggle = () => {
     setShowPassword(!showPassword);
   };
@@ -30,7 +39,7 @@ function Login() {
       // Handle success
       console.log(response.data.message);
       localStorage.setItem('token', response.data.token); // Store token if needed
-      navigate('/loggedIn'); // Redirect to a blank page or dashboard
+      navigate('/student/dashboard'); // Redirect to a blank page or dashboard
     } catch (error) {
       // Handle error
       console.log(error.response.data.message);
@@ -56,7 +65,7 @@ function Login() {
           {/* form starts from here */}
 
           <div className="flex justify-center items-center mt-[80px] w-[600px] mx-auto " >
-            <form className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div className="flex flex-col items-center">
                 <input
                   type="email"
