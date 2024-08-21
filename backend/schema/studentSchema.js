@@ -18,8 +18,13 @@ const studentSchema =new mongoose.Schema({
   password: { 
     type: String,
      required: true
-  }
-  //add timestamp field
+  },
+  resume: {
+    data: Buffer, // Store the file data as binary
+    contentType: String, // Store the MIME type
+    filename: String, // Store the original filename
+  },
+  
     
 },{timestamps: true});
 

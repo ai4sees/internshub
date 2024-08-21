@@ -48,7 +48,7 @@ function Signup() {
     setEmailError('');
     try {
       // Send a POST request to the backend
-      const response = await axios.post('http://localhost://4000/student/signup', {
+      const response = await axios.post('http://localhost:4000/student/signup', {
         firstname,
         lastname,
         email,
@@ -153,7 +153,7 @@ function Signup() {
                   placeholder='Password'
                   onChange={(e) => {
                     setPassword(e.target.value);
-                    if (password.length < 8) setPasswordError('Password must be at least 8 characters');
+                    if (e.target.value.trim().length < 8) setPasswordError('Password must be at least 8 characters');
                     else setPasswordError('');
                   }
                   }

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import logo from "../../images/nav_logo.png";
+import getUserIdFromToken from "./auth/authUtils.js"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCaretUp,
@@ -11,6 +12,7 @@ import {
 
 const Navbar = () => {
   const navigate=useNavigate();
+  const userId = getUserIdFromToken();
   const handleLogout = () => {
     // Clear the token from localStorage
     localStorage.removeItem('token');
@@ -121,7 +123,7 @@ const Navbar = () => {
                   <Link to='/student/profile'>Profile</Link>
                 </li>
                 <li className="py-2 px-4 hover:bg-gray-100">
-                  <Link to='/student/resume'>Resume</Link>
+                  <Link to={`/student/resume/${userId}`}>Resume</Link>
                 </li>
                 <li className="py-2 px-4 hover:bg-gray-100">
                   <button onClick={handleLogout}>Logout</button>
