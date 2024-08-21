@@ -6,7 +6,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye as EyeIcon, faEyeSlash as EyeSlashIcon, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import google_pic from '../../../images/google_pic.png'
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useParams } from 'react-router-dom';
+import getUserIdFromToken from "./authUtils"
+
 
 function Login() {
 
@@ -14,11 +16,13 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-
+  const userId=getUserIdFromToken();
+  
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      navigate('/student/dashboard');
+      navigate(`/student/dashboard/${userId}`);
+      return;
     }
   }, []);
 
@@ -38,8 +42,9 @@ function Login() {
 
       // Handle success
       console.log(response.data.message);
-      localStorage.setItem('token', response.data.token); // Store token if needed
-      navigate('/student/dashboard'); // Redirect to a blank page or dashboard
+      localStorage.setItem('token', response.data.token);
+      const userId= getUserIdFromToken();
+      navigate(`/student/dashboard/${userId}`); 
     } catch (error) {
       // Handle error
       console.log(error.response.data.message);

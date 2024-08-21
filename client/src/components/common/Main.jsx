@@ -11,7 +11,7 @@ const Main = () => {
   useEffect(() => {
     const userId=getUserIdFromToken();
     if(userId){
-    navigate('/student/dashboard');
+    navigate(`/student/dashboard/${userId}`);
     }
   }, [userId])
   

@@ -1,4 +1,4 @@
-import React, { useState,useRef,useEffect } from 'react';
+import React, { useState,useRef,useEffect, useId } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,6 +14,7 @@ const Resume = () => {
   const { userId } = useParams();
   const [resumeUrl, setResumeUrl] = useState('');
   const [resumeFilename, setResumeFilename] = useState('resume.pdf');
+  const idFromToken=getUserIdFromToken();
 
   useEffect(() => {
     const token =localStorage.getItem('token');
@@ -21,7 +22,11 @@ const Resume = () => {
       navigate('/student/login');
       return;
     }
-  }, [])
+    if(idFromToken!==userId){
+      localStorage.removeItem('token');
+      return;
+    }
+  }, [userId,idFromToken])
   
 
   useEffect(() => {

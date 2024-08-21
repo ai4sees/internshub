@@ -5,6 +5,7 @@ import {faEye,faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 import google_pic from '../../../images/google_pic.png'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import getUserIdFromToken from "./authUtils"
 
 function Signup() {
 
@@ -18,13 +19,15 @@ function Signup() {
   const [passwordError, setPasswordError] = useState('');
   const [nameError, setNameError] = useState('');
   const navigate = useNavigate();
+  const userId=  getUserIdFromToken();
+ 
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      navigate('/student/dashboard');
+      navigate(`/student/dashboard/${userId}`);
     }
-  }, []);
+  }, [userId]);
 
   const handlePasswordToggle = () => {
     setShowPassword(!showPassword);
@@ -58,8 +61,9 @@ function Signup() {
       // Handle success
       console.log(response.data.message);
       localStorage.setItem('token', response.data.token); // Store token if needed
+      const userId=  getUserIdFromToken();
       console.log(response.data.token);
-      navigate('/student/dashboard');
+      navigate(`/student/dashboard/${userId}`);
     } catch (error) {
       // Handle error
       console.error('There was an error!', error.response.data.message);
