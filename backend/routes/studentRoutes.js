@@ -73,12 +73,17 @@ router.post('/upload-resume/:id', upload.single('resume'), async (req, res) => {
         if (!student) {
           return res.status(404).send('Student not found.');
         }
-    
-        // Update the student document with the resume
+        const createdAt = new Date();
+        const day = String(createdAt.getDate()).padStart(2, '0');
+        
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const month = months[createdAt.getMonth()];
+        
         student.resume = {
           data: req.file.buffer,
           contentType: req.file.mimetype,
           filename: req.file.originalname,
+          createdAt: `${day}th ${month}`,
         };
         await student.save();
     
