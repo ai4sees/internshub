@@ -6,6 +6,7 @@ import {faCloudArrowUp,faCheck,faArrowLeft} from "@fortawesome/free-solid-svg-ic
 import getUserIdFromToken from "./auth/authUtils.js"
 import { useParams } from 'react-router-dom';
 
+
 const Resume = () => {
 
   const fileInputRef=useRef(null);
@@ -30,17 +31,24 @@ const Resume = () => {
         const response = await axios.get(`http://localhost:4000/student/resume/${userId}`, {
           responseType: 'blob', // Set response type to blob for binary data
         });
-
+        
+      
         // Create a URL for the blob data
         const url = window.URL.createObjectURL(new Blob([response.data]));
         setResumeUrl(url);
         console.log(resumeUrl);
 
         const contentDisposition = response.headers['content-disposition'];
+        // console.log('contentDisposition:', contentDisposition);
+        // console.log(Object.keys(response.headers));
+        // console.log('response.headers:', response.headers);
         if (contentDisposition) {
+          console.log('yattttaaa');
           const matches = /filename="([^"]*)"/.exec(contentDisposition);
           if (matches) setResumeFilename(matches[1]);
         }
+
+        // setResumeCreatedAt(createdAt);
       } catch (error) {
         console.error('Error fetching resume:', error);
       }
@@ -111,7 +119,7 @@ const Resume = () => {
       {(file|| resumeUrl) &&
       <>
       <button className=' text-red-500 text-xl font-bold mt-10 hover:scale-105 duration-300' onClick={handleFileReupload}>RE-UPLOAD</button>
-      <a href={resumeUrl} download={resumeFilename} className='text-red-500 text-xl font-bold mt-4 hover:scale-105 duration-300'>Download Resume</a>
+      <a href={resumeUrl} download={resumeFilename} className='text-red-500 text-xl font-bold mt-4 hover:scale-105 duration-300'>Download Resume-{resumeFilename}</a>
         </>
 
       }

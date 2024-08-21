@@ -6,8 +6,10 @@ const Student=require('./schema/studentSchema');
 const jwt = require('jsonwebtoken');
 const studentRoutes= require('./routes/studentRoutes');
 
+
 const app = express();
 const PORT=process.env.PORT || 4000;
+//cors middleware
 app.use(cors());
 app.use(express.json());
 

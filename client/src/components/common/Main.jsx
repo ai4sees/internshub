@@ -1,9 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import { Link } from 'react-router-dom';
+import getUserIdFromToken from "../student/auth/authUtils"
+import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
+  const navigate = useNavigate();
+  const userId=getUserIdFromToken();
+  useEffect(() => {
+    const userId=getUserIdFromToken();
+    if(userId){
+    navigate('/student/dashboard');
+    }
+  }, [userId])
+  
   return (
     <div className='w-full h-screen flex'>
       <div className='w-1/2 border-r-4 border-black bg-red-600 h-screen flex items-center'>

@@ -102,10 +102,13 @@ router.get('/resume/:id', async (req, res) => {
     if (!student || !student.resume) {
       return res.status(404).send('Resume not found.');
     }
-
+    res.setHeader('Access-Control-Expose-Headers', 'Content-Disposition');
     res.setHeader('Content-Type', student.resume.contentType);
     res.setHeader('Content-Disposition', `attachment; filename="${student.resume.filename}"`);
     res.send(student.resume.data);
+    
+
+
   } catch (error) {
     console.error('Error retrieving resume:', error);
     res.status(500).send('Error retrieving resume.');
