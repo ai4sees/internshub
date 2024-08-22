@@ -15,7 +15,7 @@ const Home = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
   const idFromToken = getUserIdFromToken();
-  const student=useStudent();
+  const {student}=useStudent();
 
  
 
@@ -44,7 +44,7 @@ const Home = () => {
    <>
       {student?(
           <div className='Home'>
-          <Sidebar student={student}/>
+        <Sidebar student={student}/>
           <RightSide/>
           </div>
       ):(<Spinner/>)

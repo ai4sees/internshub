@@ -6,7 +6,7 @@ import Spinner from '../common/Spinner';
 
 
 const Profile = () => {
-  const student=useStudent();
+  const {student}=useStudent();
   return (
     <>
     {

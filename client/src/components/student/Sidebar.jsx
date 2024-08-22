@@ -5,12 +5,6 @@ import {useStudent} from './context/studentContext'
 import Spinner from '../common/Spinner'
 
 const Sidebar = ({student}) => {
-  // const student= useStudent();
-  // console.log(typeof student);
-
-  // if (!student) {
-  //   return <div>Loading...</div>;
-  // }
   
   
   return (

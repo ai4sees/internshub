@@ -12,6 +12,7 @@ import {auth,provider} from '../../common/firebaseConfig'
 import {signInWithPopup} from 'firebase/auth'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useStudent } from '../context/studentContext';
 
 
 function Login() {
@@ -21,6 +22,7 @@ function Login() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const userId=getUserIdFromToken();
+  const {login}=useStudent();
   
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -48,6 +50,7 @@ function Login() {
       // Handle success
       console.log(response.data.message);
       localStorage.setItem('token', response.data.token);
+      login();
       const userId= getUserIdFromToken();
       navigate(`/student/dashboard/${userId}`); 
     } catch (error) {

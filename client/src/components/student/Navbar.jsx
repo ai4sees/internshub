@@ -11,13 +11,15 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useStudent } from "./context/studentContext.js";
 
 const Navbar = () => {
   const navigate=useNavigate();
   const userId = getUserIdFromToken();
+  const {logout}=useStudent();
   const handleLogout = () => {
     // Clear the token from localStorage
-    localStorage.removeItem('token');
+    logout(); 
     toast.success('You are logged out');
 
     // Navigate to the login page

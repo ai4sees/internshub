@@ -9,6 +9,7 @@ export const useStudent = () => useContext(StudentContext);
 
 export const StudentProvider = ({ children }) => {
   const [student, setStudent] = useState(null);
+  const [token, setToken] = useState(localStorage.getItem('token'));
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -27,13 +28,24 @@ export const StudentProvider = ({ children }) => {
           // Optionally handle errors (e.g., logout user)
         }
       }
+      else console.log('there is no token');
     };
 
     fetchUserData();
-  }, []);
+  }, [token]);
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    setToken(null); // Clear token to trigger refetch
+  };
+
+  const login=()=>{
+    const token=localStorage.getItem('token');
+    setToken(token);
+  }
 
   return (
-    <StudentContext.Provider value={student}>
+    <StudentContext.Provider value={{student, logout,login}}>
       {children}
     </StudentContext.Provider>
   );
