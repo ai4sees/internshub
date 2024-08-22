@@ -61,7 +61,7 @@ function Login() {
 
         <div className='text-center  mt-10'>
           <p className='text-5xl font-extrabold mb-6'>Welcome back!</p>
-          <p className='text-gray-500'>Log in to your account.
+          <p className='text-gray-500 text-lg'>Student Login.
 
           </p>
         </div>
@@ -151,6 +151,11 @@ function Login() {
           </div>
 
         </div>
+
+        <div className='mt-[30px] text-center'>
+            <span className='text-gray-500 '>login as recruiter </span>
+            <Link to='/recruiter/login'><span className='text-purple-500 underline'>login</span></Link>
+          </div>
       </div>
 
     </div>

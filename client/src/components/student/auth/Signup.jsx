@@ -6,7 +6,8 @@ import google_pic from '../../../images/google_pic.png'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import getUserIdFromToken from "./authUtils"
-
+import {auth,provider} from '../../common/firebaseConfig'
+import {signInWithPopup} from 'firebase/auth'
 function Signup() {
 
   const [showPassword, setShowPassword] = useState(false);
@@ -20,6 +21,7 @@ function Signup() {
   const [nameError, setNameError] = useState('');
   const navigate = useNavigate();
   const userId=  getUserIdFromToken();
+  const [googleEmail,setGoogleEmail]=useState('');
  
 
   useEffect(() => {
@@ -73,6 +75,36 @@ function Signup() {
 
   const isFormValid = email.trim() !== '' && password.trim() !== '' && firstname.trim()!=='' && lastname.trim() !== '';
 
+  const handleGoogleClick=async(e)=>{
+    e.preventDefault();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      const email = user.email;
+      const firstname = user.displayName.split(' ')[0];
+      const lastname = user.displayName.split(' ')[1] || '';
+
+      const response = await axios.post('http://localhost:4000/student/signup/googleauth', {
+        email,
+        firstname,
+        lastname,
+      });
+
+      if (response.data.success) {
+        console.log('User successfully logged in or registered:', response.data.student);
+        const token=response.data.token;
+        localStorage.setItem('token',token);
+        const userId=  getUserIdFromToken();
+        navigate(`/student/dashboard/${userId}`);
+      } else {
+        console.error('Error handling Google sign-in on the server:', response.data.message);
+      }
+
+
+    } catch (error) {
+      console.error('Error signing in with Google', error);
+    }
+  }
 
 
   return (
@@ -81,7 +113,7 @@ function Signup() {
         
         <div className='flex flex-col items-center'>
           <p className='text-5xl font-extrabold mb-3 mt-10'>Welcome</p>
-          <p className='text-gray-500'>Sign up for free!</p>
+          <p className='text-gray-500 text-lg'>Student Sign up</p>
         </div>
         <div>
 
@@ -206,7 +238,7 @@ function Signup() {
           
           <div className='w-full mt-8 space-y-3'>
             
-          <button
+          <button onClick={handleGoogleClick}
             className='w-full mx-auto py-2 border border-gray-300 h-[50px] text-black text-[18px] rounded-full font-semibold'
           >
             <div className='inline-flex space-x-4'>
@@ -225,10 +257,16 @@ function Signup() {
           </div>
           
 
-          <div className='mt-10 mb-[100px] text-center'>
+          <div className='mt-10 mb-[50px] text-center'>
             <span className='text-gray-500 '>Already have an account?</span>
             <Link to='/student/login'><span className='text-purple-500 underline'>Log in</span></Link>
           </div>
+
+          <div className='mt-3 mb-[100px] text-center'>
+            <span className='text-gray-500 '>Sign up as recruiter?</span>
+            <Link to='/recruiter/signup'><span className='text-purple-500 underline'>&nbsp;Sign up</span></Link>
+          </div>
+
 
 
 

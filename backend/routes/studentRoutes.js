@@ -38,6 +38,34 @@ router.post('/signup', async (req, res) => {
   }
 });
 
+router.post('/signup/googleauth', async (req, res) => {
+  const { email, firstname, lastname } = req.body;
+
+  try {
+    // Check if the user already exists
+    let student = await Student.findOne({ email });
+
+    if (!student) {
+      // If user doesn't exist, create a new one
+      student = new Student({
+        firstname,
+        lastname,
+        email,
+        // Password can be omitted or a default value if using Google Auth
+      });
+      await student.save();
+    }
+     
+      const token = jwt.sign({ id: student._id }, process.env.JWT_SECRET_KEY, { expiresIn: '10d' });
+      res.json({ success: true, student, token });
+    } 
+      
+   catch (error) {
+    console.error('Error handling Google sign-in on the server:', error);
+    res.json({ success: false, message: 'Server error' });
+  }
+});
+
 router.post('/login', async(req,res)=>{
   const {email, password}=req.body;
   try {

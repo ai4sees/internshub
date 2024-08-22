@@ -100,7 +100,7 @@ const Resume = () => {
       });
 
       alert('Resume uploaded successfully!');
-      navigate('/student/dashboard');
+      navigate(`/student/dashboard/${userId}`);
     } catch (error) {
       console.error('There was an error uploading the resume:', error);
       alert('Failed to upload the resume.');

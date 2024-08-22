@@ -17,7 +17,6 @@ const studentSchema =new mongoose.Schema({
   },
   password: { 
     type: String,
-     required: true
   },
   resume: {
     data: Buffer, // Store the file data as binary
