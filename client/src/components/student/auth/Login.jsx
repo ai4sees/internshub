@@ -8,6 +8,8 @@ import google_pic from '../../../images/google_pic.png'
 import axios from 'axios';
 import { useNavigate,useParams } from 'react-router-dom';
 import getUserIdFromToken from "./authUtils"
+import {auth,provider} from '../../common/firebaseConfig'
+import {signInWithPopup} from 'firebase/auth'
 
 
 function Login() {
@@ -24,7 +26,7 @@ function Login() {
       navigate(`/student/dashboard/${userId}`);
       return;
     }
-  }, []);
+  }, [navigate,userId]);
 
   
 
@@ -53,6 +55,38 @@ function Login() {
   };
 
   const isFormValid = email.trim() !== '' && password.trim() !== '';
+
+
+  const handleGoogleClick=async(e)=>{
+    e.preventDefault();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      const email = user.email;
+      const firstname = user.displayName.split(' ')[0];
+      const lastname = user.displayName.split(' ')[1] || '';
+
+      const response = await axios.post('http://localhost:4000/student/login/googleauth', {
+        email,
+        firstname,
+        lastname
+      });
+
+      if (response.data.success) {
+        console.log('User successfully logged in or registered:', response.data.student);
+        const token=response.data.token;
+        localStorage.setItem('token',token);
+        const userId=  getUserIdFromToken();
+        navigate(`/student/dashboard/${userId}`);
+      } else {
+        console.error('Error handling Google sign-in on the server:', response.data.message);
+      }
+
+
+    } catch (error) {
+      console.error('Error signing in with Google', error);
+    }
+  }
 
   return (
     <div className='flex min-h-screen'>
@@ -135,7 +169,7 @@ function Login() {
           <div className='w-[580px] mx-auto mt-8 space-y-3'>
 
             <button
-              className='w-full py-2 border border-gray-300 h-[50px] text-black text-[18px] rounded-full font-semibold'
+              className='w-full py-2 border border-gray-300 h-[50px] text-black text-[18px] rounded-full font-semibold' onClick={handleGoogleClick}
             >
               <div className='inline-flex space-x-4'>
                 <img src={google_pic} alt="" className='w-5 h-5 py-0 px-0 ml-5 mt-2' />

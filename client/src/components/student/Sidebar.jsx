@@ -1,11 +1,19 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faCaretRight,faFile} from '@fortawesome/free-solid-svg-icons'
+import {useStudent} from './context/studentContext'
 
 const Sidebar = () => {
+  const student= useStudent();
+  // console.log(typeof student);
+
+  if (!student) {
+    return <div>Loading...</div>;
+  }
+  
   return (
     <div className=' w-[28%] h-[180vh] relative top-16 pt-10 px-8 bg-slate-100'>
-      <h1 className='text-4xl font-bold p-3 mt-5'>Welcome back, Jai</h1>
+      <h1 className='text-4xl font-bold p-3 mt-5'>Welcome back,{student.firstname}</h1>
       <h1 className='text-lg px-3'>Let’s help you land your dream career.....</h1>
       <div className=' p-6 border-b-2'>
         <h1 className='text-lg'>Assignments Pending</h1>

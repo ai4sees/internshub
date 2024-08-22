@@ -21,7 +21,6 @@ function Signup() {
   const [nameError, setNameError] = useState('');
   const navigate = useNavigate();
   const userId=  getUserIdFromToken();
-  const [googleEmail,setGoogleEmail]=useState('');
  
 
   useEffect(() => {

@@ -3,6 +3,9 @@ const Student = require('../schema/studentSchema');
 const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
 const multer = require('multer');
+const {jwtDecode} = require('jwt-decode');
+// const getUserIdFromToken = require('../auth/auth');
+// const { default: getUserIdFromToken } = require('../../client/src/components/student/auth/authUtils');
 
 
 dotenv.config();
@@ -89,6 +92,30 @@ catch(error){
 }
 })
 
+router.post('/login/googleauth', async (req, res) => {
+  const { email,firstname,lastname } = req.body;
+
+  try {
+    // Check if the user already exists
+    let student = await Student.findOne({ email });
+
+    if (!student) {
+      student = new Student({
+        firstname,
+        lastname,
+        email,})
+         await student.save();
+
+    } 
+    const token=jwt.sign({id:student._id},process.env.JWT_SECRET_KEY,{expiresIn:'10d'});
+    res.json({success:true,token,student});
+    
+  } catch (error) {
+    console.error('Error handling Google login on the server:', error);
+    res.json({ success: false, message: 'Server error' });
+  }
+});
+
 
 router.post('/upload-resume/:id', upload.single('resume'), async (req, res) => {
   if (!req.file) {
@@ -122,6 +149,35 @@ router.post('/upload-resume/:id', upload.single('resume'), async (req, res) => {
     res.status(500).send('Error saving resume.');
   }
 });
+
+router.get('/details', async (req, res) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1]; // Get token from 'Bearer TOKEN'
+
+  if (!token) return res.sendStatus(401); // Unauthorized if no token
+
+  try {
+    // Decode the token
+    const decodedToken = jwtDecode(token);
+    const userId = decodedToken.id; // Ensure that the token contains an `id` field
+
+    // Find the user in the database
+    const student = await Student.findById(userId);
+
+    if (!student) return res.sendStatus(404); // Not found if user does not exist
+
+    // Send user data as response
+    res.json({
+      firstname: student.firstname,
+      lastname: student.lastname,
+      email: student.email,
+    });
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    res.sendStatus(500); // Internal server error
+  }
+});
+
 
 router.get('/resume/:id', async (req, res) => {
   try {
