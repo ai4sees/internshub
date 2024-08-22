@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCloudArrowUp,faCheck,faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 import getUserIdFromToken from "./auth/authUtils.js"
 import { useParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Resume = () => {
@@ -98,8 +100,9 @@ const Resume = () => {
       await axios.post(`http://localhost:4000/student/upload-resume/${userId}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
-
-      alert('Resume uploaded successfully!');
+    
+      toast.success('Resume Uploaded Successfully');
+      
       navigate(`/student/dashboard/${userId}`);
     } catch (error) {
       console.error('There was an error uploading the resume:', error);
@@ -136,7 +139,7 @@ const Resume = () => {
       </div>
 
       <div className=' mt-[80px]'>
-      <Link to='/student/dashboard' > <div className='border-2 border-black rounded-full w-[60px] h-[60px] mx-auto p-2 hover:bg-green-400 hover:cursor-pointer'>
+      <Link to={`/student/dashboard/${userId}`} > <div className='border-2 border-black rounded-full w-[60px] h-[60px] mx-auto p-2 hover:bg-green-400 hover:cursor-pointer'>
          <FontAwesomeIcon icon={faArrowLeft} className='w-full h-full'/>
         </div></Link>
         <div className='text-center text-lg font-bold'>

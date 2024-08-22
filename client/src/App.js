@@ -43,6 +43,7 @@ function App() {
         <Route path="/student/chats" element={<Chats />} />
         <Route path="/student/alerts" element={<Alerts />} />
         <Route path="/student/Resume" element={<Resume />} />
+        <Route path="/student/profile" element={<Profile />} />
       </Routes>
       <ToastContainer
       autoClose={3000}
