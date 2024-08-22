@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import getUserIdFromToken from "./authUtils"
 import {auth,provider} from '../../common/firebaseConfig'
 import {signInWithPopup} from 'firebase/auth'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function Signup() {
 
   const [showPassword, setShowPassword] = useState(false);
@@ -60,14 +62,14 @@ function Signup() {
       });
 
       // Handle success
-      console.log(response.data.message);
+      toast.success('You are Signed in');
       localStorage.setItem('token', response.data.token); // Store token if needed
       const userId=  getUserIdFromToken();
       console.log(response.data.token);
       navigate(`/student/dashboard/${userId}`);
     } catch (error) {
       // Handle error
-      console.error('There was an error!', error.response.data.message);
+      toast.error(error.response.data.message);
     }
 
   };
@@ -90,13 +92,13 @@ function Signup() {
       });
 
       if (response.data.success) {
-        console.log('User successfully logged in or registered:', response.data.student);
+        toast.success('You are Signed in');
         const token=response.data.token;
         localStorage.setItem('token',token);
         const userId=  getUserIdFromToken();
         navigate(`/student/dashboard/${userId}`);
       } else {
-        console.error('Error handling Google sign-in on the server:', response.data.message);
+        toast.error('Something went wrong')
       }
 
 

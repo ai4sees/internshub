@@ -15,6 +15,8 @@ import Login from './components/student/auth/Login';
 import Main from "./components/common/Main";
 import Signup from "./components/student/auth/Signup";
 import Spinner from "./components/common/Spinner";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 //import broswerRouter for different routes
@@ -42,6 +44,11 @@ function App() {
         <Route path="/student/alerts" element={<Alerts />} />
         <Route path="/student/Resume" element={<Resume />} />
       </Routes>
+      <ToastContainer
+      autoClose={3000}
+      position="top-center"
+
+      />
       </>
   );
 }
@@ -50,6 +57,7 @@ export default function AppWrapper() {
   return (
     <Router>
       <App />
+      
     </Router>
   );
 }

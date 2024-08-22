@@ -9,6 +9,8 @@ import {
   faCaretDown,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Navbar = () => {
   const navigate=useNavigate();
@@ -16,6 +18,7 @@ const Navbar = () => {
   const handleLogout = () => {
     // Clear the token from localStorage
     localStorage.removeItem('token');
+    toast.success('You are logged out');
 
     // Navigate to the login page
     navigate('/student/login');

@@ -10,6 +10,8 @@ import { useNavigate,useParams } from 'react-router-dom';
 import getUserIdFromToken from "./authUtils"
 import {auth,provider} from '../../common/firebaseConfig'
 import {signInWithPopup} from 'firebase/auth'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function Login() {
@@ -41,6 +43,7 @@ function Login() {
         email,
         password,
       });
+      toast.success('Login successful!');
 
       // Handle success
       console.log(response.data.message);
@@ -49,6 +52,7 @@ function Login() {
       navigate(`/student/dashboard/${userId}`); 
     } catch (error) {
       // Handle error
+      toast.error(error.response.data.message || 'Login failed');
       console.log(error.response.data.message);
       // setError(error.response.data.message || 'Login failed');
     }
@@ -73,18 +77,18 @@ function Login() {
       });
 
       if (response.data.success) {
-        console.log('User successfully logged in or registered:', response.data.student);
+        toast.success('Google login successful!');
         const token=response.data.token;
         localStorage.setItem('token',token);
         const userId=  getUserIdFromToken();
         navigate(`/student/dashboard/${userId}`);
       } else {
-        console.error('Error handling Google sign-in on the server:', response.data.message);
+        toast.error('Error handling Google sign-in on the server');
       }
 
 
     } catch (error) {
-      console.error('Error signing in with Google', error);
+      toast.error('Error signing in with Google');
     }
   }
 
