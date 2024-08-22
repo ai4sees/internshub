@@ -2,14 +2,16 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faCaretRight,faFile} from '@fortawesome/free-solid-svg-icons'
 import {useStudent} from './context/studentContext'
+import Spinner from '../common/Spinner'
 
-const Sidebar = () => {
-  const student= useStudent();
+const Sidebar = ({student}) => {
+  // const student= useStudent();
   // console.log(typeof student);
 
-  if (!student) {
-    return <div>Loading...</div>;
-  }
+  // if (!student) {
+  //   return <div>Loading...</div>;
+  // }
+  
   
   return (
     <div className=' w-[28%] h-[180vh] relative top-16 pt-10 px-8 bg-slate-100'>

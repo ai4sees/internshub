@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom'
 // import getUserIdFromToken from "./auth/authUtils"
 import { useParams } from 'react-router-dom';
 import getUserIdFromToken from './auth/authUtils';
+import Spinner from '../common/Spinner'
+import { useStudent } from './context/studentContext'
 
 
 const Home = () => {
@@ -13,6 +15,7 @@ const Home = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
   const idFromToken = getUserIdFromToken();
+  const student=useStudent();
 
  
 
@@ -33,14 +36,20 @@ const Home = () => {
     console.log(userId);
   }, [userId,idFromToken])
 
+  
+
 
   
   return (
-   
-      <div className='Home'>
-      <Sidebar/>
-      <RightSide/>
-    </div>
+   <>
+      {student?(
+          <div className='Home'>
+          <Sidebar student={student}/>
+          <RightSide/>
+          </div>
+      ):(<Spinner/>)
+      }
+  </>
     
   )
 }

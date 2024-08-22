@@ -14,6 +14,8 @@ import Resume from "./components/student/Resume";
 import Login from './components/student/auth/Login';
 import Main from "./components/common/Main";
 import Signup from "./components/student/auth/Signup";
+import Spinner from "./components/common/Spinner";
+
 
 //import broswerRouter for different routes
 
@@ -28,6 +30,7 @@ function App() {
       { !location.pathname.endsWith('/signup') && !location.pathname.endsWith('/login') && location.pathname !== '/' && <Navbar />}
       <Routes>
         <Route path="/" element={<Main />} />
+        {/* <Route path="/spinner" element={<Spinner />} /> */}
         <Route path="/student/signup" element={<Signup />} />
         <Route path="/student/login" element={<Login />} />
         <Route path="/student/dashboard/:userId" element={<Home />} />
