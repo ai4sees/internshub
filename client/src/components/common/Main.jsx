@@ -4,14 +4,21 @@ import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import { Link } from 'react-router-dom';
 import getUserIdFromToken from "../student/auth/authUtils"
 import { useNavigate } from 'react-router-dom';
+import {useStudent} from '../student/context/studentContext'
+import {useRecruiter} from '../recruiter/context/recruiterContext'
 
 const Main = () => {
   const navigate = useNavigate();
   const userId=getUserIdFromToken();
+  const {student}=useStudent();
+  const {recruiter} = useRecruiter();
   useEffect(() => {
     const userId=getUserIdFromToken();
-    if(userId){
+    if(userId && student){
     navigate(`/student/dashboard/${userId}`);
+    }
+    if(userId && recruiter){
+      navigate(`/recruiter/dashboard/${userId}`)
     }
   }, [userId])
   
