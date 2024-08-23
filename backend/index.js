@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const Student=require('./schema/studentSchema');
 const jwt = require('jsonwebtoken');
 const studentRoutes= require('./routes/studentRoutes');
+const recruiterRoutes= require('./routes/recruiterRoutes')
 
 
 const app = express();
@@ -15,6 +16,7 @@ app.use(express.json());
 
 
 app.use('/student',studentRoutes);
+app.use('/recruiter',recruiterRoutes);
 app.get('/',(req,res)=>{
   res.send('Welcome to our Server...')
 })

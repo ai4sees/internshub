@@ -5,12 +5,11 @@ import {faEye,faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 import google_pic from '../../../images/google_pic.png'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import getUserIdFromToken from "./authUtils"
+import getUserIdFromToken from "../auth/authUtilsRecr"
 import {auth,provider} from '../../common/firebaseConfig'
 import {signInWithPopup} from 'firebase/auth'
-import {toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useStudent } from '../context/studentContext';
 function Signup() {
 
   const [showPassword, setShowPassword] = useState(false);
@@ -18,20 +17,20 @@ function Signup() {
   const [firstname, setFirstName] = useState('');
   const [lastname, setLastName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [nameError, setNameError] = useState('');
+  const [phoneError, setPhoneError] = useState('');
   const navigate = useNavigate();
   const userId=  getUserIdFromToken();
-  const {login}=useStudent();
  
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      login();
-      navigate(`/student/dashboard/${userId}`);
+      navigate(`/recruiter/dashboard/${userId}`);
     }
   }, [userId]);
 
@@ -45,6 +44,9 @@ function Signup() {
     return emailRegex.test(email);
   };
 
+  const isFormValid = email.trim() !== '' && password.trim() !== '' && firstname.trim()!=='' && lastname.trim() !== '';
+
+
 
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -57,20 +59,20 @@ function Signup() {
     setEmailError('');
     try {
       // Send a POST request to the backend
-      const response = await axios.post('http://localhost:4000/student/signup', {
+      const response = await axios.post('http://localhost:4000/recruiter/signup', {
         firstname,
         lastname,
         email,
+        phone,
         password,
       });
 
       // Handle success
       toast.success('You are Signed in');
       localStorage.setItem('token', response.data.token); // Store token if needed
-      login();
       const userId=  getUserIdFromToken();
       console.log(response.data.token);
-      navigate(`/student/dashboard/${userId}`);
+      navigate(`/recruiter/dashboard/${userId}`);
     } catch (error) {
       // Handle error
       toast.error(error.response.data.message);
@@ -78,8 +80,7 @@ function Signup() {
 
   };
 
-  const isFormValid = email.trim() !== '' && password.trim() !== '' && firstname.trim()!=='' && lastname.trim() !== '';
-
+ 
   const handleGoogleClick=async(e)=>{
     e.preventDefault();
     try {
@@ -89,7 +90,7 @@ function Signup() {
       const firstname = user.displayName.split(' ')[0];
       const lastname = user.displayName.split(' ')[1] || '';
 
-      const response = await axios.post('http://localhost:4000/student/signup/googleauth', {
+      const response = await axios.post('http://localhost:4000/recruiter/signup/googleauth', {
         email,
         firstname,
         lastname,
@@ -99,9 +100,8 @@ function Signup() {
         toast.success('You are Signed in');
         const token=response.data.token;
         localStorage.setItem('token',token);
-        login();
         const userId=  getUserIdFromToken();
-        navigate(`/student/dashboard/${userId}`);
+        navigate(`/recruiter/dashboard/${userId}`);
       } else {
         toast.error('Something went wrong')
       }
@@ -119,7 +119,7 @@ function Signup() {
         
         <div className='flex flex-col items-center'>
           <p className='text-5xl font-extrabold mb-3 mt-10'>Welcome</p>
-          <p className='text-gray-500 text-lg'>Student Sign up</p>
+          <p className='text-gray-500 text-lg'>Recruiter Sign up</p>
         </div>
         <div>
 
@@ -185,6 +185,31 @@ function Signup() {
                 )}
 
               </div>
+
+              <div className="flex flex-col items-center">
+                <input
+                  type="number"
+                  id="phone"
+                  value={phone}
+                  placeholder='Phone no'
+                  onChange={(e) => {
+                    setPhone(e.target.value);
+                    if (e.target.value.trim().length<10) {
+                      setPhoneError('Enter a valid phone number');
+                    }
+                    else setPhoneError('');
+                  }}
+                  className="h-12 border-none bg-[rgb(246,247,245)] p-2 rounded-md w-[560px]"
+                  required
+                />
+                {phoneError && (
+                  <p className="text-red-500 text-left w-full">{phoneError}</p>
+                )}
+
+              </div>
+
+              
+
 
               <div className="flex flex-col items-center relative">
 

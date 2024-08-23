@@ -36,19 +36,20 @@ const Home = () => {
     console.log(userId);
   }, [userId,idFromToken])
 
-  
+  if(!student){
+    return <Spinner/>
+  }
 
 
   
   return (
    <>
-      {student?(
+      
           <div className='Home'>
         <Sidebar student={student}/>
           <RightSide/>
           </div>
-      ):(<Spinner/>)
-      }
+      
   </>
     
   )

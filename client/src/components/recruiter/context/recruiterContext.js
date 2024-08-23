@@ -2,13 +2,13 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
 // Create the context
-const StudentContext = createContext();
+const RecruiterContext = createContext();
 
 // Custom hook for accessing the context
-export const useStudent = () => useContext(StudentContext);
+export const useRecruiter = () => useContext(RecruiterContext);
 
-export const StudentProvider = ({ children }) => {
-  const [student, setStudent] = useState(null);
+export const RecruiterProvider = ({ children }) => {
+  const [recruiter, setRecruiter] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token'));
 
   useEffect(() => {
@@ -16,16 +16,15 @@ export const StudentProvider = ({ children }) => {
       const token = localStorage.getItem('token');
       if (token) {
         try {
-          const response = await axios.get('http://localhost:4000/student/details', {
+          const response = await axios.get('http://localhost:4000/recruiter/details', {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           });
           // console.log(response.data);
-          console.log('Useeffect of tudentcontext triggered');
-          setStudent(response.data);
+          setRecruiter(response.data);
         } catch (error) {
-          console.error('Error fetching student data:', error);
+          console.error('Error fetching recruiter data:', error);
           // Optionally handle errors (e.g., logout user)
         }
       }
@@ -46,8 +45,8 @@ export const StudentProvider = ({ children }) => {
   }
 
   return (
-    <StudentContext.Provider value={{student, logout,login}}>
+    <RecruiterContext.Provider value={{recruiter, logout,login}}>
       {children}
-    </StudentContext.Provider>
+    </RecruiterContext.Provider>
   );
 };

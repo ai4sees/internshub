@@ -14,9 +14,12 @@ import Resume from "./components/student/Resume";
 import Login from './components/student/auth/Login';
 import Main from "./components/common/Main";
 import Signup from "./components/student/auth/Signup";
+import SignupRecruit from "./components/recruiter/auth/Signup";
+import LoginRecruit from "./components/recruiter/auth/Login"
 import Spinner from "./components/common/Spinner";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import RecruiterDash from "./components/recruiter/RecruiterDash";
 
 
 //import broswerRouter for different routes
@@ -44,6 +47,11 @@ function App() {
         <Route path="/student/alerts" element={<Alerts />} />
         <Route path="/student/Resume" element={<Resume />} />
         <Route path="/student/profile" element={<Profile />} />
+
+
+        <Route path="/recruiter/signup" element={<SignupRecruit/>} />
+        <Route path="/recruiter/login" element={<LoginRecruit/>} />
+        <Route path="/recruiter/dashboard/:userId" element={<RecruiterDash/>} />
       </Routes>
       <ToastContainer
       autoClose={3000}

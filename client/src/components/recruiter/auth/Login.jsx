@@ -7,12 +7,13 @@ import { faEye as EyeIcon, faEyeSlash as EyeSlashIcon, faEye, faEyeSlash } from 
 import google_pic from '../../../images/google_pic.png'
 import axios from 'axios';
 import { useNavigate,useParams } from 'react-router-dom';
-import getUserIdFromToken from "./authUtils"
+import getUserIdFromToken from "../auth/authUtilsRecr"
 import {auth,provider} from '../../common/firebaseConfig'
 import {signInWithPopup} from 'firebase/auth'
-import { ToastContainer, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useStudent } from '../context/studentContext';
+// import { useStudent } from '../context/studentContext';
+import {useRecruiter} from '../context/recruiterContext'
 
 
 function Login() {
@@ -22,13 +23,12 @@ function Login() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const userId=getUserIdFromToken();
-  const {login}=useStudent();
+  const {login}=useRecruiter();
   
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      login();
-      navigate(`/student/dashboard/${userId}`);
+      navigate(`/recruiter/dashboard/${userId}`);
       return;
     }
   }, [navigate,userId]);
@@ -42,7 +42,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:4000/student/login', {
+      const response = await axios.post('http://localhost:4000/recruiter/login', {
         email,
         password,
       });
@@ -53,7 +53,7 @@ function Login() {
       localStorage.setItem('token', response.data.token);
       login();
       const userId= getUserIdFromToken();
-      navigate(`/student/dashboard/${userId}`); 
+      navigate(`/recruiter/dashboard/${userId}`); 
     } catch (error) {
       // Handle error
       toast.error(error.response.data.message || 'Login failed');
@@ -74,7 +74,7 @@ function Login() {
       const firstname = user.displayName.split(' ')[0];
       const lastname = user.displayName.split(' ')[1] || '';
 
-      const response = await axios.post('http://localhost:4000/student/login/googleauth', {
+      const response = await axios.post('http://localhost:4000/recruiter/login/googleauth', {
         email,
         firstname,
         lastname
@@ -86,7 +86,7 @@ function Login() {
         localStorage.setItem('token',token);
         login();
         const userId=  getUserIdFromToken();
-        navigate(`/student/dashboard/${userId}`);
+        navigate(`/recruiter/dashboard/${userId}`);
       } else {
         toast.error('Error handling Google sign-in on the server');
       }
@@ -104,7 +104,7 @@ function Login() {
 
         <div className='text-center  mt-10'>
           <p className='text-5xl font-extrabold mb-6'>Welcome back!</p>
-          <p className='text-gray-500 text-lg'>Student Login.
+          <p className='text-gray-500 text-lg'>Recruiter Login.
 
           </p>
         </div>

@@ -36,7 +36,7 @@ const Main = () => {
         <button className='w-[40%] h-[100px] border-red-600 border-4 border-dotted text-3xl font-extrabold rounded-xl text-red-600 flex flex-col items-center space-y-2'>
         <p>I'm a Recruiter</p>
           <div className='border-2 border-red-600 w-10 h-10 rounded-full hover:cursor-pointer hover:bg-red-600 hover:scale-125 duration-300'>
-            <FontAwesomeIcon icon={faArrowRight} className='w-full mx-auto hover:text-white'/>
+           <Link to='/recruiter/signup'> <FontAwesomeIcon icon={faArrowRight} className='w-full mx-auto hover:text-white'/></Link>
           </div>
         </button>
       </div>
