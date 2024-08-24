@@ -14,6 +14,7 @@ export const StudentProvider = ({ children }) => {
   useEffect(() => {
     const fetchUserData = async () => {
       const token = localStorage.getItem('token');
+      console.log('Inside useEffect of studentContext');
       if (token) {
         try {
           const response = await axios.get('http://localhost:4000/student/details', {
@@ -21,9 +22,17 @@ export const StudentProvider = ({ children }) => {
               Authorization: `Bearer ${token}`,
             },
           });
-          // console.log(response.data);
-          console.log('Useeffect of tudentcontext triggered');
-          setStudent(response.data);
+          
+          if(!response.data.success){
+            console.log('Student is not associated with this token');
+            return;
+          } 
+
+          if(response.data.success){
+            console.log('Student Found');
+            setStudent(response.data.student);
+          }
+          
         } catch (error) {
           console.error('Error fetching student data:', error);
           // Optionally handle errors (e.g., logout user)

@@ -164,14 +164,18 @@ router.get('/details', async (req, res) => {
     // Find the user in the database
     const student = await Student.findById(userId);
 
-    if (!student) return res.sendStatus(404); // Not found if user does not exist
+    if (!student) return res.status(200).json({success:false}); // Not found if user does not exist
 
     // Send user data as response
-    res.json({
-      firstname: student.firstname,
-      lastname: student.lastname,
-      email: student.email,
+    res.status(200).json({
+      success: true,
+      student: {
+        firstname: student.firstname,
+        lastname: student.lastname,
+        email: student.email,
+      }
     });
+
   } catch (error) {
     console.error('Error fetching user data:', error);
     res.sendStatus(500); // Internal server error

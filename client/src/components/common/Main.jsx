@@ -12,15 +12,27 @@ const Main = () => {
   const userId=getUserIdFromToken();
   const {student}=useStudent();
   const {recruiter} = useRecruiter();
+  const token=localStorage.getItem('token');
+
   useEffect(() => {
-    const userId=getUserIdFromToken();
-    if(userId && student){
-    navigate(`/student/dashboard/${userId}`);
+   
+    console.log('Inside Useeffect of main');
+    if(!token) return;
+    else{
+      const userId=getUserIdFromToken();
+      if(student){
+        navigate(`/student/dashboard/${userId}`);
+        return;
+      }
+      if(recruiter){
+        navigate(`/recruiter/dashboard/${userId}`);
+        return;
+      }
     }
-    if(userId && recruiter){
-      navigate(`/recruiter/dashboard/${userId}`)
-    }
-  }, [userId])
+  }, [student,recruiter,token])
+
+
+
   
   return (
     <div className='w-full h-screen flex'>

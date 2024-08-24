@@ -14,6 +14,7 @@ export const RecruiterProvider = ({ children }) => {
   useEffect(() => {
     const fetchUserData = async () => {
       const token = localStorage.getItem('token');
+      console.log('Inside useEffect of recruiterContext');
       if (token) {
         try {
           const response = await axios.get('http://localhost:4000/recruiter/details', {
@@ -22,7 +23,14 @@ export const RecruiterProvider = ({ children }) => {
             },
           });
           // console.log(response.data);
-          setRecruiter(response.data);
+          if(!response.data.success){
+            console.log('Recruiter is not associated with this token');
+            return;
+          }
+          if(response.data.success){
+          setRecruiter(response.data.recruiter);
+          console.log('Recruiter found');
+          }
         } catch (error) {
           console.error('Error fetching recruiter data:', error);
           // Optionally handle errors (e.g., logout user)

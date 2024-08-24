@@ -29,27 +29,32 @@ const images2 = [
   {
     src:pic7,
     title:"Full stack development Course",
-    duration:"8 Months"
+    duration:"8 Months",
+    ind:1
   },
   {
     src:pic8,
     title:"Data Science Course",
-    duration:"8 Months"
+    duration:"8 Months",
+    ind:2
   },
   {
     src:pic9,
     title:"Electric Vehicle Course",
-    duration:"8 Months"
+    duration:"8 Months",
+    ind:3
   },
   {
     src:pic10,
     title:"Product Management Course",
-    duration:"8 Months"
+    duration:"8 Months",
+    ind:4
   },
   {
     src:pic11,
     title:"UI/UX design Course",
-    duration:"8 Months"
+    duration:"8 Months",
+    ind:5
   },
 ];
 
@@ -90,11 +95,7 @@ const RightSide = () => {
     autoplaySpeed: 2000,
     pauseOnHover: true,
     dots: true,
-    afterChange: function (index) {
-      console.log(
-        `Slider Changed to: ${index + 1}, background: #222; color: #bada55`
-      );
-    },
+    
   };
 
   return (
@@ -110,6 +111,7 @@ const RightSide = () => {
               <div className="mx-5 px-5 h-[250px] w-[400px] border-l-2 p-0">
                 <img
                   src={image}
+                  key={index}
                   alt=""
                   className="rounded-xl hover:cursor-pointer  h-[170px] w-[470px] p-0 hover:scale-110 duration-300 mt-7"
                 />
@@ -125,9 +127,9 @@ const RightSide = () => {
           <Slider {...settings}>
          
           {
-            images2.map(({src,title,duration})=>(
+            images2.map(({src,title,duration,ind})=>(
               <div className="mx-5 px-5 h-[240px] w-[400px] p-5 border-l-2 ">
-              <img src={src} alt="" className="mt-7 hover:scale-110 duration-300 hover:cursor-pointer" />
+              <img src={src} key={ind} alt="" className="mt-7 hover:scale-110 duration-300 hover:cursor-pointer" />
               <h1 className="text-center text-lg font-semibold">{title}</h1>
               <h1 className="text-center">Duration-{duration}</h1>
               </div>
