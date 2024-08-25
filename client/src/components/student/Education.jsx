@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import getUserIdFromToken from './auth/authUtils';
 import { useStudent } from './context/studentContext';
 import { toast } from 'react-toastify';
@@ -8,6 +8,7 @@ import axios from 'axios';
 
 
 const Education = () => {
+  const [clicked,setClicked]=useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [degree, setDegree] = useState('');
   const [fieldOfStudy, setFieldOfStudy] = useState('');
@@ -15,6 +16,7 @@ const Education = () => {
   const [startYear, setStartYear] = useState('');
   const [endYear, setEndYear] = useState('');
   const [educationDetails, setEducationDetails] = useState([]);
+  const [editIndex, setEditIndex] = useState(null);
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 100 }, (_, i) => currentYear - i);
 
@@ -30,12 +32,16 @@ const Education = () => {
         return;
       }
       setEducationDetails(response.data);
+
+      console.log(degree);
+      // console.log('useeffect');
+      setClicked(false);
     } catch (error) {
       console.error('Error fetching education detailsvcc:', error);
     }
   } 
   fetchEducation();
-  }, [userId,educationDetails]);
+  }, [userId,clicked]);
 
 
   const handleSubmit = async (e) => {
@@ -48,25 +54,65 @@ const Education = () => {
       startYear,
       endYear,
     };
-    if(!degree || !fieldOfStudy|| !institution || !startYear || !endYear){
-      toast.error('Please Enter all fields');
+
+    if (!degree || !fieldOfStudy || !institution || !startYear || !endYear) {
+      toast.error('Please enter all fields');
       return;
     }
 
-    // Send the data to the backend API
     try {
+      if (editIndex !== null) {
+        // Update existing education entry
+        const response = await axios.put(`http://localhost:4000/student/profile/${userId}/education/${editIndex}`, educationData);
+        const updatedDetails = [...educationDetails];
+        updatedDetails[editIndex] = response.data;
+        setEducationDetails(updatedDetails);
+        setIsEditing(false);
+        toast.success('Details updated');
+      } else {
+        // Add new education entry
+        const response = await axios.post(`http://localhost:4000/student/profile/${userId}/education`, educationData);
+        setEducationDetails([...educationDetails, response.data]);
+        toast.success('Details added');
+      }
 
-      const response = await axios.post(`http://localhost:4000/student/profile/${userId}/education`, educationData)
-      setEducationDetails([...educationDetails, response.data]);
+      setClicked(true);
+      setDegree('');
+      setFieldOfStudy('');
+      setInstitution('');
+      setStartYear('');
+      setEndYear('');
+      setEditIndex(null);
       setIsEditing(false);
-      toast.success('Details updated');
-
     } catch (error) {
       console.error('Error saving the education details:', error);
       toast.error('Failed to update details');
     }
+  };
 
+  const handleDelete = async (index) => {
+    try {
+      console.log(educationDetails[index]);
+      await axios.delete(`http://localhost:4000/student/profile/${userId}/education/${index}`);
+      setEducationDetails(educationDetails.filter((_, i) => i !== index));
+      
+      toast.success('Education details deleted');
+    } catch (error) {
+      console.error('Error deleting education details:', error);
+      toast.error('Failed to delete details');
+    }
+  };
 
+  const handleEdit = (index) => {
+    const edu = educationDetails[index];
+    setIsEditing(true);
+    setDegree(edu.degree);
+    setFieldOfStudy(edu.fieldOfStudy);
+    setInstitution(edu.institution);
+    setStartYear(edu.startYear);
+    setEndYear(edu.endYear);
+    
+    setEditIndex(index);
   };
 
 
@@ -74,18 +120,17 @@ const Education = () => {
 
   return (
     <div className="container mx-auto p-4 border border-black mt-[68px]">
-
       <h2 className="text-xl font-semibold flex justify-between">
         Education
         <button onClick={() => setIsEditing(true)} className="text-blue-500">
-          <FontAwesomeIcon icon={faPen} />
+          <FontAwesomeIcon icon={faPlus} />
         </button>
       </h2>
 
       {isEditing ? (
-        <form className="mt-4" onSubmit={handleSubmit} value={degree} onChange={(e) => setDegree(e.target.value)}>
+        <form className="mt-4" onSubmit={handleSubmit}>
           {/* Form Fields for Education */}
-          <select id="degree" className="border p-2 mb-2 w-full">
+          <select id="degree" value={degree} onChange={(e) => setDegree(e.target.value)} className="border p-2 mb-2 w-full">
             <option value="">Select your degree</option>
             <option value="B.Tech">B.Tech</option>
             <option value="M.Tech">M.Tech</option>
@@ -103,11 +148,7 @@ const Education = () => {
 
           <input type="text" value={institution} onChange={(e) => setInstitution(e.target.value)} placeholder="Institution" className="border p-2 mb-2 w-full" />
 
-          <select
-            value={startYear}
-            onChange={(e)=>setStartYear(e.target.value)}
-            className="border p-2 mb-2 w-full"
-          >
+          <select value={startYear} onChange={(e) => setStartYear(e.target.value)} className="border p-2 mb-2 w-full">
             <option value="">Select Start Year</option>
             {years.map((year) => (
               <option key={year} value={year}>
@@ -116,11 +157,7 @@ const Education = () => {
             ))}
           </select>
 
-          <select
-            value={endYear}
-            onChange={(e)=>setEndYear(e.target.value)}
-            className="border p-2 mb-2 w-full"
-          >
+          <select value={endYear} onChange={(e) => setEndYear(e.target.value)} className="border p-2 mb-2 w-full">
             <option value="">Select End Year</option>
             {years.map((year) => (
               <option key={year} value={year}>
@@ -134,13 +171,18 @@ const Education = () => {
         </form>
       ) : (
         <div>
-          {/* Display Education Details */}
           {educationDetails.length > 0 ? (
             educationDetails.map((edu, index) => (
-              <div key={index} className="border p-2 mb-2">
-                <h3 className="text-lg font-semibold">{edu.degree}</h3>
-                <p>{edu.fieldOfStudy} at {edu.institution}</p>
-                <p>{edu.startYear} - {edu.endYear}</p>
+              <div key={index} className="border p-5 mb-2 flex justify-between">
+                <div>
+                  <h3 className="text-lg font-semibold">{edu.degree}</h3>
+                  <p>{edu.fieldOfStudy} at {edu.institution}</p>
+                  <p>{edu.startYear} - {edu.endYear}</p>
+                </div>
+                <div className="space-x-5">
+                  <FontAwesomeIcon icon={faPen} onClick={() => handleEdit(index)} />
+                  <FontAwesomeIcon icon={faTrash} onClick={() => handleDelete(index)} />
+                </div>
               </div>
             ))
           ) : (
@@ -148,9 +190,6 @@ const Education = () => {
           )}
         </div>
       )}
-
-
-
     </div>
   );
 };

@@ -33,6 +33,7 @@ const studentSchema =new mongoose.Schema({
   },
   education: [{
     degree: String,
+    fieldOfStudy:String,
     institution: String,
     startYear: String,
     endYear: String,

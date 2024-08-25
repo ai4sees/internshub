@@ -125,7 +125,7 @@ const Navbar = () => {
                   <a href="/">Home</a>
                 </li>
                 <li className="py-2 px-4 hover:bg-gray-100">
-                  <Link to='/student/profile'>Profile</Link>
+                  <Link to={`/student/profile/${userId}`}>Profile</Link>
                 </li>
                 <li className="py-2 px-4 hover:bg-gray-100">
                   <Link to={`/student/resume/${userId}`}>Resume</Link>
