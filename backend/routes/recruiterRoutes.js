@@ -3,7 +3,7 @@ const express = require('express');
 const Recruiter =require('../schema/recruiterSchema');
 const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
-const multer = require('multer');
+
 const {jwtDecode} = require('jwt-decode');
 
 dotenv.config();

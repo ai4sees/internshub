@@ -6,6 +6,7 @@ const Student=require('./schema/studentSchema');
 const jwt = require('jsonwebtoken');
 const studentRoutes= require('./routes/studentRoutes');
 const recruiterRoutes= require('./routes/recruiterRoutes')
+const studentProfRoutes = require('./routes/studentProfRoutes');
 
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.json());
 
 app.use('/student',studentRoutes);
 app.use('/recruiter',recruiterRoutes);
+app.use('/student/profile',studentProfRoutes);
 app.get('/',(req,res)=>{
   res.send('Welcome to our Server...')
 })

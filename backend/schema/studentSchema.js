@@ -31,6 +31,38 @@ const studentSchema =new mongoose.Schema({
     } 
   
   },
+  education: [{
+    degree: String,
+    institution: String,
+    startYear: String,
+    endYear: String,
+  }],
+  workExperience: [{
+    company: String,
+    role: String,
+    startDate: String,
+    endDate: String,
+    type: String, // Type of work experience (e.g., Internship, Job)
+    description: String, // Added description field
+  }],
+  certificates: [{
+    title: String,
+    issuingOrganization: String,
+    issueDate: String,
+    description: String, // Added description field
+  }],
+  personalProjects: [{
+    title: String,
+    description: String,
+    link: String,
+  }],
+  skills: [{
+    name: String,
+    proficiency: String,
+  }],
+  portfolioLink: {
+    type: String,
+  },
   
     
 },{timestamps: true});
