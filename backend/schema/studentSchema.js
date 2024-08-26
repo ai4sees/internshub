@@ -23,12 +23,6 @@ const studentSchema =new mongoose.Schema({
     contentType: String, // Store the MIME type
     filename: String, // Store the original filename
     //add a field for current time and date
-    createdAt:{
-      type: String
-    },
-    updatedAt:{
-      type: String
-    } 
   
   },
   education: [{
@@ -40,12 +34,12 @@ const studentSchema =new mongoose.Schema({
     endYear: String,
   }],
   workExperience: [{
-    company: String,
-    role: String,
-    startDate: String,
-    endDate: String,
-    type: String, // Type of work experience (e.g., Internship, Job)
-    description: String, // Added description field
+      company: String,
+      role: String,
+      startDate: String,
+      endDate: String,
+      typeofwork: String,
+      description: String,
   }],
   certificates: [{
     title: String,
@@ -65,6 +59,7 @@ const studentSchema =new mongoose.Schema({
   portfolioLink: {
     type: String,
   },
+  
   
     
 },{timestamps: true});

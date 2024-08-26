@@ -1,33 +1,34 @@
 import React, { useEffect } from 'react'
 import Education from './Education'
 import getUserIdFromToken from './auth/authUtils'
-import {useNavigate,useParams} from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useStudent } from './context/studentContext'
 import Spinner from '../common/Spinner'
+import WorkExp from './WorkExp'
 
 const Profile = () => {
 
   const idFromToken = getUserIdFromToken();
   const { userId } = useParams();
-  const navigate=useNavigate();
-  const {logout,student}=useStudent();
+  const navigate = useNavigate();
+  const { logout, student } = useStudent();
 
-  useEffect(()=>{
-    const token =localStorage.getItem('token');
-    if(!token){
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
       navigate('/student/login');
       return;
     }
     console.log('id from token', idFromToken);
-    console.log('id from params',userId);
-    
-    if(idFromToken!==userId){
+    console.log('id from params', userId);
+
+    if (idFromToken !== userId) {
       logout(); //logout from studentContext to remove token and setToken to null in useeffect of context to trigger the useeffect of studentContext
       navigate('/student/login');
       return;
     }
 
-  },[userId,idFromToken])
+  }, [userId, idFromToken])
   return (
     !student ? (
       <Spinner />
@@ -36,9 +37,12 @@ const Profile = () => {
         <h1 className="text-3xl font-bold mb-2 ">Profile</h1>
         <h1 className=' text-xl capitalize text-gray-600'>{student.firstname} {student.lastname}</h1>
         <h1 className=' text-gray-600'>{student.email}</h1>
-  
+
         <section className="mb-8">
           <Education />
+        </section>
+        <section className="mb-8">
+          <WorkExp />
         </section>
       </div>
     )
