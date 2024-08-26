@@ -15,6 +15,7 @@ const WorkExp = () => {
   const [typeofwork, setTypeOfWork] = useState('');
   const [description, setDescription] = useState('');
   const [currentEditIndex, setCurrentEditIndex] = useState(null);
+  const [clicked,setClicked]=useState(false);
 
   const userId = getUserIdFromToken();
 
@@ -23,12 +24,13 @@ const WorkExp = () => {
       try {
         const response = await axios.get(`http://localhost:4000/student/profile/${userId}/work-experience`);
         setWorkExperiences(response.data);
+        setClicked(false);
       } catch (error) {
         console.error('Error fetching work experiences:', error);
       }
     };
     fetchWorkExperiences();
-  }, [userId]);
+  }, [userId,clicked]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -64,6 +66,7 @@ const WorkExp = () => {
       }
       setIsEditing(false);
       resetForm();
+      setClicked(true);
     } catch (error) {
       console.error('Error saving work experience:', error);
       toast.error('Failed to save experience');
@@ -88,7 +91,7 @@ const WorkExp = () => {
     setRole(experienceToEdit.role);
     setStartDate(experienceToEdit.startDate);
     setEndDate(experienceToEdit.endDate);
-    setType(experienceToEdit.type);
+    setTypeOfWork(experienceToEdit.typeofwork);
     setDescription(experienceToEdit.description);
     setCurrentEditIndex(index);
     setIsEditing(true);
@@ -99,10 +102,17 @@ const WorkExp = () => {
     setRole('');
     setStartDate('');
     setEndDate('');
-    setType('');
+    setTypeOfWork('');
     setDescription('');
     setCurrentEditIndex(null);
   };
+
+  const formatDate=(givenDate)=>{
+  const [year,month,day]=givenDate.split('-');
+  return `${day}-${month}-${year}`;
+  }
+
+
 
   return (
     <div className="container mx-auto p-4 border border-black mt-[68px]">
@@ -123,6 +133,7 @@ const WorkExp = () => {
 
           {/* <input type="text" value={type} onChange={(e) => setType(e.target.value)} placeholder="Type (e.g., Internship, Job)" className="border p-2 mb-2 w-full" /> */}
           <select type='text' value={typeofwork} onChange={(e)=>setTypeOfWork(e.target.value)} placeholder="Type (e.g., Internship, Job)" className="border p-2 mb-2 w-full">
+            <option value="">Select Type</option>
             <option value="job">Job</option>
             <option value="internship">Internship</option>
           </select>
@@ -136,14 +147,16 @@ const WorkExp = () => {
             workExperiences.map((work, index) => (
               <div key={index} className="border p-5 mb-2 flex justify-between">
                 <div>
-                  <h3 className="text-lg font-semibold">{work.company}</h3>
-                  <p>{work.role} ({work.type})</p>
-                  <p>{work.startDate} - {work.endDate}</p>
-                  <p>{work.description}</p>
+                  <h3 className="text-lg font-semibold">{work.role} at : {work.company}</h3>
+                  <div className='text-gray-600'>
+                  <p> ({work.typeofwork})</p>
+                  <p>Duration: {formatDate(work.startDate)} - {formatDate(work.endDate)}</p>
+                  <p>Details: {work.description}</p>
+                  </div>
                 </div>
                 <div className='space-x-5'>
-                  <FontAwesomeIcon icon={faPen} onClick={() => handleEdit(index)} />
-                  <FontAwesomeIcon icon={faTrash} onClick={() => handleDelete(index)} />
+                  <FontAwesomeIcon icon={faPen} onClick={() => handleEdit(index)} className='hover:scale-125 duration-300 hover:text-blue-500 hover:cursor-pointer'/>
+                  <FontAwesomeIcon icon={faTrash} onClick={() => handleDelete(index)} className='hover:scale-125 duration-300 hover:text-red-500 hover:cursor-pointer'/>
                 </div>
               </div>
             ))

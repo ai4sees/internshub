@@ -181,7 +181,7 @@ router.post("/:userId/work-experience", async (req, res) => {
 router.put("/:userId/work-experience/:index", async (req, res) => {
   try {
     const { userId, index } = req.params;
-    const { company, role, startDate, endDate, type, description } = req.body;
+    const { company, role, startDate, endDate, typeofwork, description } = req.body;
     const student = await Student.findById(userId);
     if (!student) return res.status(404).json({ message: "Student not found" });
     if (index < 0 || index >= student.workExperience.length)
@@ -192,7 +192,7 @@ router.put("/:userId/work-experience/:index", async (req, res) => {
       role,
       startDate,
       endDate,
-      type,
+      typeofwork,
       description,
     };
     await student.save();

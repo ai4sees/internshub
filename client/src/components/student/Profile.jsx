@@ -12,9 +12,10 @@ const Profile = () => {
   const { userId } = useParams();
   const navigate = useNavigate();
   const { logout, student } = useStudent();
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    
     if (!token) {
       navigate('/student/login');
       return;
@@ -28,7 +29,7 @@ const Profile = () => {
       return;
     }
 
-  }, [userId, idFromToken])
+  }, [userId, idFromToken,token])
   return (
     !student ? (
       <Spinner />
