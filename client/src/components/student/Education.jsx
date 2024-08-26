@@ -15,6 +15,7 @@ const Education = () => {
   const [institution, setInstitution] = useState('');
   const [startYear, setStartYear] = useState('');
   const [endYear, setEndYear] = useState('');
+  const [score, setScore]=useState('');
   const [educationDetails, setEducationDetails] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
   const currentYear = new Date().getFullYear();
@@ -53,9 +54,10 @@ const Education = () => {
       institution,
       startYear,
       endYear,
+      score
     };
 
-    if (!degree || !fieldOfStudy || !institution || !startYear || !endYear) {
+    if (!degree || !fieldOfStudy || !institution || !startYear || !endYear || !score) {
       toast.error('Please enter all fields');
       return;
     }
@@ -82,6 +84,7 @@ const Education = () => {
       setInstitution('');
       setStartYear('');
       setEndYear('');
+      setScore('');
       setEditIndex(null);
       setIsEditing(false);
     } catch (error) {
@@ -111,6 +114,7 @@ const Education = () => {
     setInstitution(edu.institution);
     setStartYear(edu.startYear);
     setEndYear(edu.endYear);
+    setScore(edu.score);
     
     setEditIndex(index);
   };
@@ -122,8 +126,8 @@ const Education = () => {
     <div className="container mx-auto p-4 border border-black mt-[68px]">
       <h2 className="text-xl font-semibold flex justify-between">
         Education
-        <button onClick={() => setIsEditing(true)} className="text-blue-500">
-          <FontAwesomeIcon icon={faPlus} />
+        <button onClick={() => setIsEditing(true)} className="text-blue-500 hover:text-green-600 flex items-center space-x-1">
+         <span>Add Education</span> <FontAwesomeIcon icon={faPlus} />
         </button>
       </h2>
 
@@ -165,6 +169,7 @@ const Education = () => {
               </option>
             ))}
           </select>
+          <input type="text" placeholder='Enter Percentage/CGPA scored' value={score} onChange={(e)=>setScore(e.target.value)} className="border p-2 mb-2 w-full" />
 
           <button type="submit" className="bg-blue-500 text-white px-4 py-2 mt-4">Save</button>
           <button onClick={() => setIsEditing(false)} className="border ml-4 px-4 py-2 text-gray-500 hover:bg-red-500 hover:text-white">Cancel</button>
@@ -176,12 +181,16 @@ const Education = () => {
               <div key={index} className="border p-5 mb-2 flex justify-between">
                 <div>
                   <h3 className="text-lg font-semibold">{edu.degree}</h3>
+                  <div className='text-gray-600'>
                   <p>{edu.fieldOfStudy} at {edu.institution}</p>
-                  <p>{edu.startYear} - {edu.endYear}</p>
+                  <p>Start Year: {edu.startYear}</p>
+                  <p>Year of Completion: {edu.endYear}</p>
+                  <p>Percentage/CGPA: {edu.score}</p>
+                  </div>
                 </div>
                 <div className="space-x-5">
-                  <FontAwesomeIcon icon={faPen} onClick={() => handleEdit(index)} />
-                  <FontAwesomeIcon icon={faTrash} onClick={() => handleDelete(index)} />
+                  <FontAwesomeIcon icon={faPen} onClick={() => handleEdit(index)} className='hover:scale-125 duration-300 hover:text-blue-500 hover:cursor-pointer' />
+                  <FontAwesomeIcon icon={faTrash} onClick={() => handleDelete(index)} className='hover:scale-125 duration-300 hover:text-red-600 hover:cursor-pointer'/>
                 </div>
               </div>
             ))

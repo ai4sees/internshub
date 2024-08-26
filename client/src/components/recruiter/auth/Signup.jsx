@@ -294,8 +294,8 @@ function Signup() {
           </div>
 
           <div className='mt-3 mb-[100px] text-center'>
-            <span className='text-gray-500 '>Sign up as recruiter?</span>
-            <Link to='/recruiter/signup'><span className='text-purple-500 underline'>&nbsp;Sign up</span></Link>
+            <span className='text-gray-500 '>Sign up as Student?</span>
+            <Link to='/student/signup'><span className='text-purple-500 underline'>&nbsp;Sign up</span></Link>
           </div>
 
 

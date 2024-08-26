@@ -3,13 +3,14 @@ import Education from './Education'
 import getUserIdFromToken from './auth/authUtils'
 import {useNavigate,useParams} from 'react-router-dom'
 import { useStudent } from './context/studentContext'
+import Spinner from '../common/Spinner'
 
 const Profile = () => {
 
   const idFromToken = getUserIdFromToken();
   const { userId } = useParams();
   const navigate=useNavigate();
-  const {logout}=useStudent();
+  const {logout,student}=useStudent();
 
   useEffect(()=>{
     const token =localStorage.getItem('token');
@@ -28,14 +29,20 @@ const Profile = () => {
 
   },[userId,idFromToken])
   return (
-    <div className='container mx-auto p-4 border border-black mt-[68px]'>
-      <h1 className="text-2xl font-bold mb-4">Profile</h1>
-
-      <section className="mb-8">
-        <Education />
-      </section>
-    </div>
-  )
+    !student ? (
+      <Spinner />
+    ) : (
+      <div className='container mx-auto p-4 border border-black mt-[68px]'>
+        <h1 className="text-3xl font-bold mb-2 ">Profile</h1>
+        <h1 className=' text-xl capitalize text-gray-600'>{student.firstname} {student.lastname}</h1>
+        <h1 className=' text-gray-600'>{student.email}</h1>
+  
+        <section className="mb-8">
+          <Education />
+        </section>
+      </div>
+    )
+  );
 }
 
 export default Profile

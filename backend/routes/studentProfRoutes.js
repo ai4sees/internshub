@@ -29,7 +29,7 @@ catch (error) {
 
 router.post('/:id/education', async(req,res)=>{
   try{
-    const { degree, fieldOfStudy, institution, startYear, endYear } = req.body;
+    const { degree, fieldOfStudy, institution, startYear, endYear, score } = req.body;
     const userId=req.params.id;
 
     console.log('Request Body:', req.body);
@@ -43,7 +43,8 @@ router.post('/:id/education', async(req,res)=>{
       fieldOfStudy,
       institution,
       startYear,
-      endYear
+      endYear,
+      score
     });
 
     // Save the updated student document
@@ -61,7 +62,7 @@ router.post('/:id/education', async(req,res)=>{
 
 router.put('/:userId/education/:index', async (req, res) => {
   const { userId, index } = req.params;
-  const { degree, fieldOfStudy, institution, startYear, endYear } = req.body;
+  const { degree, fieldOfStudy, institution, startYear, endYear, score } = req.body;
 
   try {
     const student = await Student.findById(userId);
@@ -75,7 +76,7 @@ router.put('/:userId/education/:index', async (req, res) => {
     }
 
     // Update the education details
-    student.education[index] = { degree, fieldOfStudy, institution, startYear, endYear };
+    student.education[index] = { degree, fieldOfStudy, institution, startYear, endYear, score };
     await student.save();
 
     res.status(200).json(student.education[index]);
