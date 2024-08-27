@@ -11,6 +11,7 @@ const studentProfRoutes = require('./routes/studentProfRoutes');
 
 const app = express();
 const PORT=process.env.PORT || 4000;
+dotenv.config();
 //cors middleware
 app.use(cors());
 app.use(express.json());
@@ -27,7 +28,7 @@ app.get('/',(req,res)=>{
 
 const startServer= async()=>{
   try {
-    connection('mongodb://localhost:27017');
+    connection(process.env.MONGO_URI);
     app.listen(PORT,()=> console.log(`Server has Started on port http://localhost:${PORT}`))
   } catch (error) {
     console.log(error);

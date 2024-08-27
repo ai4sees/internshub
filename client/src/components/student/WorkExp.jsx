@@ -108,7 +108,7 @@ const WorkExp = () => {
   };
 
   const formatDate=(givenDate)=>{
-  const [year,month,day]=givenDate.split('-');
+  const [year,month,day]=givenDate?givenDate.split('-'):'';
   return `${day}-${month}-${year}`;
   }
 

@@ -135,7 +135,7 @@ const Education = () => {
         <form className="mt-4" onSubmit={handleSubmit}>
           {/* Form Fields for Education */}
           <select id="degree" value={degree} onChange={(e) => setDegree(e.target.value)} className="border p-2 mb-2 w-full">
-            <option value="">Select your degree</option>
+            <option value="">Select your degree / Course</option>
             <option value="B.Tech">B.Tech</option>
             <option value="M.Tech">M.Tech</option>
             <option value="B.Sc">B.Sc</option>
@@ -145,6 +145,9 @@ const Education = () => {
             <option value="BBA">BBA</option>
             <option value="MBA">MBA</option>
             <option value="PhD">PhD</option>
+            <option value="X Standard">X Standard</option>
+            <option value="XII Standard">XII Standard</option>
+            <option value="Diploma">Diploma</option>
             {/* Add more degree options as needed */}
           </select>
 
