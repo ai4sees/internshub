@@ -17,7 +17,7 @@ app.use(cors({
   origin:['https://clone-internshub-client.vercel.app'],
   methods:['POST','GET','PUT','DELETE'],
   credentials:true,
-  
+
   
 }));
 app.use(express.json());
@@ -27,7 +27,7 @@ app.use('/student',studentRoutes);
 app.use('/recruiter',recruiterRoutes);
 app.use('/student/profile',studentProfRoutes);
 app.get('/',(req,res)=>{
-  res.send('Welcome to our Server...')
+  res.send('Welcome to our Server..')
 })
 
 
