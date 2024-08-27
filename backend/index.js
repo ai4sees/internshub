@@ -27,7 +27,7 @@ app.use('/student',studentRoutes);
 app.use('/recruiter',recruiterRoutes);
 app.use('/student/profile',studentProfRoutes);
 app.get('/',(req,res)=>{
-  res.send('Welcome to our Server....')
+  res.send('Welcome to our Server......')
 })
 
 
