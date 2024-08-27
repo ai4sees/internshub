@@ -230,11 +230,9 @@ router.get("/:userId/certificates", async (req, res) => {
     if (!student) return res.status(404).json({ message: "User not found" });
 
     if (!student.certificates || student.certificates.length === 0)
-      return res
-        .status(404)
-        .json({
-          message: "Student having certificates field is not available",
-        });
+      return res.status(404).json({
+        message: "Student having certificates field is not available",
+      });
     res.status(200).json(student.certificates);
   } catch (error) {
     console.error("Error fetching certificates details:", error);
@@ -252,41 +250,41 @@ router.post("/:userId/certificates", async (req, res) => {
       title,
       issuingOrganization,
       issueDate,
-      description
+      description,
     });
     await student.save();
     res.status(200).json({
-    message: "Certificates details added successfully",
-    certificates: student.certificates,
-  });
-
-} catch (error) {
-  console.error("Error adding certificate", error);
-  res.status(500).json({ message: "Server error", error: error.message });
-}
+      message: "Certificates details added successfully",
+      certificates: student.certificates,
+    });
+  } catch (error) {
+    console.error("Error adding certificate", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
 });
 
-router.put('/:userId/certificates/:index',async(req,res)=>{
+router.put("/:userId/certificates/:index", async (req, res) => {
   try {
-    const{userId,index}=req.params;
-    const{title,issuingOrganization,issueDate,description}=req.body;
-    const student=await Student.findById(userId);
-    if(!student) return res.status(404).json({message: "User not found"});
-    if(index <0 || student.certificates.length<=index)  return res.status(400).json({ message: "Invalid education index" });
+    const { userId, index } = req.params;
+    const { title, issuingOrganization, issueDate, description } = req.body;
+    const student = await Student.findById(userId);
+    if (!student) return res.status(404).json({ message: "User not found" });
+    if (index < 0 || student.certificates.length <= index)
+      return res.status(400).json({ message: "Invalid education index" });
 
-    student.certificates[index]={
+    student.certificates[index] = {
       title,
       issuingOrganization,
       issueDate,
-      description
-    }
+      description,
+    };
     await student.save();
-    
+    res.status(200).json(student.certificates[index]);
   } catch (error) {
     console.error("Error updating certificate details:", error);
     res.status(500).json({ message: "Server error" });
   }
-})
+});
 
 router.delete("/:userId/certificates/:index", async (req, res) => {
   try {
@@ -307,4 +305,243 @@ router.delete("/:userId/certificates/:index", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+router.get("/:userId/personal-projects", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const student = await Student.findById(userId);
+    if (!student) return res.status(404).json({ message: "User not found" });
+
+    if (!student.personalProjects || student.personalProjects.length === 0)
+      return res.status(404).json({
+        message: "Student having personalProjects field is not available",
+      });
+    res.status(200).json(student.personalProjects);
+  } catch (error) {
+    console.error("Error fetching personalProjects details:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.post("/:userId/personal-projects", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { title, link, description } = req.body;
+    const student = await Student.findById(userId);
+    if (!student) return res.status(404).json({ message: "User not found" });
+    student.personalProjects.push({
+      title,
+      description,
+      link,
+    });
+    await student.save();
+    res.status(200).json({
+      personalProjects: student.personalProjects,
+    });
+  } catch (error) {
+    console.error("Error adding personalProjects", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+router.put("/:userId/personal-projects/:index", async (req, res) => {
+  try {
+    const { userId, index } = req.params;
+    const { title, link, description } = req.body;
+    const student = await Student.findById(userId);
+    if (!student) return res.status(404).json({ message: "User not found" });
+    if (index < 0 || student.personalProjects.length <= index)
+      return res
+        .status(400)
+        .json({ message: "Invalid personalProjects index" });
+
+    student.personalProjects[index] = {
+      title,
+      link,
+      description,
+    };
+    await student.save();
+    res.status(200).json(student.certificates[index]);
+  } catch (error) {
+    console.error("Error updating personalProjects details:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.delete("/:userId/personal-projects/:index", async (req, res) => {
+  try {
+    const { userId, index } = req.params;
+    const student = await Student.findById(userId);
+    if (!student) return res.status(404).json({ message: "student not found" });
+
+    if (index < 0 || index >= student.personalProjects.length) {
+      return res
+        .status(400)
+        .json({ message: "Invalid personalProjects index" });
+    }
+
+    // Remove the education details at the specified index
+    student.personalProjects.splice(index, 1);
+    await student.save();
+    res.status(200).json({ message: "personalProjects details deleted" });
+  } catch (error) {
+    console.error("Error deleting personalProjects details:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.get("/:userId/skills", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const student = await Student.findById(userId);
+    if (!student) return res.status(404).json({ message: "User not found" });
+
+    if (!student.skills || student.skills.length === 0)
+      return res.status(404).json({
+        message: "Student having skills field is not available",
+      });
+    res.status(200).json(student.skills);
+  } catch (error) {
+    console.error("Error fetching skills details:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.post("/:userId/skills", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { skillName, proficiency } = req.body;
+    const student = await Student.findById(userId);
+    if (!student) return res.status(404).json({ message: "User not found" });
+    student.skills.push({ skillName, proficiency });
+
+    await student.save();
+    res.status(200).json({
+      skills: student.skills,
+    });
+  } catch (error) {
+    console.error("Error adding skills", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+router.put("/:userId/skills/:index", async (req, res) => {
+  try {
+    const { userId, index } = req.params;
+    const { skillName, proficiency } = req.body;
+    const student = await Student.findById(userId);
+    if (!student) return res.status(404).json({ message: "User not found" });
+    if (index < 0 || student.skills.length <= index)
+      return res.status(400).json({ message: "Invalid skills index" });
+
+    student.skills[index] = {
+      skillName,
+      proficiency,
+    };
+    await student.save();
+    res.status(200).json(student.skills[index]);
+  } catch (error) {
+    console.error("Error updating skills details:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.delete("/:userId/skills/:index", async (req, res) => {
+  try {
+    const { userId, index } = req.params;
+    const student = await Student.findById(userId);
+    if (!student) return res.status(404).json({ message: "student not found" });
+
+    if (index < 0 || index >= student.skills.length) {
+      return res.status(400).json({ message: "Invalid skills index" });
+    }
+
+    // Remove the education details at the specified index
+    student.skills.splice(index, 1);
+    await student.save();
+    res.status(200).json({ message: "skills details deleted" });
+  } catch (error) {
+    console.error("Error deleting skills details:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.get("/:userId/portfolioLinks", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const student = await Student.findById(userId);
+    if (!student) return res.status(404).json({ message: "User not found" });
+
+    if (!student.portfolioLink || student.portfolioLink.length === 0)
+      return res.status(404).json({
+        message: "Student having portfolioLink field is not available",
+      });
+    res.status(200).json(student.portfolioLink);
+  } catch (error) {
+    console.error("Error fetching skills details:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.post("/:userId/portfolioLinks", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { linkType, linkUrl } = req.body;
+    const student = await Student.findById(userId);
+    if (!student) return res.status(404).json({ message: "User not found" });
+    student.portfolioLink.push({ linkType, linkUrl });
+
+    await student.save();
+    res.status(200).json({
+      portfolioLink: student.portfolioLink
+    });
+  } catch (error) {
+    console.error("Error adding portfolioLink", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+router.put("/:userId/portfolioLinks/:index", async (req, res) => {
+  try {
+    const { userId, index } = req.params;
+    const { linkType, linkUrl } = req.body;
+    const student = await Student.findById(userId);
+    if (!student) return res.status(404).json({ message: "User not found" });
+    if (index < 0 || student.portfolioLink.length <= index)
+      return res.status(400).json({ message: "Invalid portfolioLink index" });
+
+    student.portfolioLink[index] = {
+      linkType,
+      linkUrl,
+    };
+    await student.save();
+    res.status(200).json(student.portfolioLink[index]);
+  } catch (error) {
+    console.error("Error updating portfolioLink details:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+router.delete("/:userId/portfolioLinks/:index", async (req, res) => {
+  try {
+    const { userId, index } = req.params;
+    const student = await Student.findById(userId);
+    if (!student) return res.status(404).json({ message: "student not found" });
+
+    if (index < 0 || index >= student.portfolioLink.length) {
+      return res.status(400).json({ message: "Invalid portfolioLink index" });
+    }
+
+    // Remove the education details at the specified index
+    student.portfolioLink.splice(index, 1);
+    await student.save();
+    res.status(200).json({ message: "portfolioLink details deleted" });
+  } catch (error) {
+    console.error("Error deleting portfolioLink details:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
 module.exports = router;

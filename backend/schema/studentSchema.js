@@ -53,12 +53,13 @@ const studentSchema =new mongoose.Schema({
     link: String,
   }],
   skills: [{
-    name: String,
+    skillName: String,
     proficiency: String,
   }],
-  portfolioLink: {
-    type: String,
-  },
+  portfolioLink: [{
+    linkType: String,
+    linkUrl:String
+  }],
   
   
     

@@ -6,6 +6,10 @@ import { useStudent } from './context/studentContext'
 import Spinner from '../common/Spinner'
 import WorkExp from './WorkExp'
 import Certificates from './Certificates'
+import PersonalProjects from './PersonalProjects'
+import Skills from './Skills'
+import PortfolioLinks from './Portfolio'
+import Portfolio from './Portfolio'
 
 const Profile = () => {
 
@@ -48,6 +52,15 @@ const Profile = () => {
         </section>
         <section className="mb-8">
           <Certificates />
+        </section>
+        <section className="mb-8">
+          <PersonalProjects />
+        </section>
+        <section className="mb-8">
+          <Skills />
+        </section>
+        <section className="mb-8">
+          <Portfolio />
         </section>
       </div>
     )
