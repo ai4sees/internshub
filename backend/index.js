@@ -18,6 +18,7 @@ app.use(cors({
   methods:['POST','GET','PUT','DELETE'],
   credentials:true,
   
+  
 }));
 app.use(express.json());
 // https://clone-internshub-client.vercel.app/
