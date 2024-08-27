@@ -1,15 +1,16 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { Link } from 'react-router-dom'
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye as EyeIcon, faEyeSlash as EyeSlashIcon, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import google_pic from '../../../images/google_pic.png'
+import login_bg from '../../../images/login_bg.jpeg'
 import axios from 'axios';
-import { useNavigate,useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import getUserIdFromToken from "./authUtils"
-import {auth,provider} from '../../common/firebaseConfig'
-import {signInWithPopup} from 'firebase/auth'
+import { auth, provider } from '../../common/firebaseConfig'
+import { signInWithPopup } from 'firebase/auth'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useStudent } from '../context/studentContext';
@@ -21,9 +22,9 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const userId=getUserIdFromToken();
-  const {login}=useStudent();
-  
+  const userId = getUserIdFromToken();
+  const { login } = useStudent();
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -31,9 +32,9 @@ function Login() {
       navigate(`/student/dashboard/${userId}`);
       return;
     }
-  }, [navigate,userId]);
+  }, [navigate, userId]);
 
-  
+
 
   const handlePasswordToggle = () => {
     setShowPassword(!showPassword);
@@ -52,8 +53,8 @@ function Login() {
       console.log(response.data.message);
       localStorage.setItem('token', response.data.token);
       login();
-      const userId= getUserIdFromToken();
-      navigate(`/student/dashboard/${userId}`); 
+      const userId = getUserIdFromToken();
+      navigate(`/student/dashboard/${userId}`);
     } catch (error) {
       // Handle error
       toast.error(error.response.data.message || 'Login failed');
@@ -65,7 +66,7 @@ function Login() {
   const isFormValid = email.trim() !== '' && password.trim() !== '';
 
 
-  const handleGoogleClick=async(e)=>{
+  const handleGoogleClick = async (e) => {
     e.preventDefault();
     try {
       const result = await signInWithPopup(auth, provider);
@@ -82,10 +83,10 @@ function Login() {
 
       if (response.data.success) {
         toast.success('Google login successful!');
-        const token=response.data.token;
-        localStorage.setItem('token',token);
+        const token = response.data.token;
+        localStorage.setItem('token', token);
         login();
-        const userId=  getUserIdFromToken();
+        const userId = getUserIdFromToken();
         navigate(`/student/dashboard/${userId}`);
       } else {
         toast.error('Error handling Google sign-in on the server');
@@ -99,11 +100,15 @@ function Login() {
 
   return (
     <div className='flex min-h-screen'>
-      <div className='w-full'>
-       
+      <div className='relative w-1/2'>
+      <img src={login_bg} alt="" className='w-full h-screen'/>
+      {/* <p className='absolute flex inset-0 justify-center items-center text-white text-6xl font-bold '>Welcome back !</p> */}
+      </div>
+      <div className='w-1/2'>
 
-        <div className='text-center  mt-10'>
-          <p className='text-5xl font-extrabold mb-6'>Welcome back!</p>
+
+        <div className='text-center  mt-[70px]'>
+          <p className='text-5xl font-extrabold mb-6'>Login</p>
           <p className='text-gray-500 text-lg'>Student Login.
 
           </p>
@@ -185,7 +190,7 @@ function Login() {
                 <span className='mt-1'>Continue up with Google</span>
               </div>
             </button>
-            
+
           </div>
 
           <div className='mt-[30px] text-center'>
@@ -196,10 +201,11 @@ function Login() {
         </div>
 
         <div className='mt-[30px] text-center'>
-            <span className='text-gray-500 '>login as recruiter </span>
-            <Link to='/recruiter/login'><span className='text-purple-500 underline'>login</span></Link>
-          </div>
+          <span className='text-gray-500 '>login as recruiter </span>
+          <Link to='/recruiter/login'><span className='text-purple-500 underline'>login</span></Link>
+        </div>
       </div>
+      
 
     </div>
   )

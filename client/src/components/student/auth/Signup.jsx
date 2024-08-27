@@ -11,6 +11,7 @@ import {signInWithPopup} from 'firebase/auth'
 import {toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useStudent } from '../context/studentContext';
+import login_bg from '../../../images/login_bg.jpeg'
 function Signup() {
 
   const [showPassword, setShowPassword] = useState(false);
@@ -115,7 +116,10 @@ function Signup() {
 
   return (
     <div className='flex min-h-screen'>
-      <div className='w-full border border-black flex flex-col items-center justify-center '>
+      <div className='relative w-1/2 h-auto '>
+      <img src={login_bg} alt="" className=' absolute inset-0 w-full h-full object-cover'/>
+      </div>
+      <div className='w-1/2  flex flex-col items-center justify-center '>
         
         <div className='flex flex-col items-center'>
           <p className='text-5xl font-extrabold mb-3 mt-10'>Welcome</p>
@@ -125,7 +129,7 @@ function Signup() {
 
           {/* form starts from here */}
 
-          <div className="flex justify-center items-center mt-[80px] w-full " >
+          <div className="flex justify-center items-center mt-[40px] w-full " >
             <form onSubmit={handleSubmit} className="space-y-4 mx-auto">
               <div className='flex flex-col items-center'>
                 <input type="text" 
@@ -234,15 +238,15 @@ function Signup() {
 
           </div>
 
-          <div className='w-[80%] mx-auto mt-[40px]'>
+          {/* <div className='w-[80%] mx-auto mt-[40px]'>
             <p className='text-center text-gray-500'>
               By clicking Create account, you agree to Linktree's privacy notice, T&Cs and to receive offers, news and updates.
             </p>
-          </div>
+          </div> */}
 
           <p className='mt-5 text-center'>OR</p>
           
-          <div className='w-full mt-8 space-y-3'>
+          <div className='w-full mt-3 space-y-3'>
             
           <button onClick={handleGoogleClick}
             className='w-full mx-auto py-2 border border-gray-300 h-[50px] text-black text-[18px] rounded-full font-semibold'
@@ -262,15 +266,16 @@ function Signup() {
           </button> */}
           </div>
           
-
-          <div className='mt-10 mb-[50px] text-center'>
+          <div className='flex justify-center items-center space-x-7 mt-3'>
+          <div className='  flex '>
             <span className='text-gray-500 '>Already have an account?</span>
             <Link to='/student/login'><span className='text-purple-500 underline'>Log in</span></Link>
           </div>
 
-          <div className='mt-3 mb-[100px] text-center'>
+          <div className=' flex items-center'>
             <span className='text-gray-500 '>Sign up as recruiter?</span>
             <Link to='/recruiter/signup'><span className='text-purple-500 underline'>&nbsp;Sign up</span></Link>
+          </div>
           </div>
 
 
