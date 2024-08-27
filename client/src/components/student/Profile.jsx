@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useStudent } from './context/studentContext'
 import Spinner from '../common/Spinner'
 import WorkExp from './WorkExp'
+import Certificates from './Certificates'
 
 const Profile = () => {
 
@@ -44,6 +45,9 @@ const Profile = () => {
         </section>
         <section className="mb-8">
           <WorkExp />
+        </section>
+        <section className="mb-8">
+          <Certificates />
         </section>
       </div>
     )

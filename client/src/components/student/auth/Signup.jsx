@@ -57,7 +57,7 @@ function Signup() {
     setEmailError('');
     try {
       // Send a POST request to the backend
-      const response = await axios.post('http://localhost:4000/student/signup', {
+      const response = await axios.post('https://clone-internshub-api.vercel.app/student/signup', {
         firstname,
         lastname,
         email,
@@ -89,7 +89,7 @@ function Signup() {
       const firstname = user.displayName.split(' ')[0];
       const lastname = user.displayName.split(' ')[1] || '';
 
-      const response = await axios.post('http://localhost:4000/student/signup/googleauth', {
+      const response = await axios.post('https://clone-internshub-api.vercel.app/student/signup/googleauth', {
         email,
         firstname,
         lastname,

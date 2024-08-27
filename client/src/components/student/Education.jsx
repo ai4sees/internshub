@@ -8,14 +8,14 @@ import axios from 'axios';
 
 
 const Education = () => {
-  const [clicked,setClicked]=useState(false);
+  const [clicked, setClicked] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [degree, setDegree] = useState('');
   const [fieldOfStudy, setFieldOfStudy] = useState('');
   const [institution, setInstitution] = useState('');
   const [startYear, setStartYear] = useState('');
   const [endYear, setEndYear] = useState('');
-  const [score, setScore]=useState('');
+  const [score, setScore] = useState('');
   const [educationDetails, setEducationDetails] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
   const currentYear = new Date().getFullYear();
@@ -25,24 +25,24 @@ const Education = () => {
 
 
   useEffect(() => {
-    const fetchEducation=async()=>{
-    try {
-      const response = await axios.get(`http://localhost:4000/student/profile/${userId}/education`);
-      if(!response.data) {
-        toast.error('sorry no details found');
-        return;
-      }
-      setEducationDetails(response.data);
+    const fetchEducation = async () => {
+      try {
+        const response = await axios.get(`https://clone-internshub-api.vercel.app/student/profile/${userId}/education`);
+        if (!response.data) {
+          toast.error('sorry no details found');
+          return;
+        }
+        setEducationDetails(response.data);
 
-      console.log(degree);
-      // console.log('useeffect');
-      setClicked(false);
-    } catch (error) {
-      console.error('Error fetching education detailsvcc:', error);
+        console.log(degree);
+        // console.log('useeffect');
+        setClicked(false);
+      } catch (error) {
+        console.error('Error fetching education detailsvcc:', error);
+      }
     }
-  } 
-  fetchEducation();
-  }, [userId,clicked]);
+    fetchEducation();
+  }, [userId, clicked]);
 
 
   const handleSubmit = async (e) => {
@@ -65,7 +65,7 @@ const Education = () => {
     try {
       if (editIndex !== null) {
         // Update existing education entry
-        const response = await axios.put(`http://localhost:4000/student/profile/${userId}/education/${editIndex}`, educationData);
+        const response = await axios.put(`https://clone-internshub-api.vercel.app/student/profile/${userId}/education/${editIndex}`, educationData);
         const updatedDetails = [...educationDetails];
         updatedDetails[editIndex] = response.data;
         setEducationDetails(updatedDetails);
@@ -73,7 +73,7 @@ const Education = () => {
         toast.success('Details updated');
       } else {
         // Add new education entry
-        const response = await axios.post(`http://localhost:4000/student/profile/${userId}/education`, educationData);
+        const response = await axios.post(`https://clone-internshub-api.vercel.app/student/profile/${userId}/education`, educationData);
         setEducationDetails([...educationDetails, response.data]);
         toast.success('Details added');
       }
@@ -96,9 +96,9 @@ const Education = () => {
   const handleDelete = async (index) => {
     try {
       console.log(educationDetails[index]);
-      await axios.delete(`http://localhost:4000/student/profile/${userId}/education/${index}`);
+      await axios.delete(`https://clone-internshub-api.vercel.app/student/profile/${userId}/education/${index}`);
       setEducationDetails(educationDetails.filter((_, i) => i !== index));
-      
+
       toast.success('Education details deleted');
     } catch (error) {
       console.error('Error deleting education details:', error);
@@ -115,7 +115,7 @@ const Education = () => {
     setStartYear(edu.startYear);
     setEndYear(edu.endYear);
     setScore(edu.score);
-    
+
     setEditIndex(index);
   };
 
@@ -127,7 +127,7 @@ const Education = () => {
       <h2 className="text-xl font-semibold flex justify-between">
         Education
         <button onClick={() => setIsEditing(true)} className="text-blue-500 hover:text-green-600 flex items-center space-x-1">
-         <span>Add Education</span> <FontAwesomeIcon icon={faPlus} />
+          <span>Add Education</span> <FontAwesomeIcon icon={faPlus} />
         </button>
       </h2>
 
@@ -172,7 +172,7 @@ const Education = () => {
               </option>
             ))}
           </select>
-          <input type="text" placeholder='Enter Percentage/CGPA scored' value={score} onChange={(e)=>setScore(e.target.value)} className="border p-2 mb-2 w-full" />
+          <input type="text" placeholder='Enter Percentage/CGPA scored' value={score} onChange={(e) => setScore(e.target.value)} className="border p-2 mb-2 w-full" />
 
           <button type="submit" className="bg-blue-500 text-white px-4 py-2 mt-4">Save</button>
           <button onClick={() => setIsEditing(false)} className="border ml-4 px-4 py-2 text-gray-500 hover:bg-red-500 hover:text-white">Cancel</button>
@@ -185,15 +185,15 @@ const Education = () => {
                 <div>
                   <h3 className="text-lg font-semibold">{edu.degree}</h3>
                   <div className='text-gray-600'>
-                  <p>{edu.fieldOfStudy} at {edu.institution}</p>
-                  <p>Start Year: {edu.startYear}</p>
-                  <p>Year of Completion: {edu.endYear}</p>
-                  <p>Percentage/CGPA: {edu.score}</p>
+                    <p>{edu.fieldOfStudy} at {edu.institution}</p>
+                    <p>Start Year: {edu.startYear}</p>
+                    <p>Year of Completion: {edu.endYear}</p>
+                    <p>Percentage/CGPA: {edu.score}</p>
                   </div>
                 </div>
                 <div className="space-x-5">
                   <FontAwesomeIcon icon={faPen} onClick={() => handleEdit(index)} className='hover:scale-125 duration-300 hover:text-blue-500 hover:cursor-pointer' />
-                  <FontAwesomeIcon icon={faTrash} onClick={() => handleDelete(index)} className='hover:scale-125 duration-300 hover:text-red-600 hover:cursor-pointer'/>
+                  <FontAwesomeIcon icon={faTrash} onClick={() => handleDelete(index)} className='hover:scale-125 duration-300 hover:text-red-600 hover:cursor-pointer' />
                 </div>
               </div>
             ))

@@ -17,7 +17,7 @@ export const RecruiterProvider = ({ children }) => {
       console.log('Inside useEffect of recruiterContext');
       if (token) {
         try {
-          const response = await axios.get('http://localhost:4000/recruiter/details', {
+          const response = await axios.get('https://clone-internshub-api.vercel.app/recruiter/details', {
             headers: {
               Authorization: `Bearer ${token}`,
             },
