@@ -42,7 +42,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://clone-internshub-api.vercel.app/recruiter/login', {
+      const response = await axios.post('http://localhost:4000/recruiter/login', {
         email,
         password,
       });

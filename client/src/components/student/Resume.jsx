@@ -35,7 +35,7 @@ const Resume = () => {
     // Fetch the resume from the backend
     const fetchResume = async () => {
       try {
-        const response = await axios.get(`https://clone-internshub-api.vercel.app/student/resume/${userId}`, {
+        const response = await axios.get(`http://localhost:4000/student/resume/${userId}`, {
           responseType: 'blob', // Set response type to blob for binary data
         });
         
@@ -97,7 +97,7 @@ const Resume = () => {
     formData.append('resume', file);
 
     try {
-      await axios.post(`https://clone-internshub-api.vercel.app/student/upload-resume/${userId}`, formData, {
+      await axios.post(`http://localhost:4000/student/upload-resume/${userId}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
     

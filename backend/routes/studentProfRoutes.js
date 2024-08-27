@@ -283,8 +283,28 @@ router.put('/:userId/certificates/:index',async(req,res)=>{
     await student.save();
     
   } catch (error) {
-    console.error("Error updating workexperience details:", error);
+    console.error("Error updating certificate details:", error);
     res.status(500).json({ message: "Server error" });
   }
 })
+
+router.delete("/:userId/certificates/:index", async (req, res) => {
+  try {
+    const { userId, index } = req.params;
+    const student = await Student.findById(userId);
+    if (!student) return res.status(404).json({ message: "student not found" });
+
+    if (index < 0 || index >= student.certificates.length) {
+      return res.status(400).json({ message: "Invalid certificate index" });
+    }
+
+    // Remove the education details at the specified index
+    student.certificates.splice(index, 1);
+    await student.save();
+    res.status(200).json({ message: "certificate details deleted" });
+  } catch (error) {
+    console.error("Error deleting certificate details:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 module.exports = router;
