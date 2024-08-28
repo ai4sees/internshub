@@ -14,6 +14,8 @@ import { signInWithPopup } from 'firebase/auth'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useStudent } from '../context/studentContext';
+import ToggleButton from '../../common/ToggleButton';
+import ToggleButtonSecond from '../../common/ToogleButtonSecond';
 
 
 function Login() {
@@ -107,17 +109,19 @@ function Login() {
       <div className='w-1/2'>
 
 
-        <div className='text-center  mt-[70px]'>
-          <p className='text-5xl font-extrabold mb-6'>Login</p>
-          <p className='text-gray-500 text-lg'>Student Login.
+        <div className='text-center flex flex-col justify-center items-center mt-[20px]'>
+          <p className='text-5xl font-extrabold mb-12'>Login</p>
+          <div className='flex space-x-3'>
+          <ToggleButton type="student" auth="login"/>
+          <ToggleButtonSecond type="student" auth="login"/>
+          </div>
 
-          </p>
         </div>
         <div>
 
           {/* form starts from here */}
 
-          <div className="flex justify-center items-center mt-[80px] w-[600px] mx-auto " >
+          <div className="flex justify-center items-center mt-[90px] w-[600px] mx-auto " >
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="flex flex-col items-center">
                 <input
@@ -193,17 +197,17 @@ function Login() {
 
           </div>
 
-          <div className='mt-[30px] text-center'>
+          {/* <div className='mt-[30px] text-center'>
             <span className='text-gray-500 '>Don't have an account? </span>
             <Link to='/student/signup'><span className='text-purple-500 underline'>Sign up.</span></Link>
-          </div>
+          </div> */}
 
         </div>
 
-        <div className='mt-[30px] text-center'>
+        {/* <div className='mt-[30px] text-center'>
           <span className='text-gray-500 '>login as recruiter </span>
           <Link to='/recruiter/login'><span className='text-purple-500 underline'>login</span></Link>
-        </div>
+        </div> */}
       </div>
       
 

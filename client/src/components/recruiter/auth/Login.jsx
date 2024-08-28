@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye as EyeIcon, faEyeSlash as EyeSlashIcon, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import google_pic from '../../../images/google_pic.png'
+import recruiter_bg from '../../../images/recruiter_bg.jpeg'
 import axios from 'axios';
 import { useNavigate,useParams } from 'react-router-dom';
 import getUserIdFromToken from "../auth/authUtilsRecr"
@@ -14,6 +15,8 @@ import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // import { useStudent } from '../context/studentContext';
 import {useRecruiter} from '../context/recruiterContext'
+import ToggleButton from '../../common/ToggleButton';
+import ToggleButtonSecond from '../../common/ToogleButtonSecond';
 
 
 function Login() {
@@ -99,20 +102,26 @@ function Login() {
 
   return (
     <div className='flex min-h-screen'>
-      <div className='w-full'>
+      <div className='relative w-1/2 h-auto border-r'>
+      <img src={recruiter_bg} alt="" className='absolute inset-0 w-full h-full object-cover'/>
+      </div>
+
+      <div className='w-1/2'>
        
 
-        <div className='text-center  mt-10'>
-          <p className='text-5xl font-extrabold mb-6'>Welcome back!</p>
-          <p className='text-gray-500 text-lg'>Recruiter Login.
-
-          </p>
+        <div className='text-center flex flex-col justify-center items-center mt-[20px]'>
+          <p className='text-5xl font-extrabold mb-12'>Login</p>
+          <div className='flex space-x-3'>
+          <ToggleButton type="recruiter" auth="login"/>
+          <ToggleButtonSecond type="recruiter" auth="login"/>
+          </div>
         </div>
+        
         <div>
 
           {/* form starts from here */}
 
-          <div className="flex justify-center items-center mt-[80px] w-[600px] mx-auto " >
+          <div className="flex justify-center items-center mt-[90px] w-[600px] mx-auto " >
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="flex flex-col items-center">
                 <input
@@ -188,17 +197,17 @@ function Login() {
             
           </div>
 
-          <div className='mt-[30px] text-center'>
+          {/* <div className='mt-[30px] text-center'>
             <span className='text-gray-500 '>Don't have an account? </span>
             <Link to='/student/signup'><span className='text-purple-500 underline'>Sign up.</span></Link>
-          </div>
+          </div> */}
 
         </div>
 
-        <div className='mt-[30px] text-center'>
-            <span className='text-gray-500 '>login as recruiter </span>
-            <Link to='/recruiter/login'><span className='text-purple-500 underline'>login</span></Link>
-          </div>
+        {/* <div className='mt-[30px] text-center'>
+            <span className='text-gray-500 '>login as student </span>
+            <Link to='/student/login'><span className='text-purple-500 underline'>login</span></Link>
+          </div> */}
       </div>
 
     </div>

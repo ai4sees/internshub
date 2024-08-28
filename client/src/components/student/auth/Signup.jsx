@@ -12,6 +12,8 @@ import {toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useStudent } from '../context/studentContext';
 import login_bg from '../../../images/login_bg.jpeg'
+import ToggleButton from '../../common/ToggleButton';
+import ToggleButtonSecond from '../../common/ToogleButtonSecond';
 function Signup() {
 
   const [showPassword, setShowPassword] = useState(false);
@@ -117,13 +119,16 @@ function Signup() {
   return (
     <div className='flex min-h-screen'>
       <div className='relative w-1/2 h-auto '>
-      <img src={login_bg} alt="" className=' absolute inset-0 w-full h-full object-cover'/>
+      <img src={login_bg} alt="" className=' w-full h-screen'/>
       </div>
-      <div className='w-1/2  flex flex-col items-center justify-center '>
+      <div className='w-1/2 '>
         
-        <div className='flex flex-col items-center'>
-          <p className='text-5xl font-extrabold mb-3 mt-10'>Welcome</p>
-          <p className='text-gray-500 text-lg'>Student Sign up</p>
+        <div className='flex flex-col items-center mt-[20px]'>
+          <p className='text-5xl font-extrabold mb-12 '>Sign up</p>
+          <div className='flex space-x-3'>
+          <ToggleButton type='student' auth='signup'/>
+          <ToggleButtonSecond type="student" auth="signup"/>
+          </div>
         </div>
         <div>
 
@@ -246,7 +251,7 @@ function Signup() {
 
           <p className='mt-5 text-center'>OR</p>
           
-          <div className='w-full mt-3 space-y-3'>
+          <div className='w-[580px] mx-auto mt-8  space-y-3'>
             
           <button onClick={handleGoogleClick}
             className='w-full mx-auto py-2 border border-gray-300 h-[50px] text-black text-[18px] rounded-full font-semibold'
@@ -266,7 +271,7 @@ function Signup() {
           </button> */}
           </div>
           
-          <div className='flex justify-center items-center space-x-7 mt-3'>
+          {/* <div className='flex justify-center items-center space-x-7 mt-3'>
           <div className='  flex '>
             <span className='text-gray-500 '>Already have an account?</span>
             <Link to='/student/login'><span className='text-purple-500 underline'>Log in</span></Link>
@@ -276,7 +281,7 @@ function Signup() {
             <span className='text-gray-500 '>Sign up as recruiter?</span>
             <Link to='/recruiter/signup'><span className='text-purple-500 underline'>&nbsp;Sign up</span></Link>
           </div>
-          </div>
+          </div> */}
 
 
 

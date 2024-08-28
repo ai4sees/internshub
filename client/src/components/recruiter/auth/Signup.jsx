@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faEye,faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 import google_pic from '../../../images/google_pic.png'
+import recruiter_bg from '../../../images/recruiter_bg.jpeg'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import getUserIdFromToken from "../auth/authUtilsRecr"
@@ -10,6 +11,8 @@ import {auth,provider} from '../../common/firebaseConfig'
 import {signInWithPopup} from 'firebase/auth'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ToggleButton from '../../common/ToggleButton';
+import ToggleButtonSecond from '../../common/ToogleButtonSecond';
 function Signup() {
 
   const [showPassword, setShowPassword] = useState(false);
@@ -115,17 +118,24 @@ function Signup() {
 
   return (
     <div className='flex min-h-screen'>
-      <div className='w-full border border-black flex flex-col items-center justify-center '>
+      <div className='relative w-1/2 h-auto border-r'>
+      <img src={recruiter_bg} alt="" className='absolute inset-0 w-full h-full object-cover'/>
+      </div>
+      <div className='w-1/2 '>
         
-        <div className='flex flex-col items-center'>
-          <p className='text-5xl font-extrabold mb-3 mt-10'>Welcome</p>
-          <p className='text-gray-500 text-lg'>Recruiter Sign up</p>
+        <div className='text-center flex flex-col items-center justify-center mt-[20px]'>
+          <p className='text-5xl font-extrabold mb-12'>Sign up</p>
+          <div className='flex space-x-3'>
+          <ToggleButton type='recruiter' auth='signup'/>
+          <ToggleButtonSecond type="recruiter" auth="signup"/>
+          </div>
+          {/* <p className='text-gray-500 text-lg'>Recruiter Sign up</p> */}
         </div>
         <div>
 
           {/* form starts from here */}
 
-          <div className="flex justify-center items-center mt-[80px] w-full " >
+          <div className="flex justify-center items-center mt-[20px] w-full " >
             <form onSubmit={handleSubmit} className="space-y-4 mx-auto">
               <div className='flex flex-col items-center'>
                 <input type="text" 
@@ -259,44 +269,32 @@ function Signup() {
 
           </div>
 
-          <div className='w-[80%] mx-auto mt-[40px]'>
-            <p className='text-center text-gray-500'>
-              By clicking Create account, you agree to Linktree's privacy notice, T&Cs and to receive offers, news and updates.
-            </p>
-          </div>
-
-          <p className='mt-5 text-center'>OR</p>
+          <p className='mt-1 text-center'>OR</p>
           
-          <div className='w-full mt-8 space-y-3'>
+          <div className='w-full mt-3 space-y-3'>
             
           <button onClick={handleGoogleClick}
-            className='w-full mx-auto py-2 border border-gray-300 h-[50px] text-black text-[18px] rounded-full font-semibold'
+            className='w-full mx-auto py-2 border border-gray-300 h-[45px] text-black text-[18px] rounded-full font-semibold'
           >
             <div className='inline-flex space-x-4'>
             <img src={google_pic} alt="" className='w-5 h-5 py-0 px-0 ml-5 mt-2'/>
             <span className='mt-1'>Sign up with Google</span>
             </div>
           </button>
-          {/* <button
-            className='w-full py-2 border border-gray-300 h-[50px] text-black text-[18px] rounded-full font-semibold'
-          >
-            <div className='inline-flex space-x-1 ml-0'>
-            <img src={apple_pic} alt="" className='w-10 h-10 py-0 px-0 ml-5 mt-[-4px]'/>
-            <span className='mt-1'>Sign up with Apple</span>
-            </div>
-          </button> */}
+         
           </div>
           
-
-          <div className='mt-10 mb-[50px] text-center'>
-            <span className='text-gray-500 '>Already have an account?</span>
-            <Link to='/student/login'><span className='text-purple-500 underline'>Log in</span></Link>
+          {/* <div className='flex space-x-3 justify-center items-center mt-3'>
+          <div >
+            <span className='text-gray-500 '>Already have an account? </span>
+            <Link to='/student/login'><span className='text-purple-500 '>Log in</span></Link>
           </div>
 
-          <div className='mt-3 mb-[100px] text-center'>
+          <div>
             <span className='text-gray-500 '>Sign up as Student?</span>
-            <Link to='/student/signup'><span className='text-purple-500 underline'>&nbsp;Sign up</span></Link>
+            <Link to='/student/signup'><span className='text-purple-500 '>&nbsp;Sign up</span></Link>
           </div>
+          </div> */}
 
 
 
