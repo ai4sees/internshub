@@ -45,7 +45,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://clone-internshub-api.vercel.app/student/login', {
+      const response = await axios.post('http://localhost:4000/student/login', {
         email,
         password,
       });
@@ -77,7 +77,7 @@ function Login() {
       const firstname = user.displayName.split(' ')[0];
       const lastname = user.displayName.split(' ')[1] || '';
 
-      const response = await axios.post('https://clone-internshub-api.vercel.app/student/login/googleauth', {
+      const response = await axios.post('http://localhost:4000/student/login/googleauth', {
         email,
         firstname,
         lastname

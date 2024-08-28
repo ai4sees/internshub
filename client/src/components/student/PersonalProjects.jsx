@@ -19,7 +19,7 @@ const PersonalProjects = () => {
   useEffect(() => {
     const fetchPersonalProjects = async () => {
       try {
-        const response = await axios.get(`https://clone-internshub-api.vercel.app/student/profile/${userId}/personal-projects`);
+        const response = await axios.get(`http://localhost:4000/student/profile/${userId}/personal-projects`);
         if (!response.data) {
           toast.error('Sorry, no projects found');
           return;
@@ -50,7 +50,7 @@ const PersonalProjects = () => {
     try {
       if (editIndex !== null) {
         // Update existing project entry
-        const response = await axios.put(`https://clone-internshub-api.vercel.app/student/profile/${userId}/personal-projects/${editIndex}`, projectData);
+        const response = await axios.put(`http://localhost:4000/student/profile/${userId}/personal-projects/${editIndex}`, projectData);
         const updatedProjects = [...personalProjects];
         updatedProjects[editIndex] = response.data;
         setPersonalProjects(updatedProjects);
@@ -58,7 +58,7 @@ const PersonalProjects = () => {
         toast.success('Project updated');
       } else {
         // Add new project entry
-        const response = await axios.post(`https://clone-internshub-api.vercel.app/student/profile/${userId}/personal-projects`, projectData);
+        const response = await axios.post(`http://localhost:4000/student/profile/${userId}/personal-projects`, projectData);
         setPersonalProjects([...personalProjects, response.data.personalProjects]);
         toast.success('Project added');
       }
@@ -77,7 +77,7 @@ const PersonalProjects = () => {
 
   const handleDelete = async (index) => {
     try {
-      await axios.delete(`https://clone-internshub-api.vercel.app/student/profile/${userId}/personal-projects/${index}`);
+      await axios.delete(`http://localhost:4000/student/profile/${userId}/personal-projects/${index}`);
       setPersonalProjects(personalProjects.filter((_, i) => i !== index));
       toast.success('Project deleted');
     } catch (error) {

@@ -22,7 +22,7 @@ const WorkExp = () => {
   useEffect(() => {
     const fetchWorkExperiences = async () => {
       try {
-        const response = await axios.get(`https://clone-internshub-api.vercel.app/student/profile/${userId}/work-experience`);
+        const response = await axios.get(`http://localhost:4000/student/profile/${userId}/work-experience`);
         setWorkExperiences(response.data);
         setClicked(false);
       } catch (error) {
@@ -52,7 +52,7 @@ const WorkExp = () => {
     try {
       if (currentEditIndex !== null) {
         // Edit existing experience
-        await axios.put(`https://clone-internshub-api.vercel.app/student/profile/${userId}/work-experience/${currentEditIndex}`, workExpData);
+        await axios.put(`http://localhost:4000/student/profile/${userId}/work-experience/${currentEditIndex}`, workExpData);
         const updatedExperiences = [...workExperiences];
         updatedExperiences[currentEditIndex] = workExpData;
         setWorkExperiences(updatedExperiences);
@@ -60,7 +60,7 @@ const WorkExp = () => {
       } else {
         console.log(workExpData);    
         // Add new experience
-        const response = await axios.post(`https://clone-internshub-api.vercel.app/student/profile/${userId}/work-experience`, workExpData);
+        const response = await axios.post(`http://localhost:4000/student/profile/${userId}/work-experience`, workExpData);
         setWorkExperiences([...workExperiences, response.data.workExperience]);
         toast.success('Experience added successfully');
       }
@@ -75,7 +75,7 @@ const WorkExp = () => {
 
   const handleDelete = async (index) => {
     try {
-      await axios.delete(`https://clone-internshub-api.vercel.app/student/profile/${userId}/work-experience/${index}`);
+      await axios.delete(`http://localhost:4000/student/profile/${userId}/work-experience/${index}`);
       const updatedExperiences = workExperiences.filter((_, i) => i !== index);
       setWorkExperiences(updatedExperiences);
       toast.success('Experience deleted successfully');
