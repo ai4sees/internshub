@@ -6,6 +6,9 @@ import { useStudent } from './context/studentContext'
 import Spinner from '../common/Spinner'
 import WorkExp from './WorkExp'
 import Certificates from './Certificates'
+import PersonalProjects from './PersonalProjects'
+import Skills from './Skills'
+import Portfolio from './Portfolio'
 
 const Profile = () => {
 
@@ -36,9 +39,9 @@ const Profile = () => {
       <Spinner />
     ) : (
       <div className='container mx-auto p-4 border border-black mt-[68px]'>
-        <h1 className="text-3xl font-bold mb-2 ">Profile</h1>
-        <h1 className=' text-xl capitalize text-gray-600'>{student.firstname} {student.lastname}</h1>
-        <h1 className=' text-gray-600'>{student.email}</h1>
+        <h1 className="text-3xl font-bold mb-2 text-center">Profile</h1>
+        <h1 className=' text-xl capitalize text-center text-gray-600'>{student.firstname} {student.lastname}</h1>
+        <h1 className=' text-gray-600 text-center'>{student.email}</h1>
 
         <section className="mb-8">
           <Education />
@@ -48,6 +51,15 @@ const Profile = () => {
         </section>
         <section className="mb-8">
           <Certificates />
+        </section>
+        <section className="mb-8">
+          <PersonalProjects />
+        </section>
+        <section className="mb-8">
+          <Skills />
+        </section>
+        <section className="mb-8">
+          <Portfolio />
         </section>
       </div>
     )

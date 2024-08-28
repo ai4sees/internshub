@@ -124,13 +124,13 @@ const Portfolio = () => {
           <button onClick={() => setIsEditing(false)} className="border ml-4 px-4 py-2 text-gray-500 hover:bg-red-500 hover:text-white">Cancel</button>
         </form>
       ) : (
-        <div>
+        <div className='flex flex-col items-center mt-10'>
           {portfolioLinks.length > 0 ? (
             portfolioLinks.map((portfolioLink, index) => (
-              <div key={index} className="border p-5 mb-2 flex justify-between">
+              <div key={index} className="border-2 p-5 mb-2 flex justify-between w-[70%]">
                 <div>
                   <h3 className="text-lg font-semibold">{portfolioLink.linkType}</h3>
-                  <p>URL: <a href={portfolioLink.linkUrl} target="_blank" rel="noopener noreferrer">{portfolioLink.linkUrl}</a></p>
+                  <p>URL: <a href={portfolioLink.linkUrl} className='text-blue-500' target="_blank" rel="noopener noreferrer">{portfolioLink.linkUrl}</a></p>
                 </div>
                 <div className="space-x-5">
                   <FontAwesomeIcon icon={faPen} onClick={() => handleEdit(index)} className='hover:scale-125 duration-300 hover:text-blue-500 hover:cursor-pointer' />

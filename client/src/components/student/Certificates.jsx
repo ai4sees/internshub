@@ -125,10 +125,10 @@ const Certificates = () => {
           <button onClick={() => setIsEditing(false)} className="border ml-4 px-4 py-2 text-gray-500 hover:bg-red-500 hover:text-white">Cancel</button>
         </form>
       ) : (
-        <div>
+        <div className='flex flex-col items-center mt-10'>
           {certificates.length > 0 ? (
             certificates.map((cert, index) => (
-              <div key={index} className="border p-5 mb-2 flex justify-between">
+              <div key={index} className="border-2 p-5 mb-2 flex justify-between w-[70%]">
                 <div>
                   <h3 className="text-lg font-semibold">{cert.title}</h3>
                   <div className='text-gray-600'>
@@ -138,8 +138,8 @@ const Certificates = () => {
                   </div>
                 </div>
                 <div className="space-x-5">
-                  <FontAwesomeIcon icon={faPen} onClick={() => handleEdit(index)} className='hover:scale-125 duration-300 hover:text-blue-500 hover:cursor-pointer' />
-                  <FontAwesomeIcon icon={faTrash} onClick={() => handleDelete(index)} className='hover:scale-125 duration-300 hover:text-red-600 hover:cursor-pointer' />
+                  <FontAwesomeIcon icon={faPen} onClick={() => handleEdit(index)} className='hover:scale-125 duration-300 text-blue-500 hover:cursor-pointer' />
+                  <FontAwesomeIcon icon={faTrash} onClick={() => handleDelete(index)} className='hover:scale-125 duration-300 text-red-600 hover:cursor-pointer' />
                 </div>
               </div>
             ))

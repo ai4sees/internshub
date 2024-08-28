@@ -118,10 +118,10 @@ const Skills = () => {
           <button onClick={() => setIsEditing(false)} className="border ml-4 px-4 py-2 text-gray-500 hover:bg-red-500 hover:text-white">Cancel</button>
         </form>
       ) : (
-        <div>
+        <div className='flex space-x-2 flex-wrap mt-10 p-3'>
           {skills.length > 0 ? (
             skills.map((skill, index) => (
-              <div key={index} className="border p-5 mb-2 flex justify-between">
+              <div key={index} className="border-2 hover:border-blue-500 rounded-2xl p-5 mb-2 flex justify-between w-[270px]">
                 <div>
                   <h3 className="text-lg font-semibold">{skill.skillName}</h3>
                   <p>Proficiency: {skill.proficiency}</p>
