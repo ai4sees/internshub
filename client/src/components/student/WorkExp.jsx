@@ -115,7 +115,7 @@ const WorkExp = () => {
 
 
   return (
-    <div className="container mx-auto p-4 border border-black mt-[68px]">
+    <div className="container mx-auto p-4 border-b shadow-lg mt-[68px] w-2/3">
 
       <h2 className="text-xl font-semibold flex justify-between font-outfit">
         Work Experience / Internship
@@ -145,7 +145,7 @@ const WorkExp = () => {
         <div className='flex flex-col items-center mt-10'>
           {workExperiences.length > 0 ? (
             workExperiences.map((work, index) => (
-              <div key={index} className="border-2 p-5 mb-2 flex justify-between w-[70%]">
+              <div key={index} className="border-2 shadow-lg p-5 mb-2 flex justify-between w-[70%]">
                 <div>
                   <h3 className="text-lg font-semibold">{work.role} at : {work.company}</h3>
                   <div className='text-gray-600'>

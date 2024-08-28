@@ -94,7 +94,7 @@ const Skills = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 border border-black mt-[68px]">
+    <div className="container mx-auto p-4 border-b shadow-lg  mt-[68px] w-2/3">
       <h2 className="text-xl font-semibold flex justify-between font-outfit">
         Skills
         <button onClick={() => setIsEditing(true)} className="text-blue-500 hover:text-green-600 flex items-center space-x-1">
@@ -121,7 +121,7 @@ const Skills = () => {
         <div className='flex space-x-2 flex-wrap mt-10 p-3'>
           {skills.length > 0 ? (
             skills.map((skill, index) => (
-              <div key={index} className="border-2 hover:border-blue-500 rounded-2xl p-5 mb-2 flex justify-between w-[270px]">
+              <div key={index} className="border-2 shadow-lg hover:border-blue-500 rounded-2xl p-5 mb-2 flex justify-between w-[270px]">
                 <div>
                   <h3 className="text-lg font-semibold">{skill.skillName}</h3>
                   <p>Proficiency: {skill.proficiency}</p>
