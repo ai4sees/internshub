@@ -173,6 +173,13 @@ router.get('/details', async (req, res) => {
         firstname: student.firstname,
         lastname: student.lastname,
         email: student.email,
+        education:student.education,
+        workExperience:student.workExperience,
+        certificates:student.certificates,
+        personalProjects:student.personalProjects,
+        skills:student.skills,
+        portfolioLink:student.portfolioLink
+
       }
     });
 

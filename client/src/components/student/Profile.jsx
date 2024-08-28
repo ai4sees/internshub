@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import Education from './Education'
 import getUserIdFromToken from './auth/authUtils'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -17,9 +17,9 @@ const Profile = () => {
   const navigate = useNavigate();
   const { logout, student } = useStudent();
   const token = localStorage.getItem('token');
-
+  
   useEffect(() => {
-    
+
     if (!token) {
       navigate('/student/login');
       return;
@@ -33,17 +33,23 @@ const Profile = () => {
       return;
     }
 
-  }, [userId, idFromToken,token])
+  }, [userId, idFromToken, token]);
+
+
+ 
+
   return (
     !student ? (
       <Spinner />
     ) : (
       <div className='container mx-auto p-4 mt-[68px] '>
         <div className='border-b '>
-        <h1 className="text-3xl font-bold mb-2 text-center">Profile</h1>
-        <h1 className=' text-xl capitalize text-center text-gray-600'>{student.firstname} {student.lastname}</h1>
-        <h1 className=' text-gray-600 text-center'>{student.email}</h1>
+          <h1 className="text-3xl font-bold mb-2 text-center">Profile</h1>
+          <h1 className=' text-xl capitalize text-center text-gray-600'>{student.firstname} {student.lastname}</h1>
+          <h1 className=' text-gray-600 text-center'>{student.email}</h1>
         </div>
+
+        
 
         <section className="mb-8">
           <Education />

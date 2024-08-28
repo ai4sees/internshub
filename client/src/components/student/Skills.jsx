@@ -127,8 +127,8 @@ const Skills = () => {
                   <p>Proficiency: {skill.proficiency}</p>
                 </div>
                 <div className="space-x-5">
-                  <FontAwesomeIcon icon={faPen} onClick={() => handleEdit(index)} className='hover:scale-125 duration-300 hover:text-blue-500 hover:cursor-pointer' />
-                  <FontAwesomeIcon icon={faTrash} onClick={() => handleDelete(index)} className='hover:scale-125 duration-300 hover:text-red-600 hover:cursor-pointer' />
+                  <FontAwesomeIcon icon={faPen} onClick={() => handleEdit(index)} className='hover:scale-125 duration-300 text-blue-500 hover:cursor-pointer' />
+                  <FontAwesomeIcon icon={faTrash} onClick={() => handleDelete(index)} className='hover:scale-125 duration-300 text-red-600 hover:cursor-pointer' />
                 </div>
               </div>
             ))
