@@ -97,7 +97,7 @@ const PersonalProjects = () => {
 
   return (
     <div className="container mx-auto p-4 border border-black mt-[68px]">
-      <h2 className="text-xl font-semibold flex justify-between">
+      <h2 className="text-xl font-semibold flex justify-between font-outfit">
         Personal Projects
         <button onClick={() => setIsEditing(true)} className="text-blue-500 hover:text-green-600 flex items-center space-x-1">
           <span>Add Project</span> <FontAwesomeIcon icon={faPlus} />

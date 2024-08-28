@@ -124,7 +124,7 @@ const Education = () => {
 
   return (
     <div className="container mx-auto p-4 border border-black mt-[68px]">
-      <h2 className="text-xl font-semibold flex justify-between">
+      <h2 className="text-xl font-outfit font-semibold flex justify-between">
         Education
         <button onClick={() => setIsEditing(true)} className="text-blue-500 hover:text-green-600 flex items-center space-x-1">
           <span>Add Education</span> <FontAwesomeIcon icon={faPlus} />

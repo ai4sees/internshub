@@ -55,22 +55,22 @@ const Navbar = () => {
 
             <div className="absolute left-0 mt-5 w-48 bg-white shadow-lg border border-gray-200 rounded-md hidden group-hover:block duration-300">
               <ul className="list-none p-2 m-0">
-                <li className="py-2 px-4 hover:bg-gray-100">
+                <li className="py-2 px-4 hover:bg-purple-300">
                   <Link to='/student/locations'>Locations</Link>
                 </li>
 
-                <li className="py-2 px-4 hover:bg-gray-100">
+                <li className="py-2 px-4 hover:bg-purple-300">
                   <Link to='/student/category'>Category</Link>
                 </li>
 
-                <li className="py-2 px-4 hover:bg-gray-100">
+                <li className="py-2 px-4 hover:bg-purple-300">
                   <Link to='/student/courses'>Courses</Link>
                 </li>
               </ul>
             </div>
           </div>
 
-          <div className="relative mt-5 group">
+          {/* <div className="relative mt-5 group">
             <a href="#" className=" hover:bg-purple-300 p-5">
               Courses
               <span className="ml-1 relative">
@@ -103,7 +103,7 @@ const Navbar = () => {
                 </li>
               </ul>
             </div>
-          </div>
+          </div> */}
           <a href="/student/chats" className=" hover:bg-purple-300 p-5">
             Messages
           </a>
@@ -121,16 +121,16 @@ const Navbar = () => {
 
             <div className="absolute right-0 top-12 w-48 bg-white shadow-lg border border-gray-200 rounded-md hidden group-hover:block">
               <ul className="list-none p-2 m-0">
-                <li className="py-2 px-4 hover:bg-gray-100">
+                <li className="py-2 px-4 hover:bg-purple-300">
                   <a href="/">Home</a>
                 </li>
-                <li className="py-2 px-4 hover:bg-gray-100">
+                <li className="py-2 px-4 hover:bg-purple-300">
                   <Link to={`/student/profile/${userId}`}>Profile</Link>
                 </li>
-                <li className="py-2 px-4 hover:bg-gray-100">
+                <li className="py-2 px-4 hover:bg-purple-300">
                   <Link to={`/student/resume/${userId}`}>Resume</Link>
                 </li>
-                <li className="py-2 px-4 hover:bg-gray-100">
+                <li className="py-2 px-4 hover:bg-purple-300">
                   <button onClick={handleLogout}>Logout</button>
                 </li>
               </ul>
