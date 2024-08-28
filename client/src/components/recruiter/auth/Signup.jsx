@@ -271,7 +271,7 @@ function Signup() {
 
           <p className='mt-1 text-center'>OR</p>
           
-          <div className='w-full mt-3 space-y-3'>
+          <div className='w-[580px] mx-auto mt-3 space-y-3'>
             
           <button onClick={handleGoogleClick}
             className='w-full mx-auto py-2 border border-gray-300 h-[45px] text-black text-[18px] rounded-full font-semibold'

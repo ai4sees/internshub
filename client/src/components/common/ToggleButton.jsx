@@ -30,7 +30,7 @@ const ToggleButton = ({type,auth}) => {
       <div className="relative flex w-[232px] h-12 bg-gray-200 rounded-full p-1">
         <div
           className={`absolute top-1 left-1 w-28 h-10 rounded-full transition-transform duration-300 transform ${selected === 'student' ? 'translate-x-0' : 'translate-x-full'
-            } bg-blue-500`}
+            } bg-[rgb(129,41,217)]`}
         />
         <button
           className={`flex-1  text-center text-sm font-medium z-10 ${selected === 'student' ? 'text-white' : 'text-gray-500'
