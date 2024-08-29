@@ -22,6 +22,10 @@ const internshipSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  skills: {
+    type: [String], // Array of strings to store the skills
+    default: [],   // Default to an empty array if no skills are provided
+  },
   // Additional fields related to internships can be added here if needed
 }, {timestamps: true});
 

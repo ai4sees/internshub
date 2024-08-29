@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from '@fortawesome/free-solid-svg-icons'; "@fortawesome/free-solid-svg-icons";
+import axios from 'axios';
+import getUserIdFromToken from './auth/authUtilsRecr'
+import {toast} from 'react-toastify'
 
 const RecPosting = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +16,7 @@ const RecPosting = () => {
   });
 
   const [skill, setSkill] = useState('');
+  const userId=getUserIdFromToken();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,17 +47,49 @@ const RecPosting = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log('Form Data:', formData);
-    setFormData({
-      internshipName: '',
-      internshipType: '',
-      numberOfOpenings: '',
-      stipend: '',
-      description: '',
-      skills: [],
-    });
+    const postData={
+      internshipName: formData.internshipName,
+      internshipType: formData.internshipType,
+      numberOfOpenings: formData.numberOfOpenings,
+      stipend: formData.stipend,
+      description: formData.description,
+      skills: formData.skills,
+      
+    }
+    console.log('sending this data',postData)
+    try {
+      // Make the POST request to your backend
+      const response = await axios.post(`http://localhost:4000/recruiter/internship/post/${userId}`, postData);
+  
+      if(response.data.success){
+        toast.success('Internship posted successfully');
+        console.log('Response:', response.data);
+        setFormData({
+          internshipName: '',
+          internshipType: '',
+          numberOfOpenings: '',
+          stipend: '',
+          description: '',
+          skills: [],
+        });
+        return;
+      }
+      else{
+      toast.error('some error occured');
+      return;
+      }
+     
+  
+    
+      
+
+  
+    } catch (error) {
+      // Handle errors
+      console.error('There was an error posting the internship:', error);
+    }
   };
 
 
