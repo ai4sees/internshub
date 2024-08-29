@@ -1,6 +1,32 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
+const internshipSchema = new mongoose.Schema({
+  internshipName: {
+    type: String,
+    required: true,
+  },
+  internshipType: {
+    type: String, // Ensures that the type is either 'Remote' or 'Office'
+    required: true,
+  },
+  numberOfOpenings: {
+    type: Number,
+    required: true,
+  },
+  stipend: {
+    type: Number,
+    required:true
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  // Additional fields related to internships can be added here if needed
+}, {timestamps: true});
+
+
+
 const recruiterSchema =new mongoose.Schema({
   firstname:{
     type:String,
@@ -21,6 +47,7 @@ const recruiterSchema =new mongoose.Schema({
   password: { 
     type: String,
   },
+  internships: [internshipSchema],
   
     
 },{timestamps: true});

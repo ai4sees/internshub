@@ -132,7 +132,9 @@ router.get('/details', async (req, res) => {
       recruiter:{
         firstname:recruiter.firstname,
         lastname:recruiter.lastname,
-        email:recruiter.email
+        email:recruiter.email,
+        phone: recruiter.phone,
+        
       }
     })
     

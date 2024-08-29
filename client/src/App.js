@@ -16,10 +16,13 @@ import Main from "./components/common/Main";
 import Signup from "./components/student/auth/Signup";
 import SignupRecruit from "./components/recruiter/auth/Signup";
 import LoginRecruit from "./components/recruiter/auth/Login"
-import Spinner from "./components/common/Spinner";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import RecruiterDash from "./components/recruiter/RecruiterDash";
+// import RecruiterDash from "./components/recruiter/RecruiterDash";
+import RecNavbar from "./components/recruiter/RecNavbar";
+import RecProfile from "./components/recruiter/RecProfile";
+import RecruiterHome from "./components/recruiter/RecruiterHome";
+import RecPosting from "./components/recruiter/RecPosting";
 
 
 //import broswerRouter for different routes
@@ -32,7 +35,8 @@ function App() {
   const location = useLocation();
   return (
     <>
-      { !location.pathname.endsWith('/signup') && !location.pathname.endsWith('/login') && location.pathname !== '/' && <Navbar />}
+      { !location.pathname.endsWith('/signup') && !location.pathname.endsWith('/login') && location.pathname !== '/' && location.pathname.startsWith('/student')&&  <Navbar />}
+      { !location.pathname.endsWith('/signup') && !location.pathname.endsWith('/login') && location.pathname !== '/' && location.pathname.startsWith('/recruiter')&&  <RecNavbar />}
       <Routes>
         <Route path="/" element={<Main />} />
         {/* <Route path="/spinner" element={<Spinner />} /> */}
@@ -48,10 +52,12 @@ function App() {
         <Route path="/student/Resume" element={<Resume />} />
         <Route path="/student/profile/:userId" element={<Profile />} />
 
-
+        
         <Route path="/recruiter/signup" element={<SignupRecruit/>} />
         <Route path="/recruiter/login" element={<LoginRecruit/>} />
-        <Route path="/recruiter/dashboard/:userId" element={<RecruiterDash/>} />
+        <Route path="/recruiter/home/:userId" element={<RecruiterHome/>} />
+        <Route path="/recruiter/profile/:userId" element={<RecProfile/>} />
+        <Route path="/recruiter/posting/:userId" element={<RecPosting/>} />
       </Routes>
       <ToastContainer
       autoClose={3000}

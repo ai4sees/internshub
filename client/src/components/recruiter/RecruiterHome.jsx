@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import getUserIdFromToken from './auth/authUtilsRecr';
 
 
-const RecruiterDash = () => {
+const RecruiterHome = () => {
 
   const navigate=useNavigate();
   const { userId } = useParams();
@@ -23,4 +23,4 @@ const RecruiterDash = () => {
   )
 }
 
-export default RecruiterDash
+export default RecruiterHome
