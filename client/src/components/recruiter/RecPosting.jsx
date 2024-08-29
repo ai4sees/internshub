@@ -14,12 +14,17 @@ const RecPosting = () => {
     description: '',
     skills: [],
   });
+  const [Location,setLocation]=useState('');
+  const [mode, setMode]=useState('');
 
   const [skill, setSkill] = useState('');
   const userId=getUserIdFromToken();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if(name==='internshipType'){
+      
+    }
     setFormData({
       ...formData,
       [name]: value,
@@ -37,6 +42,10 @@ const RecPosting = () => {
     });
   };
 
+  const handleLocation=(e)=>{
+    setLocation(e.target.value);
+  }
+
   const addSkill = () => {
     if (skill.trim()) {
       setFormData({
@@ -49,6 +58,17 @@ const RecPosting = () => {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
+    if(!mode || !Location ){
+      toast.error('Please enter all fields');
+      return;
+    }
+    
+    if(mode==='Remote'){
+      setFormData({...formData,internshipType: 'Work from Home'})
+    }
+    else if(mode==='Office'){
+      setFormData({...formData,internshipType:`Work from ${Location}`})
+    }
     const postData={
       internshipName: formData.internshipName,
       internshipType: formData.internshipType,
@@ -115,9 +135,9 @@ const RecPosting = () => {
         <div className="flex flex-col">
           {/* <label className="mb-2 font-medium">Internship Type:</label> */}
           <select
-            name="internshipType"
-            value={formData.internshipType}
-            onChange={handleChange}
+            name="mode"
+            value={mode}
+            onChange={(e)=>setMode(e.target.value)}
             className="p-2 border border-gray-300 rounded-md"
 
           >
@@ -126,6 +146,17 @@ const RecPosting = () => {
             <option value="Office">Office</option>
           </select>
         </div>
+
+        {
+          mode==='Office'&&<div className='flex flex-col'>
+          <input type="text"
+           value={Location}
+          onChange={handleLocation}
+          className='p-2 border border-gray-300 rounded-md'
+          placeholder='Enter Location e.g Delhi or Mumbai' />
+          
+        </div>
+        }
 
         <div className="flex flex-col">
           {/* <label className="mb-2 font-medium"></label> */}

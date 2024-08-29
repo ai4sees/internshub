@@ -8,7 +8,6 @@ const internshipSchema = new mongoose.Schema({
   },
   internshipType: {
     type: String, // Ensures that the type is either 'Remote' or 'Office'
-    required: true,
   },
   numberOfOpenings: {
     type: Number,
