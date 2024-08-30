@@ -39,9 +39,9 @@ const Navbar = () => {
         <div className="flex space-x-8">
           {/* Links starts from here */}
           <div className="relative mt-5 group ">
-            <a href="#" className=" hover:bg-purple-300 p-5 ">
+            <Link to={`/student/internships/${userId}`} className=" hover:bg-purple-300 p-5 ">
               Internship
-              <span className="ml-1 relative">
+              {/* <span className="ml-1 relative">
                 <FontAwesomeIcon
                   icon={faCaretDown}
                   className="group-hover:invisible absolute top-1 left-0 h-4"
@@ -50,10 +50,10 @@ const Navbar = () => {
                   icon={faCaretUp}
                   className="invisible group-hover:visible absolute top-1 left-0 "
                 />
-              </span>
-            </a>
+              </span> */}
+            </Link>
 
-            <div className="absolute left-0 mt-5 w-48 bg-white shadow-lg border border-gray-200 rounded-md hidden group-hover:block duration-300">
+            {/* <div className="absolute left-0 mt-5 w-48 bg-white shadow-lg border border-gray-200 rounded-md hidden group-hover:block duration-300">
               <ul className="list-none p-2 m-0">
                 <li className="py-2 px-4 hover:bg-purple-300">
                   <Link to='/student/locations'>Locations</Link>
@@ -67,7 +67,7 @@ const Navbar = () => {
                   <Link to='/student/courses'>Courses</Link>
                 </li>
               </ul>
-            </div>
+            </div> */}
           </div>
 
           {/* <div className="relative mt-5 group">

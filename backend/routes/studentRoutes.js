@@ -1,5 +1,6 @@
 const express = require('express');
 const Student = require('../schema/studentSchema');
+const Recruiter= require('../schema/recruiterSchema.js')
 const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
 const multer = require('multer');
@@ -207,6 +208,33 @@ router.get('/resume/:id', async (req, res) => {
   } catch (error) {
     console.error('Error retrieving resume:', error);
     res.status(500).send('Error retrieving resume.');
+  }
+});
+
+router.get('/:userId/internships', async (req, res) => {
+  try {
+    const recruiters = await Recruiter.find().populate('internships');
+    const internships = [];
+
+    recruiters.forEach(recruiter => {
+      recruiter.internships.forEach(internship => {
+        internships.push({
+          ...internship._doc,
+          recruiter: {
+            _id: recruiter._id,
+            firstname: recruiter.firstname,
+            lastname: recruiter.lastname,
+            email: recruiter.email,
+            phone: recruiter.phone,
+          },
+        });
+      });
+    });
+
+    res.status(200).json(internships);
+  } catch (error) {
+    console.error('Error fetching internships:', error);
+    res.status(500).json({ message: 'Server Error' });
   }
 });
 

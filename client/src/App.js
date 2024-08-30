@@ -23,6 +23,7 @@ import RecNavbar from "./components/recruiter/RecNavbar";
 import RecProfile from "./components/recruiter/RecProfile";
 import RecruiterHome from "./components/recruiter/RecruiterHome";
 import RecPosting from "./components/recruiter/RecPosting";
+import Internships from "./components/student/Internships";
 
 
 //import broswerRouter for different routes
@@ -51,6 +52,7 @@ function App() {
         <Route path="/student/alerts" element={<Alerts />} />
         <Route path="/student/Resume" element={<Resume />} />
         <Route path="/student/profile/:userId" element={<Profile />} />
+        <Route path="/student/internships/:userId" element={<Internships />} />
 
         
         <Route path="/recruiter/signup" element={<SignupRecruit/>} />

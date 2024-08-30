@@ -15,26 +15,28 @@ const Home = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
   const idFromToken = getUserIdFromToken();
-  const {student}=useStudent();
+  const {student,logout}=useStudent();
+  const token=localStorage.getItem('token');
 
  
 
 
 
   useEffect(() => {
-    const token=localStorage.getItem('token');
+    
     
     if(!token ){
       navigate('/student/login');
       return;
     }
     if(userId!==idFromToken){
-      localStorage.removeItem('token');
+      logout();
+      navigate('/student/login');
       return;
     }
    
     console.log(userId);
-  }, [userId,idFromToken])
+  }, [userId,idFromToken,token])
 
   if(!student){
     return <Spinner/>
