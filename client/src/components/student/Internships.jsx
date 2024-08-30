@@ -3,6 +3,7 @@ import axios from 'axios';
 import { FaMapMarkerAlt, FaMoneyBillWave, FaUsers, FaClipboardList } from 'react-icons/fa';
 import Spinner from '../common/Spinner';
 import getUserIdFromToken from './auth/authUtils';
+import TimeAgo from '../common/TimeAgo';
 
 const Internships = () => {
   const [internships, setInternships] = useState([]);
@@ -51,6 +52,7 @@ const Internships = () => {
           <div key={internship._id} className="bg-white shadow-md rounded-lg p-6 w-[60%] my-3 mx-auto">
             <h2 className="text-2xl font-semibold mb-2">{internship.internshipName}</h2>
             <p className="text-gray-600 mb-4">Posted by: {internship.recruiter.firstname} {internship.recruiter.lastname}</p>
+            <p className='text-gray-600 mb-4'>Posted: {TimeAgo(internship.createdAt)}</p>
             
             <div className="flex items-center text-gray-700 mb-2">
               <FaMapMarkerAlt className="mr-2" />
