@@ -9,22 +9,20 @@ const RecPosting = () => {
   const [formData, setFormData] = useState({
     internshipName: '',
     internshipType: '',
+    internLocation:'',
     numberOfOpenings: '',
     stipend: '',
     description: '',
     skills: [],
   });
-  const [Location,setLocation]=useState('');
-  const [mode, setMode]=useState('');
+  // const [Location,setLocation]=useState('');
+  // const [mode, setMode]=useState('');
 
   const [skill, setSkill] = useState('');
   const userId=getUserIdFromToken();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if(name==='internshipType'){
-      
-    }
     setFormData({
       ...formData,
       [name]: value,
@@ -42,9 +40,9 @@ const RecPosting = () => {
     });
   };
 
-  const handleLocation=(e)=>{
-    setLocation(e.target.value);
-  }
+  // const handleLocation=(e)=>{
+  //   setLocation(e.target.value);
+  // }
 
   const addSkill = () => {
     if (skill.trim()) {
@@ -58,26 +56,30 @@ const RecPosting = () => {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    if(!mode || !Location ){
-      toast.error('Please enter all fields');
-      return;
-    }
-    
-    if(mode==='Remote'){
-      setFormData({...formData,internshipType: 'Work from Home'})
-    }
-    else if(mode==='Office'){
-      setFormData({...formData,internshipType:`Work from ${Location}`})
-    }
     const postData={
       internshipName: formData.internshipName,
       internshipType: formData.internshipType,
+      internLocation: formData.internLocation, 
       numberOfOpenings: formData.numberOfOpenings,
       stipend: formData.stipend,
       description: formData.description,
       skills: formData.skills,
       
     }
+    console.log(postData);
+    if(!postData.internshipName ||!postData.internshipType || !postData.stipend || !postData.numberOfOpenings || !postData.description || postData.skills.length==0 ){
+      toast.error('Please enter all fields');
+      return;
+    }
+
+    if(postData.internshipType==='Remote'){
+      // setFormData({...formData,internshipType: 'Work from Home'})
+      postData.internshipType='Work from Home';
+    }
+    else if(postData.internshipType==='Office'){
+      postData.internshipType='Work from Office';
+    }
+    
     console.log('sending this data',postData)
     try {
       // Make the POST request to your backend
@@ -115,7 +117,7 @@ const RecPosting = () => {
 
 
   return (
-    <div className="border border-gray-300 mt-24 w-[45%]  mx-auto bg-gray-100 p-6 rounded-lg shadow-lg ">
+    <div className="border border-gray-300 mt-24 w-[45%]  mx-auto bg-gray-100 p-6 rounded-lg shadow-lg mb-7 ">
       <h2 className="text-2xl font-bold mb-6 text-center">Post an Internship</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
 
@@ -126,7 +128,6 @@ const RecPosting = () => {
             name="internshipName"
             value={formData.internshipName}
             onChange={handleChange}
-            required
             className="p-2 border border-gray-300 rounded-md"
             placeholder='Internship Title'
           />
@@ -135,9 +136,9 @@ const RecPosting = () => {
         <div className="flex flex-col">
           {/* <label className="mb-2 font-medium">Internship Type:</label> */}
           <select
-            name="mode"
-            value={mode}
-            onChange={(e)=>setMode(e.target.value)}
+            name="internshipType"
+            value={formData.internshipType}
+            onChange={handleChange}
             className="p-2 border border-gray-300 rounded-md"
 
           >
@@ -148,10 +149,11 @@ const RecPosting = () => {
         </div>
 
         {
-          mode==='Office'&&<div className='flex flex-col'>
+          formData.internshipType==='Office'&&<div className='flex flex-col'>
           <input type="text"
-           value={Location}
-          onChange={handleLocation}
+          name="internLocation"
+           value={formData.internLocation}
+          onChange={handleChange}
           className='p-2 border border-gray-300 rounded-md'
           placeholder='Enter Location e.g Delhi or Mumbai' />
           
@@ -165,7 +167,7 @@ const RecPosting = () => {
             name="numberOfOpenings"
             value={formData.numberOfOpenings}
             onChange={handleChange}
-            required
+            
             className="p-2 border border-gray-300 rounded-md"
             placeholder='Number of Openings'
           />
@@ -229,7 +231,7 @@ const RecPosting = () => {
             name="description"
             value={formData.description}
             onChange={handleChange}
-            required
+            
             className="p-2 border border-gray-300 rounded-md"
             rows='10'
           />

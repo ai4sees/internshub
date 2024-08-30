@@ -9,6 +9,9 @@ const internshipSchema = new mongoose.Schema({
   internshipType: {
     type: String, // Ensures that the type is either 'Remote' or 'Office'
   },
+  internLocation:{
+    type:String
+  },
   numberOfOpenings: {
     type: Number,
     required: true,
