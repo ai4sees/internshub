@@ -3,13 +3,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from '@fortawesome/free-solid-svg-icons'; "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
 import getUserIdFromToken from './auth/authUtilsRecr'
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const RecPosting = () => {
   const [formData, setFormData] = useState({
     internshipName: '',
     internshipType: '',
-    internLocation:'',
+    internLocation: '',
     numberOfOpenings: '',
     stipend: '',
     description: '',
@@ -19,7 +21,7 @@ const RecPosting = () => {
   // const [mode, setMode]=useState('');
 
   const [skill, setSkill] = useState('');
-  const userId=getUserIdFromToken();
+  const userId = getUserIdFromToken();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,11 +31,18 @@ const RecPosting = () => {
     });
   };
 
+  const handleDescriptionChange = (value) => {
+    setFormData({
+      ...formData,
+      description: value, // This will capture the HTML content from React Quill
+    });
+  };
+
   const handleSkillChange = (e) => {
     setSkill(e.target.value);
   };
 
- const removeSkill = (indexToRemove) => {
+  const removeSkill = (indexToRemove) => {
     setFormData({
       ...formData,
       skills: formData.skills.filter((_, index) => index !== indexToRemove),
@@ -54,38 +63,38 @@ const RecPosting = () => {
     }
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const postData={
+    const postData = {
       internshipName: formData.internshipName,
       internshipType: formData.internshipType,
-      internLocation: formData.internLocation, 
+      internLocation: formData.internLocation,
       numberOfOpenings: formData.numberOfOpenings,
       stipend: formData.stipend,
       description: formData.description,
       skills: formData.skills,
-      
+
     }
     console.log(postData);
-    if(!postData.internshipName ||!postData.internshipType || !postData.stipend || !postData.numberOfOpenings || !postData.description || postData.skills.length==0 ){
+    if (!postData.internshipName || !postData.internshipType || !postData.stipend || !postData.numberOfOpenings || !postData.description || postData.skills.length == 0) {
       toast.error('Please enter all fields');
       return;
     }
 
-    if(postData.internshipType==='Remote'){
+    if (postData.internshipType === 'Remote') {
       // setFormData({...formData,internshipType: 'Work from Home'})
-      postData.internshipType='Work from Home';
+      postData.internshipType = 'Work from Home';
     }
-    else if(postData.internshipType==='Office'){
-      postData.internshipType='Work from Office';
+    else if (postData.internshipType === 'Office') {
+      postData.internshipType = 'Work from Office';
     }
-    
-    console.log('sending this data',postData)
+
+    console.log('sending this data', postData)
     try {
       // Make the POST request to your backend
       const response = await axios.post(`http://localhost:4000/recruiter/internship/post/${userId}`, postData);
-  
-      if(response.data.success){
+
+      if (response.data.success) {
         toast.success('Internship posted successfully');
         console.log('Response:', response.data);
         setFormData({
@@ -98,16 +107,16 @@ const RecPosting = () => {
         });
         return;
       }
-      else{
-      toast.error('some error occured');
-      return;
+      else {
+        toast.error('some error occured');
+        return;
       }
-     
-  
-    
-      
 
-  
+
+
+
+
+
     } catch (error) {
       // Handle errors
       console.error('There was an error posting the internship:', error);
@@ -149,15 +158,15 @@ const RecPosting = () => {
         </div>
 
         {
-          formData.internshipType==='Office'&&<div className='flex flex-col'>
-          <input type="text"
-          name="internLocation"
-           value={formData.internLocation}
-          onChange={handleChange}
-          className='p-2 border border-gray-300 rounded-md'
-          placeholder='Enter Location e.g Delhi or Mumbai' />
-          
-        </div>
+          formData.internshipType === 'Office' && <div className='flex flex-col'>
+            <input type="text"
+              name="internLocation"
+              value={formData.internLocation}
+              onChange={handleChange}
+              className='p-2 border border-gray-300 rounded-md'
+              placeholder='Enter Location e.g Delhi or Mumbai' />
+
+          </div>
         }
 
         <div className="flex flex-col">
@@ -167,7 +176,7 @@ const RecPosting = () => {
             name="numberOfOpenings"
             value={formData.numberOfOpenings}
             onChange={handleChange}
-            
+
             className="p-2 border border-gray-300 rounded-md"
             placeholder='Number of Openings'
           />
@@ -212,7 +221,7 @@ const RecPosting = () => {
                 {skill}
                 <span
                   className="absolute w-7 h-7 items-center justify-center top-0 right-0 -mt-1 -mr-1 bg-white rounded-full p-1 hidden group-hover:flex"
-                  onClick={()=>removeSkill(index)}
+                  onClick={() => removeSkill(index)}
                 >
                   <FontAwesomeIcon
                     icon={faClose}
@@ -225,16 +234,16 @@ const RecPosting = () => {
           </div>
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col   h-[400px]">
           <label className="mb-2 font-medium">Requirements</label>
-          <textarea
-            name="description"
+          <ReactQuill
             value={formData.description}
-            onChange={handleChange}
+            onChange={handleDescriptionChange}
+            className="p-2   rounded-md h-[200px]"
+            theme="snow"
             
-            className="p-2 border border-gray-300 rounded-md"
-            rows='10'
           />
+
         </div>
 
 
