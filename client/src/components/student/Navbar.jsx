@@ -110,6 +110,10 @@ const Navbar = () => {
           <a href="/student/alerts" className=" hover:bg-purple-300 p-5">
             Alerts
           </a>
+          <Link to={`/student/myApplications/${userId}`} className=" hover:bg-purple-300 p-5">
+            My Applications
+          </Link>
+
 
           <div className="group px-0 mx-0">
             <div className="p-0 absolute right-7 top-3 border border-black rounded-full h-10 w-10 flex items-center justify-center hover:bg-purple-300  ">

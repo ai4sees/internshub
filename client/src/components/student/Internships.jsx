@@ -68,7 +68,7 @@ const Internships = () => {
 
             <div className="flex items-center text-gray-700 mb-2">
               <FaMapMarkerAlt className="mr-2" />
-              <span>{internship.internLocation ? `${internship.internLocation}` : 'Work from Home'}</span>
+              <span>{internship.internLocation ? `${internship.internLocation}` : 'Remote'}</span>
             </div>
 
             <div className="flex items-center text-gray-700 mb-2">
@@ -81,10 +81,12 @@ const Internships = () => {
               <span>{internship.numberOfOpenings} Openings</span>
             </div> */}
 
-            <div className="flex items-center text-gray-700 mb-4">
-              <FaClipboardList className="mr-2" />
-              <span>{internship.internshipType}</span>
-            </div>
+            {internship.internLocation &&
+              <div className="flex items-center text-gray-700 mb-4">
+                <FaClipboardList className="mr-2" />
+                <span>{internship.internshipType}</span>
+              </div>
+            }
 
             <h3 className="text-lg font-medium mb-2">Skills Required:</h3>
             <div className="flex flex-wrap mb-4">
@@ -119,10 +121,11 @@ const Internships = () => {
                 </button>
                 <p className="text-gray-600 mb-4">Posted by: {selectedInternship.recruiter.firstname} {selectedInternship.recruiter.lastname}</p>
                 <p className='text-gray-600 mb-4'>Posted: {TimeAgo(selectedInternship.createdAt)}</p>
+                <button className='absolute bg-blue-300 hover:bg-blue-400 py-2 px-5 rounded-xl right-5 top-[100px]'>Apply</button>
 
                 <div className="flex items-center text-gray-700 mb-2">
                   <FaMapMarkerAlt className="mr-2" />
-                  <span>{selectedInternship.internLocation ? `${selectedInternship.internLocation}` : 'Work from Home'}</span>
+                  <span>{selectedInternship.internLocation ? `${selectedInternship.internLocation}` : 'Remote'}</span>
                 </div>
 
                 <div className="flex items-center text-gray-700 mb-2">
@@ -135,10 +138,12 @@ const Internships = () => {
                   <span>{selectedInternship.numberOfOpenings} Openings</span>
                 </div>
 
-                <div className="flex items-center text-gray-700 mb-4">
-                  <FaClipboardList className="mr-2" />
-                  <span>{selectedInternship.internshipType}</span>
-                </div>
+                {selectedInternship.internLocation &&
+                  <div className="flex items-center text-gray-700 mb-4">
+                    <FaClipboardList className="mr-2" />
+                    <span>{selectedInternship.internshipType}</span>
+                  </div>
+                }
 
                 <h3 className="text-lg font-medium mb-2">Skills Required:</h3>
                 <div className="flex flex-wrap mb-4">
