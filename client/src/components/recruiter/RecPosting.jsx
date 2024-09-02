@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClose } from '@fortawesome/free-solid-svg-icons'; "@fortawesome/free-solid-svg-icons";
+import { faClose } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import getUserIdFromToken from './auth/authUtilsRecr'
 import { toast } from 'react-toastify'
