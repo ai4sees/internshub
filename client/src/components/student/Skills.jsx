@@ -18,7 +18,7 @@ const Skills = () => {
   useEffect(() => {
     const fetchSkills = async () => {
       try {
-        const response = await axios.get(`https://clone-internshub-client.vercel.app/student/profile/${userId}/skills`);
+        const response = await axios.get(`https://clone-internshub-api.vercel.app/student/profile/${userId}/skills`);
         if (!response.data) {
           toast.error('Sorry, no skills found');
           return;
@@ -50,7 +50,7 @@ const Skills = () => {
     try {
       if (editIndex !== null) {
         // Update existing skill entry
-        const response = await axios.put(`https://clone-internshub-client.vercel.app/student/profile/${userId}/skills/${editIndex}`, skillData);
+        const response = await axios.put(`https://clone-internshub-api.vercel.app/student/profile/${userId}/skills/${editIndex}`, skillData);
         const updatedSkills = [...skills];
         updatedSkills[editIndex] = response.data;
         setSkills(updatedSkills);
@@ -58,7 +58,7 @@ const Skills = () => {
         toast.success('Skill updated');
       } else {
         // Add new skill entry
-        const response = await axios.post(`https://clone-internshub-client.vercel.app/student/profile/${userId}/skills`, skillData);
+        const response = await axios.post(`https://clone-internshub-api.vercel.app/student/profile/${userId}/skills`, skillData);
         setSkills([...skills, response.data.skills]);
         toast.success('Skill added');
       }
@@ -76,7 +76,7 @@ const Skills = () => {
 
   const handleDelete = async (index) => {
     try {
-      await axios.delete(`https://clone-internshub-client.vercel.app/student/profile/${userId}/skills/${index}`);
+      await axios.delete(`https://clone-internshub-api.vercel.app/student/profile/${userId}/skills/${index}`);
       setSkills(skills.filter((_, i) => i !== index));
       toast.success('Skill deleted');
     } catch (error) {
