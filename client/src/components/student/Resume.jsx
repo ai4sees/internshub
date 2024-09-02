@@ -7,6 +7,7 @@ import getUserIdFromToken from "./auth/authUtils.js"
 import { useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import api from '../common/server_url.js';
 
 
 const Resume = () => {
@@ -35,7 +36,7 @@ const Resume = () => {
     // Fetch the resume from the backend
     const fetchResume = async () => {
       try {
-        const response = await axios.get(`https://clone-internshub-api.vercel.app/student/resume/${userId}`, {
+        const response = await axios.get(`${api}/student/resume/${userId}`, {
           responseType: 'blob', // Set response type to blob for binary data
         });
         
@@ -97,7 +98,7 @@ const Resume = () => {
     formData.append('resume', file);
 
     try {
-      await axios.post(`https://clone-internshub-api.vercel.app/student/upload-resume/${userId}`, formData, {
+      await axios.post(`${api}/student/upload-resume/${userId}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
     

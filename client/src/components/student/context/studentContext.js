@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import api from '../../common/server_url'
 
 // Create the context
 const StudentContext = createContext();
@@ -17,7 +18,7 @@ export const StudentProvider = ({ children }) => {
       console.log('Inside useEffect of studentContext');
       if (token) {
         try {
-          const response = await axios.get('https://clone-internshub-api.vercel.app/student/details', {
+          const response = await axios.get(`${api}/student/details`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },

@@ -6,6 +6,7 @@ import getUserIdFromToken from './auth/authUtilsRecr'
 import { toast } from 'react-toastify'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import api from '../common/server_url'
 
 const RecPosting = () => {
   const [formData, setFormData] = useState({
@@ -92,7 +93,7 @@ const RecPosting = () => {
     console.log('sending this data', postData)
     try {
       // Make the POST request to your backend
-      const response = await axios.post(`https://clone-internshub-api.vercel.app/recruiter/internship/post/${userId}`, postData);
+      const response = await axios.post(`${api}/recruiter/internship/post/${userId}`, postData);
 
       if (response.data.success) {
         toast.success('Internship posted successfully');

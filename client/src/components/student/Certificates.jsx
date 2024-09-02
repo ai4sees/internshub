@@ -4,6 +4,7 @@ import { faPlus, faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import getUserIdFromToken from './auth/authUtils';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import api from '../common/server_url';
 
 const Certificates = () => {
   const [clicked, setClicked] = useState(false);
@@ -17,12 +18,13 @@ const Certificates = () => {
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 100 }, (_, i) => currentYear - i);
 
+
   const userId = getUserIdFromToken();
 
   useEffect(() => {
     const fetchCertificates = async () => {
       try {
-        const response = await axios.get(`https://clone-internshub-api.vercel.app/student/profile/${userId}/certificates`);
+        const response = await axios.get(`${api}/student/profile/${userId}/certificates`);
         if (!response.data) {
           toast.error('Sorry, no details found');
           return;
@@ -54,7 +56,7 @@ const Certificates = () => {
     try {
       if (editIndex !== null) {
         // Update existing certificate entry
-        const response = await axios.put(`https://clone-internshub-api.vercel.app/student/profile/${userId}/certificates/${editIndex}`, certificateData);
+        const response = await axios.put(`${api}/student/profile/${userId}/certificates/${editIndex}`, certificateData);
         const updatedCertificates = [...certificates];
         updatedCertificates[editIndex] = response.data;
         setCertificates(updatedCertificates);
@@ -62,7 +64,7 @@ const Certificates = () => {
         toast.success('Details updated');
       } else {
         // Add new certificate entry
-        const response = await axios.post(`https://clone-internshub-api.vercel.app/student/profile/${userId}/certificates`, certificateData);
+        const response = await axios.post(`${api}/student/profile/${userId}/certificates`, certificateData);
         setCertificates([...certificates, response.data]);
         toast.success('Details added');
       }
@@ -82,7 +84,7 @@ const Certificates = () => {
 
   const handleDelete = async (index) => {
     try {
-      await axios.delete(`https://clone-internshub-api.vercel.app/student/profile/${userId}/certificates/${index}`);
+      await axios.delete(`${api}/student/profile/${userId}/certificates/${index}`);
       setCertificates(certificates.filter((_, i) => i !== index));
       toast.success('Certificate details deleted');
     } catch (error) {

@@ -5,6 +5,7 @@ import getUserIdFromToken from './auth/authUtils';
 import { useStudent } from './context/studentContext';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import api from '../common/server_url';
 
 
 const Education = () => {
@@ -27,7 +28,7 @@ const Education = () => {
   useEffect(() => {
     const fetchEducation = async () => {
       try {
-        const response = await axios.get(`https://clone-internshub-api.vercel.app/student/profile/${userId}/education`);
+        const response = await axios.get(`${api}/student/profile/${userId}/education`);
         if (!response.data) {
           toast.error('sorry no details found');
           return;
@@ -65,7 +66,7 @@ const Education = () => {
     try {
       if (editIndex !== null) {
         // Update existing education entry
-        const response = await axios.put(`https://clone-internshub-api.vercel.app/student/profile/${userId}/education/${editIndex}`, educationData);
+        const response = await axios.put(`${api}/student/profile/${userId}/education/${editIndex}`, educationData);
         const updatedDetails = [...educationDetails];
         updatedDetails[editIndex] = response.data;
         setEducationDetails(updatedDetails);
@@ -73,7 +74,7 @@ const Education = () => {
         toast.success('Details updated');
       } else {
         // Add new education entry
-        const response = await axios.post(`https://clone-internshub-api.vercel.app/student/profile/${userId}/education`, educationData);
+        const response = await axios.post(`${api}/student/profile/${userId}/education`, educationData);
         setEducationDetails([...educationDetails, response.data]);
         toast.success('Details added');
       }
@@ -96,7 +97,7 @@ const Education = () => {
   const handleDelete = async (index) => {
     try {
       console.log(educationDetails[index]);
-      await axios.delete(`https://clone-internshub-api.vercel.app/student/profile/${userId}/education/${index}`);
+      await axios.delete(`${api}/student/profile/${userId}/education/${index}`);
       setEducationDetails(educationDetails.filter((_, i) => i !== index));
 
       toast.success('Education details deleted');

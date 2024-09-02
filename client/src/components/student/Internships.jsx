@@ -4,6 +4,7 @@ import { FaMapMarkerAlt, FaMoneyBillWave, FaUsers, FaClipboardList, FaTimes, FaF
 import Spinner from '../common/Spinner';
 import getUserIdFromToken from './auth/authUtils';
 import TimeAgo from '../common/TimeAgo';
+import api from '../common/server_url';
 
 const Internships = () => {
   const [internships, setInternships] = useState([]);
@@ -15,7 +16,7 @@ const Internships = () => {
   useEffect(() => {
     const fetchInternships = async () => {
       try {
-        const response = await axios.get(`https://clone-internshub-api.vercel.app/student/${userId}/internships`);
+        const response = await axios.get(`${api}/student/${userId}/internships`);
         const sortedInternships = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         setInternships(sortedInternships);
 

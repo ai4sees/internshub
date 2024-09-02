@@ -4,6 +4,7 @@ import { faPlus, faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import getUserIdFromToken from './auth/authUtils';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import api from '../common/server_url';
 
 const Skills = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -18,7 +19,7 @@ const Skills = () => {
   useEffect(() => {
     const fetchSkills = async () => {
       try {
-        const response = await axios.get(`https://clone-internshub-api.vercel.app/student/profile/${userId}/skills`);
+        const response = await axios.get(`${api}/student/profile/${userId}/skills`);
         if (!response.data) {
           toast.error('Sorry, no skills found');
           return;
@@ -50,7 +51,7 @@ const Skills = () => {
     try {
       if (editIndex !== null) {
         // Update existing skill entry
-        const response = await axios.put(`https://clone-internshub-api.vercel.app/student/profile/${userId}/skills/${editIndex}`, skillData);
+        const response = await axios.put(`${api}/student/profile/${userId}/skills/${editIndex}`, skillData);
         const updatedSkills = [...skills];
         updatedSkills[editIndex] = response.data;
         setSkills(updatedSkills);
@@ -58,7 +59,7 @@ const Skills = () => {
         toast.success('Skill updated');
       } else {
         // Add new skill entry
-        const response = await axios.post(`https://clone-internshub-api.vercel.app/student/profile/${userId}/skills`, skillData);
+        const response = await axios.post(`${api}/student/profile/${userId}/skills`, skillData);
         setSkills([...skills, response.data.skills]);
         toast.success('Skill added');
       }
@@ -76,7 +77,7 @@ const Skills = () => {
 
   const handleDelete = async (index) => {
     try {
-      await axios.delete(`https://clone-internshub-api.vercel.app/student/profile/${userId}/skills/${index}`);
+      await axios.delete(`${api}/student/profile/${userId}/skills/${index}`);
       setSkills(skills.filter((_, i) => i !== index));
       toast.success('Skill deleted');
     } catch (error) {

@@ -4,6 +4,7 @@ import { faPlus, faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import getUserIdFromToken from './auth/authUtils';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import api from '../common/server_url';
 
 const PersonalProjects = () => {
   const [clicked, setClicked] = useState(false);
@@ -19,7 +20,7 @@ const PersonalProjects = () => {
   useEffect(() => {
     const fetchPersonalProjects = async () => {
       try {
-        const response = await axios.get(`https://clone-internshub-api.vercel.app/student/profile/${userId}/personal-projects`);
+        const response = await axios.get(`${api}/student/profile/${userId}/personal-projects`);
         if (!response.data) {
           toast.error('Sorry, no projects found');
           return;
@@ -50,7 +51,7 @@ const PersonalProjects = () => {
     try {
       if (editIndex !== null) {
         // Update existing project entry
-        const response = await axios.put(`https://clone-internshub-api.vercel.app/student/profile/${userId}/personal-projects/${editIndex}`, projectData);
+        const response = await axios.put(`${api}/student/profile/${userId}/personal-projects/${editIndex}`, projectData);
         const updatedProjects = [...personalProjects];
         updatedProjects[editIndex] = response.data;
         setPersonalProjects(updatedProjects);
@@ -58,7 +59,7 @@ const PersonalProjects = () => {
         toast.success('Project updated');
       } else {
         // Add new project entry
-        const response = await axios.post(`https://clone-internshub-api.vercel.app/student/profile/${userId}/personal-projects`, projectData);
+        const response = await axios.post(`${api}/student/profile/${userId}/personal-projects`, projectData);
         setPersonalProjects([...personalProjects, response.data.personalProjects]);
         toast.success('Project added');
       }
@@ -77,7 +78,7 @@ const PersonalProjects = () => {
 
   const handleDelete = async (index) => {
     try {
-      await axios.delete(`https://clone-internshub-api.vercel.app/student/profile/${userId}/personal-projects/${index}`);
+      await axios.delete(`${api}/student/profile/${userId}/personal-projects/${index}`);
       setPersonalProjects(personalProjects.filter((_, i) => i !== index));
       toast.success('Project deleted');
     } catch (error) {

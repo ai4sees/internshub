@@ -16,6 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useStudent } from '../context/studentContext';
 import ToggleButton from '../../common/ToggleButton';
 import ToggleButtonSecond from '../../common/ToogleButtonSecond';
+import api from '../../common/server_url'
 
 
 function Login() {
@@ -45,7 +46,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://clone-internshub-api.vercel.app/student/login', {
+      const response = await axios.post(`${api}/student/login`, {
         email,
         password,
       });
@@ -77,7 +78,7 @@ function Login() {
       const firstname = user.displayName.split(' ')[0];
       const lastname = user.displayName.split(' ')[1] || '';
 
-      const response = await axios.post('https://clone-internshub-api.vercel.app/student/login/googleauth', {
+      const response = await axios.post(`${api}/student/login/googleauth`, {
         email,
         firstname,
         lastname

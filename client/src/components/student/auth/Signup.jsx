@@ -14,6 +14,7 @@ import { useStudent } from '../context/studentContext';
 import login_bg from '../../../images/login_bg.jpeg'
 import ToggleButton from '../../common/ToggleButton';
 import ToggleButtonSecond from '../../common/ToogleButtonSecond';
+import api from '../../common/server_url'
 function Signup() {
 
   const [showPassword, setShowPassword] = useState(false);
@@ -60,7 +61,7 @@ function Signup() {
     setEmailError('');
     try {
       // Send a POST request to the backend
-      const response = await axios.post('https://clone-internshub-api.vercel.app/student/signup', {
+      const response = await axios.post(`${api}/student/signup`, {
         firstname,
         lastname,
         email,
@@ -92,7 +93,7 @@ function Signup() {
       const firstname = user.displayName.split(' ')[0];
       const lastname = user.displayName.split(' ')[1] || '';
 
-      const response = await axios.post('https://clone-internshub-api.vercel.app/student/signup/googleauth', {
+      const response = await axios.post(`${api}/student/signup/googleauth`, {
         email,
         firstname,
         lastname,
