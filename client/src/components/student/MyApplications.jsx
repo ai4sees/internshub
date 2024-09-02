@@ -3,6 +3,7 @@ import axios from 'axios';
 import getUserIdFromToken from './auth/authUtils';
 import Spinner from '../common/Spinner';
 import api from '../common/server_url';
+import TimeAgo from '../common/TimeAgo';
 
 const MyApplications = () => {
   const [appliedInternships, setAppliedInternships] = useState([]);
@@ -14,7 +15,7 @@ const MyApplications = () => {
     console.log('insideeeeeeeeeeeee')
     const fetchAppliedInternships = async () => {
       try {
-        const response = await axios.get(`${api}/student/${userId}/applied-internships`);
+        const response = await axios.get(`${api}/student/internship/${userId}/applied-internships`);
         console.log(response.data);
         setAppliedInternships(response.data);
         setLoading(false);

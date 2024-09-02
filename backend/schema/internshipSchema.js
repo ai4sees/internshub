@@ -29,6 +29,11 @@ const internshipSchema = new mongoose.Schema(
       type: [String],
       default: [],
     },
+    recruiter: {  // Add this field to link to the recruiter who posted the internship
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Recruiter',
+      required: true,
+    },
     
   },{ timestamps: true });
 

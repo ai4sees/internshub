@@ -1,14 +1,59 @@
 const express = require('express');
-// const Student = require('../schema/studentSchema');
-const Recruiter =require('../schema/recruiterSchema');
-const Internship=require('../schema/internshipSchema');
+const Student=require('../schema/studentSchema');
 const dotenv = require('dotenv');
-const router = require('./recruiterInternRoutes');
 
 
-router.get('/:userId',async(req,res)=>{
-  const {userId}=req.params;
+dotenv.config();
+const router= express.Router();
+
+router.post('/:studentId/apply/:internshipId', async (req, res) => {
+  const { studentId, internshipId } = req.params;
+
+  try {
+    const student = await Student.findById(studentId);
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+
+    if (student.appliedInternships.includes(internshipId)) {
+      return res.status(400).json({ message: 'Already applied for this internship' });
+    }
+
+    student.appliedInternships.push(internshipId);
+    await student.save();
+
+    res.status(200).json({ message: 'Successfully applied to internship' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error });
+  }
+});
+
+router.get('/:studentId/applied-internships',async(req,res)=>{
+  const {studentId}=req.params;
   
-})
+  try {
+    const student = await Student.findById(studentId)
+      .populate({
+        path: 'appliedInternships', // Populate the internships the student applied to
+        populate: {
+          path: 'recruiter', // Further populate the recruiter details within each internship
+          select: 'firstname lastname email', // Select specific fields of the recruiter
+        },
+      });
+      if (!student) {
+        return res.status(404).json({ message: 'Student not found' });
+      }
 
+      const internships = student.appliedInternships.map(internship => ({
+        ...internship._doc, // Include all the internship details
+        recruiter: internship.recruiter, // Include the recruiter details
+      }));
+  
+    res.status(200).json(internships);
+   
+  } catch (error) {
+    console.error('Error fetching applied internships:', error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+})
 module.exports = router;

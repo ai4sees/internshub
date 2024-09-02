@@ -26,14 +26,15 @@ router.post('/post/:userId',async(req,res)=>{
     stipend,
     description,
     skills,
+    recruiter: userId,
+  
   });
   await newInternship.save();
+  
   console.log('Recruiter object:', recruiter);
   recruiter.internships.push(newInternship._id);
   await recruiter.save();
 
-  // recruiter.internships.push(newInternship);
-  // await recruiter.save();
 
   res.status(201).json({ success: true, internship: newInternship });
 

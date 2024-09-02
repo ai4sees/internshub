@@ -23,6 +23,7 @@ const RecPosting = () => {
 
   const [skill, setSkill] = useState('');
   const userId = getUserIdFromToken();
+  const [formKey, setFormKey] = useState(0);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -101,11 +102,15 @@ const RecPosting = () => {
         setFormData({
           internshipName: '',
           internshipType: '',
+          internLocation: '', // Reset internLocation
           numberOfOpenings: '',
           stipend: '',
           description: '',
           skills: [],
         });
+        setSkill('');
+        setFormKey(formKey + 1);
+        console.log(formData);
         return;
       }
       else {
@@ -217,7 +222,7 @@ const RecPosting = () => {
             {formData.skills.map((skill, index) => (
               <span
                 key={index}
-                className="inline-block group bg-gray-200 text-gray-700 px-7 py-2 rounded-full text-sm mx-2 mb-2 relative"
+                className="inline-block group bg-blue-300 px-7 py-2 rounded-full text-sm mx-2 mb-2 relative"
               >
                 {skill}
                 <span

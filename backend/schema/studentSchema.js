@@ -61,6 +61,11 @@ const studentSchema =new mongoose.Schema({
     linkUrl:String
   }],
   
+  appliedInternships: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Internship',
+    default: []
+  }],
   
     
 },{timestamps: true});

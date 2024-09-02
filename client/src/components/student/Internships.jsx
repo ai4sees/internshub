@@ -5,6 +5,7 @@ import Spinner from '../common/Spinner';
 import getUserIdFromToken from './auth/authUtils';
 import TimeAgo from '../common/TimeAgo';
 import api from '../common/server_url';
+import { toast } from 'react-toastify';
 
 const Internships = () => {
   const [internships, setInternships] = useState([]);
@@ -37,6 +38,19 @@ const Internships = () => {
 
   const closeModal = () => {
     setSelectedInternship(null);
+  };
+
+  const applyToInternship = async (internshipId) => {
+    try {
+      const response = await axios.post(`${api}/student/internship/${userId}/apply/${internshipId}`);
+      if (response.status === 200) {
+        toast.success('Successfully applied to the internship');
+      } else {
+        toast.error('Failed to apply');
+      }
+    } catch (error) {
+      toast.error('Error applying to internship');
+    }
   };
 
   if (loading) {
@@ -122,7 +136,7 @@ const Internships = () => {
                 </button>
                 <p className="text-gray-600 mb-4">Posted by: {selectedInternship.recruiter.firstname} {selectedInternship.recruiter.lastname}</p>
                 <p className='text-gray-600 mb-4'>Posted: {TimeAgo(selectedInternship.createdAt)}</p>
-                <button className='absolute bg-blue-300 hover:bg-blue-400 py-2 px-5 rounded-xl right-5 top-[100px]'>Apply</button>
+                <button onClick={() => applyToInternship(selectedInternship._id)} className='absolute bg-blue-300 hover:bg-blue-400 py-2 px-5 rounded-xl right-5 top-[100px]'>Apply</button>
 
                 <div className="flex items-center text-gray-700 mb-2">
                   <FaMapMarkerAlt className="mr-2" />
