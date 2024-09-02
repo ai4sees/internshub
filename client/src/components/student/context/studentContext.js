@@ -17,7 +17,7 @@ export const StudentProvider = ({ children }) => {
       console.log('Inside useEffect of studentContext');
       if (token) {
         try {
-          const response = await axios.get('http://localhost:4000/student/details', {
+          const response = await axios.get('https://clone-internshub-api.vercel.app/student/details', {
             headers: {
               Authorization: `Bearer ${token}`,
             },

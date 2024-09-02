@@ -18,7 +18,7 @@ const Portfolio = () => {
   useEffect(() => {
     const fetchPortfolioLinks = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/student/profile/${userId}/portfolioLinks`);
+        const response = await axios.get(`https://clone-internshub-api.vercel.app/student/profile/${userId}/portfolioLinks`);
         if (!response.data) {
           toast.error('Sorry, no portfolio links found');
           return;
@@ -49,7 +49,7 @@ const Portfolio = () => {
     try {
       if (editIndex !== null) {
         // Update existing portfolio link
-        const response = await axios.put(`http://localhost:4000/student/profile/${userId}/portfolioLinks/${editIndex}`, portfolioData);
+        const response = await axios.put(`https://clone-internshub-api.vercel.app/student/profile/${userId}/portfolioLinks/${editIndex}`, portfolioData);
         const updatedPortfolioLinks = [...portfolioLinks];
         updatedPortfolioLinks[editIndex] = response.data;
         setPortfolioLinks(updatedPortfolioLinks);
@@ -57,7 +57,7 @@ const Portfolio = () => {
         toast.success('Portfolio link updated');
       } else {
         // Add new portfolio link
-        const response = await axios.post(`http://localhost:4000/student/profile/${userId}/portfolioLinks`, portfolioData);
+        const response = await axios.post(`https://clone-internshub-api.vercel.app/student/profile/${userId}/portfolioLinks`, portfolioData);
         setPortfolioLinks([...portfolioLinks, response.data.portfolioLink]);
         toast.success('Portfolio link added');
       }
@@ -75,7 +75,7 @@ const Portfolio = () => {
 
   const handleDelete = async (index) => {
     try {
-      await axios.delete(`http://localhost:4000/student/profile/${userId}/portfolioLinks/${index}`);
+      await axios.delete(`https://clone-internshub-api.vercel.app/student/profile/${userId}/portfolioLinks/${index}`);
       setPortfolioLinks(portfolioLinks.filter((_, i) => i !== index));
       toast.success('Portfolio link deleted');
     } catch (error) {

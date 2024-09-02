@@ -22,7 +22,7 @@ const Certificates = () => {
   useEffect(() => {
     const fetchCertificates = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/student/profile/${userId}/certificates`);
+        const response = await axios.get(`https://clone-internshub-api.vercel.app/student/profile/${userId}/certificates`);
         if (!response.data) {
           toast.error('Sorry, no details found');
           return;
@@ -54,7 +54,7 @@ const Certificates = () => {
     try {
       if (editIndex !== null) {
         // Update existing certificate entry
-        const response = await axios.put(`http://localhost:4000/student/profile/${userId}/certificates/${editIndex}`, certificateData);
+        const response = await axios.put(`https://clone-internshub-api.vercel.app/student/profile/${userId}/certificates/${editIndex}`, certificateData);
         const updatedCertificates = [...certificates];
         updatedCertificates[editIndex] = response.data;
         setCertificates(updatedCertificates);
@@ -62,7 +62,7 @@ const Certificates = () => {
         toast.success('Details updated');
       } else {
         // Add new certificate entry
-        const response = await axios.post(`http://localhost:4000/student/profile/${userId}/certificates`, certificateData);
+        const response = await axios.post(`https://clone-internshub-api.vercel.app/student/profile/${userId}/certificates`, certificateData);
         setCertificates([...certificates, response.data]);
         toast.success('Details added');
       }
@@ -82,7 +82,7 @@ const Certificates = () => {
 
   const handleDelete = async (index) => {
     try {
-      await axios.delete(`http://localhost:4000/student/profile/${userId}/certificates/${index}`);
+      await axios.delete(`https://clone-internshub-api.vercel.app/student/profile/${userId}/certificates/${index}`);
       setCertificates(certificates.filter((_, i) => i !== index));
       toast.success('Certificate details deleted');
     } catch (error) {

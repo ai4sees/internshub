@@ -15,7 +15,7 @@ const Internships = () => {
   useEffect(() => {
     const fetchInternships = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/student/${userId}/internships`);
+        const response = await axios.get(`https://clone-internshub-api.vercel.app/student/${userId}/internships`);
         const sortedInternships = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         setInternships(sortedInternships);
 
@@ -111,7 +111,7 @@ const Internships = () => {
           <>
             <div className="fixed inset-0 bg-black bg-opacity-50 z-40  " onClick={closeModal}></div>
             <div className="fixed inset-0 flex items-center justify-center z-50">
-              <div className="bg-white rounded-lg shadow-lg w-[60%] h-[90%] p-6 relative overflow-auto">
+              <div className="bg-white border-2 border-gray-600 rounded-lg shadow-3xl w-[60%] h-[90%] p-6 relative overflow-auto">
                 <h2 className="text-2xl font-semibold mb-4">{selectedInternship.internshipName}</h2>
                 <button
                   onClick={closeModal}

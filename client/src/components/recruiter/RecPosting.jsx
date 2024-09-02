@@ -92,7 +92,7 @@ const RecPosting = () => {
     console.log('sending this data', postData)
     try {
       // Make the POST request to your backend
-      const response = await axios.post(`http://localhost:4000/recruiter/internship/post/${userId}`, postData);
+      const response = await axios.post(`https://clone-internshub-api.vercel.app/recruiter/internship/post/${userId}`, postData);
 
       if (response.data.success) {
         toast.success('Internship posted successfully');
