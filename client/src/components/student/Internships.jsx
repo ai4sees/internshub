@@ -15,7 +15,7 @@ const Internships = () => {
   useEffect(() => {
     const fetchInternships = async () => {
       try {
-        const response = await axios.get(`https://clone-internshub-api.vercel.app/student/${userId}/internships`);
+        const response = await axios.get(`https://clone-internshub-client.vercel.app/student/${userId}/internships`);
         const sortedInternships = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         setInternships(sortedInternships);
 

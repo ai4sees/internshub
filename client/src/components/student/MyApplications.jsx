@@ -13,7 +13,7 @@ const MyApplications = () => {
     console.log('insideeeeeeeeeeeee')
     const fetchAppliedInternships = async () => {
       try {
-        const response = await axios.get(`https://clone-internshub-api.vercel.app/student/${userId}/applied-internships`);
+        const response = await axios.get(`https://clone-internshub-client.vercel.app/student/${userId}/applied-internships`);
         console.log(response.data);
         setAppliedInternships(response.data);
         setLoading(false);
