@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Recruiter=require('./recruiterSchema')
+// const Recruiter=require('./recruiterSchema')
 
 const internshipSchema = new mongoose.Schema(
   {
@@ -29,10 +29,8 @@ const internshipSchema = new mongoose.Schema(
       type: [String],
       default: [],
     },
-    recruiter: { type: mongoose.Schema.Types.ObjectId, ref: "Recruiter" },
-  },
-  { timestamps: true }
-);
+    
+  },{ timestamps: true });
 
 const Internship = mongoose.model("Internship", internshipSchema);
 

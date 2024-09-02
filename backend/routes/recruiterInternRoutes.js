@@ -1,6 +1,7 @@
 const express = require('express');
 // const Student = require('../schema/studentSchema');
 const Recruiter =require('../schema/recruiterSchema');
+const Internship=require('../schema/internshipSchema');
 const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
 
@@ -17,7 +18,7 @@ router.post('/post/:userId',async(req,res)=>{
   const recruiter=await Recruiter.findById(userId);
   if(!recruiter) return res.status(404).json({message:'Recruiter not found'});
 
-  const newInternship = {
+  const newInternship = new Internship({
     internshipName,
     internshipType,
     internLocation,
@@ -25,21 +26,15 @@ router.post('/post/:userId',async(req,res)=>{
     stipend,
     description,
     skills,
-  };
-
-  recruiter.internships.push(newInternship);
+  });
+  await newInternship.save();
+  console.log('Recruiter object:', recruiter);
+  recruiter.internships.push(newInternship._id);
   await recruiter.save();
 
-  // const newInternship=new {
-  //   internshipName,
-  //   internshipType,
-  //   numberOfOpenings,
-  //   stipend,
-  //   description,
-  //   skills
-    
-  // };
-  // await newInternship.save();
+  // recruiter.internships.push(newInternship);
+  // await recruiter.save();
+
   res.status(201).json({ success: true, internship: newInternship });
 
 }catch(error){
@@ -48,6 +43,8 @@ router.post('/post/:userId',async(req,res)=>{
 }
 
 })
+
+
 
 
 
