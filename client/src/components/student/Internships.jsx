@@ -32,8 +32,14 @@ const Internships = () => {
     fetchInternships();
   }, [userId]);
 
-  const openModal = (internship) => {
+  const openModal = async(internship) => {
     setSelectedInternship(internship);
+    try {
+      const response=await axios.put(`${api}/student/internship/${internship._id}/view`);
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error updating views:', error);
+    }
   };
 
   const closeModal = () => {
@@ -95,10 +101,6 @@ const Internships = () => {
               <span>₹ {internship.stipend}</span>
             </div>
 
-            {/* <div className="flex items-center text-gray-700 mb-2">
-              <FaUsers className="mr-2" />
-              <span>{internship.numberOfOpenings} Openings</span>
-            </div> */}
 
             {internship.internLocation &&
               <div className="flex items-center text-gray-700 mb-4">

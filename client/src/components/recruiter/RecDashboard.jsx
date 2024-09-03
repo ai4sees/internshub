@@ -54,7 +54,7 @@ const RecDashboard = () => {
            <div key={internship._id} className="grid grid-cols-5 gap-5 py-2 border-b-2">
            <div className='text-center mx-0 my-3 w-[290px]'>{internship.internshipName}</div>
            <div className='inline-flex justify-center w-[90px] ml-40'>Active<span className=' ml-2 mt-2 w-2 h-2 rounded-full bg-green-500'></span></div>
-           <div className='w-[80px] mx-auto text-center my-3'>0</div>
+           <div className='w-[80px] mx-auto text-center my-3'>{internship.views}</div>
            <div className='text-center'>No details Right Now</div>
            <div className='text-center'>
              <button className="text-blue-500 hover:underline">View Details</button>

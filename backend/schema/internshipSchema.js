@@ -34,6 +34,10 @@ const internshipSchema = new mongoose.Schema(
       ref: 'Recruiter',
       required: true,
     },
+    views: {
+      type: Number,
+      default: 0, // Initialize with 0 views
+    },
     
   },{ timestamps: true });
 

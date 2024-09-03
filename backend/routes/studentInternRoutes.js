@@ -1,5 +1,6 @@
 const express = require('express');
 const Student=require('../schema/studentSchema');
+const Internship=require('../schema/internshipSchema')
 const dotenv = require('dotenv');
 
 
@@ -56,4 +57,30 @@ router.get('/:studentId/applied-internships',async(req,res)=>{
     res.status(500).json({ message: 'Server Error' });
   }
 })
+
+router.put('/:internshipId/view', async (req, res) => {
+  const { internshipId } = req.params;
+
+  try {
+    const internship = await Internship.findByIdAndUpdate(
+      internshipId,
+      { $inc: { views: 1 } }, // Increment the views by 1
+      { new: true }
+    );
+
+    if (!internship) {
+      return res.status(404).json({ message: 'Internship not found' });
+    }
+
+    res.status(200).json(internship);
+  } catch (error) {
+    console.error('Error incrementing views:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+
+
+
 module.exports = router;
