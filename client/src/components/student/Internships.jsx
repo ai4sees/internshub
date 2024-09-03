@@ -44,6 +44,10 @@ const Internships = () => {
     try {
       const response = await axios.post(`${api}/student/internship/${userId}/apply/${internshipId}`);
       if (response.status === 200) {
+        if(response.data.success){
+          toast.success('You have already applied for this Internship');
+          return;
+        }
         toast.success('Successfully applied to the internship');
       } else {
         toast.error('Failed to apply');

@@ -45,6 +45,22 @@ router.post('/post/:userId',async(req,res)=>{
 
 })
 
+router.get('/:recruiterId/getInternships',async(req,res)=>{
+  const {recruiterId}=req.params;
+  try {
+    const recruiter=await Recruiter.findById(recruiterId);
+    if(!recruiter) return res.status(404).json({message:'Recruiter not found'});
+    
+    const internships=await Internship.find({recruiter:recruiterId});
+    res.status(200).json(internships);
+
+
+  } catch (error) {
+    console.error('Error fetching internships:', error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+})
+
 
 
 

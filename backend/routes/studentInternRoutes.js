@@ -16,7 +16,7 @@ router.post('/:studentId/apply/:internshipId', async (req, res) => {
     }
 
     if (student.appliedInternships.includes(internshipId)) {
-      return res.status(400).json({ message: 'Already applied for this internship' });
+      return res.status(200).json({success:'True', message: 'Already applied for this internship' });
     }
 
     student.appliedInternships.push(internshipId);
