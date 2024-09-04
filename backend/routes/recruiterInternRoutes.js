@@ -101,6 +101,21 @@ router.get('/:recruiterId/applicants/:internshipId', async (req, res) => {
   }
 });
 
+router.get('/:recruiterId/getDetails/:internshipId',async(req,res)=>{
+  const {recruiterId,internshipId}=req.params;
+  try {
+    const recruiter=await Recruiter.findById(recruiterId);
+    if(!recruiter) return res.status(404).json({message:'Recruiter not found'});
+
+    const internship = await Internship.findOne({ _id: internshipId, recruiter: recruiterId }); 
+    if (!internship) return res.status(404).json({ message: 'Internship not found' });
+    res.status(200).json(internship);
+  } catch (error) {
+    console.error('Error fetching internhsip details:', error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+})
+
 
 
 
