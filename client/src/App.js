@@ -26,6 +26,7 @@ import RecPosting from "./components/recruiter/RecPosting";
 import Internships from "./components/student/Internships";
 import MyApplications from "./components/student/MyApplications";
 import RecDashboard from "./components/recruiter/RecDashboard";
+import Applicants from "./components/recruiter/Applicants";
 
 
 //import broswerRouter for different routes
@@ -65,7 +66,9 @@ function App() {
         <Route path="/recruiter/home/:userId" element={<RecruiterHome/>} />
         <Route path="/recruiter/profile/:userId" element={<RecProfile/>} />
         <Route path="/recruiter/dashboard/:userId" element={<RecDashboard/>} />
+        <Route path="/recruiter/dashboard/:recruiterId/applicants/:internshipId" element={<Applicants/>} />
         <Route path="/recruiter/posting/:userId" element={<RecPosting/>} />
+        
       </Routes>
       <ToastContainer
       autoClose={3000}

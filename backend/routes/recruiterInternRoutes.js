@@ -2,6 +2,7 @@ const express = require('express');
 // const Student = require('../schema/studentSchema');
 const Recruiter =require('../schema/recruiterSchema');
 const Internship=require('../schema/internshipSchema');
+const Student=require('../schema/studentSchema')
 const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
 
@@ -61,6 +62,44 @@ router.get('/:recruiterId/getInternships',async(req,res)=>{
   }
 })
 
+// router.get('/:recruiterId/view/:internshipId',async(req,res)=>{
+//   const {recruiterId,internshipId}=req.params;
+//   try {
+//     const recruiter=await Recruiter.findById(recruiterId);
+//     if(!recruiter) return res.status(404).json({message:'Recruiter not found'});
+
+//     const internship=await Internship.findOne({_id:internshipId,recruiter:recruiterId})
+//     if (!internship) return res.status(404).json({ message: 'Internship not found' });
+//     res.status(200).json(internship);
+
+//   } catch (error) {
+//     console.error('Error fetching internship details:', error);
+//     res.status(500).json({ message: 'Server Error' });
+//   }
+// })
+
+router.get('/:recruiterId/applicants/:internshipId', async (req, res) => {
+  const { recruiterId, internshipId } = req.params;
+
+  try {
+    // Check if the recruiter exists
+    const recruiter = await Recruiter.findById(recruiterId);
+    if (!recruiter) return res.status(404).json({ message: 'Recruiter not found' });
+
+    // Check if the internship exists and belongs to the recruiter
+    const internship = await Internship.findOne({ _id: internshipId, recruiter: recruiterId });
+    if (!internship) return res.status(404).json({ message: 'Internship not found' });
+
+    // Find students who have applied for this internship
+    const applicants = await Student.find({ appliedInternships: internshipId });
+
+    // Return the list of applicants
+    res.status(200).json(applicants);
+  } catch (error) {
+    console.error('Error fetching applicants:', error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+});
 
 
 
