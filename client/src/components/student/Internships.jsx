@@ -19,6 +19,7 @@ const Internships = () => {
   const [selectedInternship, setSelectedInternship] = useState(null);
   const userId = getUserIdFromToken();
   const statesAndUTs = [
+    { value: 'All Locations', label: 'All Locations' },
     { value: 'Andhra Pradesh', label: 'Andhra Pradesh' },
     { value: 'Arunachal Pradesh', label: 'Arunachal Pradesh' },
     { value: 'Assam', label: 'Assam' },
@@ -128,7 +129,11 @@ const Internships = () => {
   const handleChange = (value) => {
     setSelectedLocation(value);
   }
-  // console.log(selectedLocation);
+  
+  const handleReset=()=>{
+    setSelectedLocation(null);
+    setWorkType('');
+  }
 
 
   if (loading) {
@@ -145,12 +150,14 @@ const Internships = () => {
 
   return (
     <div className="py-10 px-5 mt-10 relative">
-      <h1 className=" right-12 text-3xl font-bold mb-8 mt-8 absolute left-1/2 transform-translate-x-1/2 translate-x-14">Internships</h1>
+      <h1 className="text-3xl font-bold mb-8 mt-8 absolute left-1/2 transform-translate-x-1/2 translate-x-14">{internships.length} Total Internships</h1>
 
       <div className='flex '>
-        <div className='w-1/4 mt-14 px-6 h-screen fixed shadow-xl border-t'>
-          <h1 className='text-center font-extrabold text-lg'>Filters</h1>
-          <p className='my-4'>Type of Internship:</p>
+        <div className='w-[20%] mt-28 px-6 h-screen fixed left-28 shadow-xl border-t py-6 overflow-y-auto '>
+          <h1 className='text-center font-extrabold text-xl tracking-widest'>Filters</h1>
+         
+          <p className='mb-4 mt-6'>Type of Internship:</p>
+          <button onClick={handleReset} className='absolute right-4 top-20 text-blue-400 underline'>Reset filters</button>
           <div className="flex flex-col space-y-4">
             <label className="flex items-center space-x-2">
               <input
@@ -159,9 +166,9 @@ const Internships = () => {
                 value=""
                 checked={workType === ''}
                 onChange={(e) => setWorkType(e.target.value)}
-                className="form-radio text-blue-600"
+                className="form-radio text-blue-600 h-6 w-6 "
               />
-              <span className="text-gray-700">All Internships</span>
+              <span className="text-[17px]">All Internships</span>
             </label>
             <label className="flex items-center space-x-2">
               <input
@@ -170,9 +177,9 @@ const Internships = () => {
                 value="Work from Home"
                 checked={workType === 'Work from Home'}
                 onChange={(e) => setWorkType(e.target.value)}
-                className="form-radio text-blue-600"
+                className="form-radio text-green-600 h-6 w-6"
               />
-              <span className="text-gray-700">Work from Home</span>
+              <span className="">Work from Home</span>
             </label>
 
             <label className="flex items-center space-x-2">
@@ -182,16 +189,16 @@ const Internships = () => {
                 value="Work from Office"
                 checked={workType === 'Work from Office'}
                 onChange={(e) => setWorkType(e.target.value)}
-                className="form-radio text-blue-600"
+                className="form-radio text-blue-600 h-6 w-6"
               />
-              <span className="text-gray-700">Work from Office</span>
+              <span className="">Work from Office</span>
             </label>
           </div>
 
 
           {
           workType==='Work from Office'&&
-          <>
+          <div>
           <p className='mt-6 mb-2 font-bold'>Location</p>
           <Select
             options={statesAndUTs}
@@ -199,8 +206,9 @@ const Internships = () => {
             onChange={handleChange}
             placeholder="Select a location"
             searchable={true}
+            className=''
           />
-          </>
+          </div>
 
           }
 

@@ -240,9 +240,9 @@ router.get('/:userId/internships', async (req, res) => {
 
     if(workType==='Work from Home'){
       internships=internships.filter(internship=>internship.internshipType==='Work from Home');
-    }else if(workType==='Work from Office'){
+    }else if(workType==='Work from Office' || locationName==='All Locations'){
       internships = internships.filter(internship => internship.internshipType === 'Work from Office');
-      if (locationName) {
+      if (locationName && locationName!=='All Locations') {
         internships = internships.filter(internship => internship.internLocation === locationName);
       }
     }
