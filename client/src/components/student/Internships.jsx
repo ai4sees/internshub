@@ -24,6 +24,7 @@ const Internships = () => {
     { value: 'Assam', label: 'Assam' },
     { value: 'Bihar', label: 'Bihar' },
     { value: 'Chhattisgarh', label: 'Chhattisgarh' },
+    { value: 'Chennai', label: 'Chennai' },
     { value: 'Goa', label: 'Goa' },
     { value: 'Gujarat', label: 'Gujarat' },
     { value: 'Haryana', label: 'Haryana' },
@@ -63,9 +64,24 @@ const Internships = () => {
   useEffect(() => {
     const fetchInternships = async () => {
       try {
-        const response = await axios.get(`${api}/student/${userId}/internships`);
+        console.log('LocationName',selectedLocation);
+        console.log('WorkType:',workType);
+        let queryParam = '';
+        if (workType === 'Work from Home') {
+          queryParam = '?workType=Work from Home';
+          setSelectedLocation(null);
+        } else if (workType === 'Work from Office'&& selectedLocation ) {
+          queryParam = `?workType=Work from Office&locationName=${selectedLocation.value}`;
+        }else if(workType==='Work from Office' && !selectedLocation){
+          queryParam = '?workType=Work from Office';
+        }
+        // console.log('triggered',queryParam);
+
+
+        const response = await axios.get(`${api}/student/${userId}/internships${queryParam}`);
         const sortedInternships = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         setInternships(sortedInternships);
+        console.log('response',sortedInternships);
 
         setLoading(false);
       } catch (err) {
@@ -76,13 +92,13 @@ const Internships = () => {
     };
 
     fetchInternships();
-  }, [userId]);
+  }, [userId,workType, selectedLocation]);
 
   const openModal = async (internship) => {
     setSelectedInternship(internship);
     try {
       const response = await axios.put(`${api}/student/internship/${internship._id}/view`);
-      console.log(response.data);
+      // console.log(response.data);
     } catch (error) {
       console.error('Error updating views:', error);
     }
@@ -112,7 +128,7 @@ const Internships = () => {
   const handleChange = (value) => {
     setSelectedLocation(value);
   }
-  console.log(selectedLocation);
+  // console.log(selectedLocation);
 
 
   if (loading) {
@@ -140,8 +156,19 @@ const Internships = () => {
               <input
                 type="radio"
                 name="work-type"
-                value="work from home"
-                checked={workType === 'work from home'}
+                value=""
+                checked={workType === ''}
+                onChange={(e) => setWorkType(e.target.value)}
+                className="form-radio text-blue-600"
+              />
+              <span className="text-gray-700">All Internships</span>
+            </label>
+            <label className="flex items-center space-x-2">
+              <input
+                type="radio"
+                name="work-type"
+                value="Work from Home"
+                checked={workType === 'Work from Home'}
                 onChange={(e) => setWorkType(e.target.value)}
                 className="form-radio text-blue-600"
               />
@@ -152,8 +179,8 @@ const Internships = () => {
               <input
                 type="radio"
                 name="work-type"
-                value="work from office"
-                checked={workType === 'work from office'}
+                value="Work from Office"
+                checked={workType === 'Work from Office'}
                 onChange={(e) => setWorkType(e.target.value)}
                 className="form-radio text-blue-600"
               />
@@ -163,7 +190,7 @@ const Internships = () => {
 
 
           {
-          workType==='work from office'&&
+          workType==='Work from Office'&&
           <>
           <p className='mt-6 mb-2 font-bold'>Location</p>
           <Select

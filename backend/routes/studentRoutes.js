@@ -213,8 +213,11 @@ router.get('/resume/:id', async (req, res) => {
 
 router.get('/:userId/internships', async (req, res) => {
   try {
+    const { workType, locationName } = req.query;
+    console.log('Received workType:', workType);
+    console.log('Received locationName:', locationName);
     const recruiters = await Recruiter.find().populate('internships');
-    const internships = [];
+    let internships = [];
 
     recruiters.forEach(recruiter => {
       recruiter.internships.forEach(internship => {
@@ -231,7 +234,21 @@ router.get('/:userId/internships', async (req, res) => {
       });
     });
 
-    res.status(200).json(internships);
+    internships.forEach(internship => {
+      console.log('Internship Type:', internship.internshipType);
+    });
+
+    if(workType==='Work from Home'){
+      internships=internships.filter(internship=>internship.internshipType==='Work from Home');
+    }else if(workType==='Work from Office'){
+      internships = internships.filter(internship => internship.internshipType === 'Work from Office');
+      if (locationName) {
+        internships = internships.filter(internship => internship.internLocation === locationName);
+      }
+    }
+    console.log('Filtered Internships:', internships);
+
+     res.status(200).json(internships);
   } catch (error) {
     console.error('Error fetching internships:', error);
     res.status(500).json({ message: 'Server Error' });
