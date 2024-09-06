@@ -4,7 +4,6 @@ import 'rc-slider/assets/index.css';
 import '../utilscss/SliderStyles.css'
 
 const StipendSlider = ({ selectedStipend, setSelectedStipend }) => {
-  const [stipend, setStipend] = useState(0);
 
   // Marks for the slider
   const marks = {
@@ -24,9 +23,9 @@ const StipendSlider = ({ selectedStipend, setSelectedStipend }) => {
  
 
   return (
-    <div className="w-full max-w-md mx-auto py-4">
-      <h3 className="text-lg font-semibold mb-4">Select Minimum Stipend</h3>
-      <div className="px-4">
+    <div className="w-full max-w-md mx-auto py-4 mt-5">
+      <h3 className="text-base mb-4">Select Minimum Stipend</h3>
+      <div className="px-2">
         <Slider
           min={0}
           max={10000}
@@ -38,9 +37,7 @@ const StipendSlider = ({ selectedStipend, setSelectedStipend }) => {
           className="custom-slider" // Add a custom class for custom CSS styling
         />
       </div>
-      <div className="text-center mt-4">
-        <span className="font-medium text-lg">Selected Stipend: ₹{stipend}</span>
-      </div>
+      
     </div>
   );
 };

@@ -214,8 +214,8 @@ router.get('/resume/:id', async (req, res) => {
 router.get('/:userId/internships', async (req, res) => {
   try {
     const { workType, locationName,minStipend } = req.query;
-    console.log('Received workType:', workType);
-    console.log('Received locationName:', locationName);
+    // console.log('Received workType:', workType);
+    // console.log('Received locationName:', locationName);
     const recruiters = await Recruiter.find().populate('internships');
     let internships = [];
 
@@ -235,7 +235,7 @@ router.get('/:userId/internships', async (req, res) => {
     });
 
     internships.forEach(internship => {
-      console.log('Internship Type:', internship.internshipType);
+      // console.log('Internship Type:', internship.internshipType);
     });
 
     if(workType==='Work from Home'){
@@ -251,8 +251,15 @@ router.get('/:userId/internships', async (req, res) => {
       internships = internships.filter(internship => internship.stipend >= parseInt(minStipend));
     }
     
-    console.log('Filtered Internships:', internships);
-
+    // console.log('Filtered Internships:', internships);
+    
+    for (const internship of internships) {
+      const students = await Student.find({ appliedInternships: internship._id });
+      
+      // Add studentCount as a new property to the internship object
+      internship.studentCount = students.length;
+    }
+    console.log(internships);
      res.status(200).json(internships);
   } catch (error) {
     console.error('Error fetching internships:', error);

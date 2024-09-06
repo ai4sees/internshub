@@ -283,9 +283,11 @@ const Internships = () => {
                     </span>
                   ))}
                 </div>
+                
                 {isAlreadyApplied(internship._id) && (
                   <p className="text-green-600 inline-flex rounded-xl border border-green-600 px-2 py-1">Applied<FaCheck className='ml-2 mt-1' /></p>
                 )}
+                <div className='text-gray-500 my-2'>{internship.studentCount} Applicants</div>
 
               </div>
             ))}
