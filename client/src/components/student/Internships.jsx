@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { FaMapMarkerAlt, FaMoneyBillWave, FaUsers, FaClipboardList, FaTimes, FaFontAwesome } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaMoneyBillWave, FaUsers, FaClipboardList, FaTimes, FaFontAwesome, FaCheck } from 'react-icons/fa';
 import Spinner from '../common/Spinner';
 import getUserIdFromToken from './auth/authUtils';
 import TimeAgo from '../common/TimeAgo';
@@ -14,6 +14,7 @@ import CustomRadio from './utils/CustomRadio';
 
 const Internships = () => {
   const [internships, setInternships] = useState([]);
+  const [appliedInternships, setAppliedInternships] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedInternship, setSelectedInternship] = useState(null);
@@ -82,7 +83,11 @@ const Internships = () => {
         const response = await axios.get(`${api}/student/${userId}/internships${queryParam}`);
         const sortedInternships = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         setInternships(sortedInternships);
-        console.log('response',sortedInternships);
+        // console.log('response',sortedInternships);
+
+        const appliedResponse = await axios.get(`${api}/student/internship/${userId}/applied-internships`);
+        setAppliedInternships(appliedResponse.data);
+        console.log('response',appliedResponse.data);
 
         setLoading(false);
       } catch (err) {
@@ -134,6 +139,10 @@ const Internships = () => {
     setSelectedLocation(null);
     setWorkType('');
   }
+
+  const isAlreadyApplied = (internshipId) => {
+    return appliedInternships.some((applied) => applied._id === internshipId);
+  };
 
 
   if (loading) {
@@ -227,7 +236,7 @@ const Internships = () => {
                 >
                   View details
                 </button>
-                <p className="text-gray-600 mb-4">Posted by: {internship.recruiter.firstname} {internship.recruiter.lastname}</p>
+                {/* <p className="text-gray-600 mb-4">Posted by: {internship.recruiter.firstname} {internship.recruiter.lastname}</p> */}
                 <p className='text-gray-600 mb-4'>Posted: {TimeAgo(internship.createdAt)}</p>
 
                 <div className="flex items-center text-gray-700 mb-2">
@@ -259,11 +268,10 @@ const Internships = () => {
                     </span>
                   ))}
                 </div>
-
-                {/* <h3 className="text-lg font-medium mb-2">Description:</h3>
-            <p className="text-gray-700 mb-4">
-              {internship.description.length > 300 ? `${internship.description.substring(0, 300)}...` : internship.description}
-            </p> */}
+                {isAlreadyApplied(internship._id) && (  
+                  <p className="text-green-600 inline-flex rounded-xl border border-green-600 px-2 py-1">Applied<FaCheck className='ml-2 mt-1'/></p>
+                )}
+            
               </div>
             ))}
 
