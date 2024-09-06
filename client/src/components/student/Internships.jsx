@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 // import CustomDropdown from './utils/CustomDropdown';
 import Select from 'react-select';
 import CustomRadio from './utils/CustomRadio';
+import StipendSlider from './utils/StipendSlider';
 // import CustomRadio from './utils/CustomRadio';
 
 
@@ -61,23 +62,27 @@ const Internships = () => {
   ];
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [workType, setWorkType] = useState('');
+  const [selectedStipend, setSelectedStipend] = useState(0);
   console.log(workType);
 
   useEffect(() => {
     const fetchInternships = async () => {
       try {
-        console.log('LocationName',selectedLocation);
-        console.log('WorkType:',workType);
+        console.log('LocationName', selectedLocation);
+        console.log('WorkType:', workType);
         let queryParam = '';
         if (workType === 'Work from Home') {
           queryParam = '?workType=Work from Home';
           setSelectedLocation(null);
-        } else if (workType === 'Work from Office'&& selectedLocation ) {
+        } else if (workType === 'Work from Office' && selectedLocation) {
           queryParam = `?workType=Work from Office&locationName=${selectedLocation.value}`;
-        }else if(workType==='Work from Office' && !selectedLocation){
+        } else if (workType === 'Work from Office' && !selectedLocation) {
           queryParam = '?workType=Work from Office';
         }
-        // console.log('triggered',queryParam);
+
+        if (selectedStipend > 0) {
+          queryParam += queryParam ? `&minStipend=${selectedStipend}` : `?minStipend=${selectedStipend}`;
+        }
 
 
         const response = await axios.get(`${api}/student/${userId}/internships${queryParam}`);
@@ -87,7 +92,7 @@ const Internships = () => {
 
         const appliedResponse = await axios.get(`${api}/student/internship/${userId}/applied-internships`);
         setAppliedInternships(appliedResponse.data);
-        console.log('response',appliedResponse.data);
+        console.log('response', appliedResponse.data);
 
         setLoading(false);
       } catch (err) {
@@ -98,7 +103,7 @@ const Internships = () => {
     };
 
     fetchInternships();
-  }, [userId,workType, selectedLocation]);
+  }, [userId, workType, selectedLocation,selectedStipend]);
 
   const openModal = async (internship) => {
     setSelectedInternship(internship);
@@ -134,15 +139,22 @@ const Internships = () => {
   const handleChange = (value) => {
     setSelectedLocation(value);
   }
-  
-  const handleReset=()=>{
+
+  const handleReset = () => {
     setSelectedLocation(null);
     setWorkType('');
+    setSelectedStipend(0);
   }
 
   const isAlreadyApplied = (internshipId) => {
     return appliedInternships.some((applied) => applied._id === internshipId);
   };
+
+  // const handleStipendChange = (stipend) => {
+  //   setSelectedStipend(stipend);
+
+  // };
+  console.log(selectedStipend);
 
 
   if (loading) {
@@ -162,9 +174,9 @@ const Internships = () => {
       <h1 className="text-3xl font-bold mb-8 mt-8 absolute left-1/2 transform-translate-x-1/2 translate-x-14">{internships.length} Total Internships</h1>
 
       <div className='flex '>
-        <div className='w-[20%] mt-28 px-6 h-screen fixed left-28 shadow-xl border-t py-6 overflow-y-auto '>
+        <div className='w-[20%] mt-12 px-6 h-screen fixed left-28 shadow-xl border-t py-6 overflow-y-auto '>
           <h1 className='text-center font-extrabold text-xl tracking-widest'>Filters</h1>
-         
+
           <p className='mb-4 mt-6'>Type of Internship:</p>
           <button onClick={handleReset} className='absolute right-4 top-20 text-blue-400 underline'>Reset filters</button>
           <div className="flex flex-col space-y-4">
@@ -204,22 +216,25 @@ const Internships = () => {
             </label>
           </div>
 
+          <StipendSlider selectedStipend={selectedStipend}
+            setSelectedStipend={setSelectedStipend} />
 
-          {
-          workType==='Work from Office'&&
-          <div>
-          <p className='mt-6 mb-2 font-bold'>Location</p>
-          <Select
-            options={statesAndUTs}
-            values={selectedLocation}
-            onChange={handleChange}
-            placeholder="Select a location"
-            searchable={true}
-            className=''
-          />
-          </div>
 
-          }
+            {
+          workType === 'Work from Office' &&
+            <div>
+              <p className='mt-6 mb-2 font-bold'>Location</p>
+              <Select
+                options={statesAndUTs}
+                values={selectedLocation}
+                onChange={handleChange}
+                placeholder="Select a location"
+                searchable={true}
+                className=''
+              />
+            </div>
+
+            }
 
         </div>
 
@@ -268,10 +283,10 @@ const Internships = () => {
                     </span>
                   ))}
                 </div>
-                {isAlreadyApplied(internship._id) && (  
-                  <p className="text-green-600 inline-flex rounded-xl border border-green-600 px-2 py-1">Applied<FaCheck className='ml-2 mt-1'/></p>
+                {isAlreadyApplied(internship._id) && (
+                  <p className="text-green-600 inline-flex rounded-xl border border-green-600 px-2 py-1">Applied<FaCheck className='ml-2 mt-1' /></p>
                 )}
-            
+
               </div>
             ))}
 

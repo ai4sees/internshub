@@ -213,7 +213,7 @@ router.get('/resume/:id', async (req, res) => {
 
 router.get('/:userId/internships', async (req, res) => {
   try {
-    const { workType, locationName } = req.query;
+    const { workType, locationName,minStipend } = req.query;
     console.log('Received workType:', workType);
     console.log('Received locationName:', locationName);
     const recruiters = await Recruiter.find().populate('internships');
@@ -246,6 +246,11 @@ router.get('/:userId/internships', async (req, res) => {
         internships = internships.filter(internship => internship.internLocation === locationName);
       }
     }
+
+    if (minStipend) {
+      internships = internships.filter(internship => internship.stipend >= parseInt(minStipend));
+    }
+    
     console.log('Filtered Internships:', internships);
 
      res.status(200).json(internships);

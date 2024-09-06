@@ -1,0 +1,21 @@
+.custom-slider .rc-slider-track {
+  background-color: #2563EB; /* Tailwind's blue-600 */
+  height: 6px;
+}
+
+.custom-slider .rc-slider-rail {
+  background-color: #E5E7EB; /* Tailwind's gray-200 */
+  height: 6px;
+}
+
+.custom-slider .rc-slider-handle {
+  border: 2px solid #04ce849c; /* Tailwind's blue-600 border */
+  height: 15px;
+  width: 15px;
+  background-color: #FFFFFF;
+  cursor:default;
+}
+
+.custom-slider .rc-slider-mark-text {
+  font-size: 0.875rem; /* Text size similar to Tailwind's text-sm */
+}
