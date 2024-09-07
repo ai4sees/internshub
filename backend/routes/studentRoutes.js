@@ -234,9 +234,9 @@ router.get('/:userId/internships', async (req, res) => {
       });
     });
 
-    internships.forEach(internship => {
-      // console.log('Internship Type:', internship.internshipType);
-    });
+    // internships.forEach(internship => {
+    //   // console.log('Internship Type:', internship.internshipType);
+    // });
 
     if(workType==='Work from Home'){
       internships=internships.filter(internship=>internship.internshipType==='Work from Home');
@@ -254,12 +254,12 @@ router.get('/:userId/internships', async (req, res) => {
     // console.log('Filtered Internships:', internships);
     
     for (const internship of internships) {
-      const students = await Student.find({ appliedInternships: internship._id });
+      const students = await Student.find({ 'appliedInternships.internship': internship._id });
       
       // Add studentCount as a new property to the internship object
       internship.studentCount = students.length;
     }
-    console.log(internships);
+    // console.log(internships);
      res.status(200).json(internships);
   } catch (error) {
     console.error('Error fetching internships:', error);

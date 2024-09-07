@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { FaMapMarkerAlt, FaMoneyBillWave, FaUsers, FaClipboardList, FaTimes, FaFontAwesome, FaCheck } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaMoneyBillWave, FaUsers, FaClipboardList, FaTimes, FaClock, FaCheck } from 'react-icons/fa';
 import Spinner from '../common/Spinner';
 import getUserIdFromToken from './auth/authUtils';
 import TimeAgo from '../common/TimeAgo';
@@ -103,7 +103,7 @@ const Internships = () => {
     };
 
     fetchInternships();
-  }, [userId, workType, selectedLocation,selectedStipend]);
+  }, [userId, workType, selectedLocation, selectedStipend]);
 
   const openModal = async (internship) => {
     setSelectedInternship(internship);
@@ -147,7 +147,7 @@ const Internships = () => {
   }
 
   const isAlreadyApplied = (internshipId) => {
-    return appliedInternships.some((applied) => applied._id === internshipId);
+    return appliedInternships.some((applied) => applied.internship._id === internshipId);
   };
 
   // const handleStipendChange = (stipend) => {
@@ -170,11 +170,12 @@ const Internships = () => {
   }
 
   return (
-    <div className="py-10 px-5 mt-10 relative">
+      
+    <div className="py-10 px-5 mt-10 relative  bg-gray-100">
       <h1 className="text-3xl font-bold mb-8 mt-8 absolute left-1/2 transform-translate-x-1/2 translate-x-14">{internships.length} Total Internships</h1>
 
-      <div className='flex '>
-        <div className='w-[20%] mt-12 px-6 h-screen fixed left-28 shadow-xl border-t py-6 overflow-y-auto '>
+      <div className='flex justify-end '>
+        <div className=' w-[20%] mt-12 px-6 h-screen fixed left-28 shadow-xl border-t py-6 overflow-y-hidden bg-white'>
           <h1 className='text-center font-extrabold text-xl tracking-widest'>Filters</h1>
 
           <p className='mb-4 mt-6'>Type of Internship:</p>
@@ -220,9 +221,9 @@ const Internships = () => {
             setSelectedStipend={setSelectedStipend} />
 
 
-            {
-          workType === 'Work from Office' &&
-            <div>
+          {
+            workType === 'Work from Office' &&
+            <div className='mt-20'>
               <p className='mt-6 mb-2 font-bold'>Location</p>
               <Select
                 options={statesAndUTs}
@@ -234,12 +235,12 @@ const Internships = () => {
               />
             </div>
 
-            }
+          }
 
         </div>
 
 
-        <div className="w-[60%] mr-4 mt-28 absolute right-32">
+        <div className="w-[60%] mr-32 mt-28 ">
 
           <div className="flex flex-col justify-center bg-gray-100">
             {internships.map((internship) => (
@@ -283,7 +284,7 @@ const Internships = () => {
                     </span>
                   ))}
                 </div>
-                
+
                 {isAlreadyApplied(internship._id) && (
                   <p className="text-green-600 inline-flex rounded-xl border border-green-600 px-2 py-1">Applied<FaCheck className='ml-2 mt-1' /></p>
                 )}
@@ -316,6 +317,10 @@ const Internships = () => {
                     <div className="flex items-center text-gray-700 mb-2">
                       <FaMoneyBillWave className="mr-2" />
                       <span>₹ {selectedInternship.stipend}</span>
+                    </div>
+                    <div className="flex items-center text-gray-700 mb-2">
+                      <FaClock className="mr-2" />
+                      <span>{selectedInternship.duration} Months</span>
                     </div>
 
                     <div className="flex items-center text-gray-700 mb-2">

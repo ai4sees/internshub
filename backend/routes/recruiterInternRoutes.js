@@ -13,7 +13,7 @@ const router= express.Router();
 
 router.post('/post/:userId',async(req,res)=>{
   const {userId}=req.params;
-  const {internshipName,internshipType,internLocation,numberOfOpenings,stipend,description,skills}=req.body;
+  const {internshipName,internshipType,internLocation,numberOfOpenings,stipend,duration,description,skills}=req.body;
   try{
 
   const recruiter=await Recruiter.findById(userId);
@@ -25,6 +25,7 @@ router.post('/post/:userId',async(req,res)=>{
     internLocation,
     numberOfOpenings,
     stipend,
+    duration,
     description,
     skills,
     recruiter: userId,
@@ -62,21 +63,6 @@ router.get('/:recruiterId/getInternships',async(req,res)=>{
   }
 })
 
-// router.get('/:recruiterId/view/:internshipId',async(req,res)=>{
-//   const {recruiterId,internshipId}=req.params;
-//   try {
-//     const recruiter=await Recruiter.findById(recruiterId);
-//     if(!recruiter) return res.status(404).json({message:'Recruiter not found'});
-
-//     const internship=await Internship.findOne({_id:internshipId,recruiter:recruiterId})
-//     if (!internship) return res.status(404).json({ message: 'Internship not found' });
-//     res.status(200).json(internship);
-
-//   } catch (error) {
-//     console.error('Error fetching internship details:', error);
-//     res.status(500).json({ message: 'Server Error' });
-//   }
-// })
 
 router.get('/:recruiterId/applicants/:internshipId', async (req, res) => {
   const { recruiterId, internshipId } = req.params;
@@ -91,7 +77,7 @@ router.get('/:recruiterId/applicants/:internshipId', async (req, res) => {
     if (!internship) return res.status(404).json({ message: 'Internship not found' });
 
     // Find students who have applied for this internship
-    const applicants = await Student.find({ appliedInternships: internshipId });
+    const applicants = await Student.find({ 'appliedInternships.internship': internshipId });
 
     // Return the list of applicants
     res.status(200).json(applicants);

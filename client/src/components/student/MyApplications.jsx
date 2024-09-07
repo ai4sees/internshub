@@ -12,11 +12,17 @@ const MyApplications = () => {
   const userId = getUserIdFromToken();
 
   useEffect(() => {
-    console.log('insideeeeeeeeeeeee')
+    // console.log('insideeeeeeeeeeeee')
     const fetchAppliedInternships = async () => {
       try {
         const response = await axios.get(`${api}/student/internship/${userId}/applied-internships`);
-        console.log(response.data);
+        
+        // const updatedAppliedInternships = response.data.map(application => ({
+        //   internship: application.internship,
+        //   recruiter: application.recruiter,
+        //   appliedAt: application.appliedAt,
+        // }));
+        // console.log('inside applicants',updatedAppliedInternships);
         setAppliedInternships(response.data);
         setLoading(false);
       } catch (err) {
@@ -41,11 +47,11 @@ const MyApplications = () => {
     <div className="py-10 px-5 mt-10 bg-gray-100 min-h-screen">
       <h1 className="text-3xl font-bold text-center mb-8">My Applications</h1>
       <div className="flex flex-col justify-center">
-        {appliedInternships.map((internship) => (
-          <div key={internship._id} className="bg-white shadow-md rounded-lg p-6 w-[60%] my-3 mx-auto relative">
-            <h2 className="text-2xl font-semibold mb-2">{internship.internshipName}</h2>
-            <p className="text-gray-600 mb-4">Posted by: {internship.recruiter.firstname} {internship.recruiter.lastname}</p>
-            <p className='text-gray-600 mb-4'>Posted: {TimeAgo(internship.createdAt)}</p>
+        {appliedInternships.map((applied) => (
+          <div key={applied.internship._id} className="bg-white shadow-md rounded-lg p-6 w-[60%] my-3 mx-auto relative">
+            <h2 className="text-2xl font-semibold mb-2">{applied.internship.internshipName}</h2>
+            <p className="text-gray-600 mb-4">Posted by: {applied.recruiter.firstname} {applied.recruiter.lastname}</p>
+            <p className='text-gray-600 mb-4'>Posted: {TimeAgo(applied.internship.createdAt)}</p>
             <p className="text-gray-600 mb-4">Status: Applied</p>
           </div>
         ))}

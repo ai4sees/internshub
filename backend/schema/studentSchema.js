@@ -60,12 +60,23 @@ const studentSchema =new mongoose.Schema({
     linkType: String,
     linkUrl:String
   }],
-  
+  // appliedInternships: [{
+  //     internship: {
+  //       type: mongoose.Schema.Types.ObjectId,
+  //       ref: 'Internship',
+  //     },
+  //   }]
   appliedInternships: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Internship',
-    default: []
+    internship: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Internship',
+    },
+    appliedAt: {
+      type: Date,
+      default: Date.now // Automatically stores the date and time of application
+    }
   }],
+
   
     
 },{timestamps: true});

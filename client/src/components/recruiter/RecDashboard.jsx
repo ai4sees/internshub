@@ -3,7 +3,7 @@ import axios from 'axios';
 import Spinner from '../common/Spinner'; // Assuming you have a spinner component
 import getUserIdFromToken from './auth/authUtilsRecr'; // Utility to get user ID from token
 import api from '../common/server_url'; // Your server URL
-import { FaMapMarkerAlt, FaMoneyBillWave, FaUsers, FaClipboardList, FaTimes, FaFontAwesome } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaMoneyBillWave, FaUsers, FaClipboardList, FaTimes, FaClock } from 'react-icons/fa';
 import TimeAgo
   from '../common/TimeAgo';
 import {Link} from 'react-router-dom'
@@ -118,6 +118,10 @@ const RecDashboard = () => {
                 <div className="flex items-center text-gray-700 mb-2">
                   <FaMoneyBillWave className="mr-2" />
                   <span>₹ {selectedInternship.stipend}</span>
+                </div>
+                <div className="flex items-center text-gray-700 mb-2">
+                  <FaClock className="mr-2" />
+                  <span>{selectedInternship.duration} Months</span>
                 </div>
 
                 <div className="flex items-center text-gray-700 mb-2">

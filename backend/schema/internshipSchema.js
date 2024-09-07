@@ -21,6 +21,10 @@ const internshipSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    duration:{
+      type:Number,
+      required:true
+    },
     description: {
       type: String,
       required: true,

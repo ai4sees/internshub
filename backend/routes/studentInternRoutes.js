@@ -16,11 +16,19 @@ router.post('/:studentId/apply/:internshipId', async (req, res) => {
       return res.status(404).json({ message: 'Student not found' });
     }
 
-    if (student.appliedInternships.includes(internshipId)) {
-      return res.status(200).json({success:'True', message: 'Already applied for this internship' });
+    const alreadyApplied = student.appliedInternships.some((application) => 
+      application.internship === internshipId
+    );
+
+    if (alreadyApplied) {
+      return res.status(200).json({ success: 'True', message: 'Already applied for this internship' });
     }
 
-    student.appliedInternships.push(internshipId);
+    student.appliedInternships.push({
+      internship: internshipId,
+      appliedAt: new Date() // Save the current date and time
+    });
+
     await student.save();
 
     res.status(200).json({ message: 'Successfully applied to internship' });
@@ -35,7 +43,7 @@ router.get('/:studentId/applied-internships',async(req,res)=>{
   try {
     const student = await Student.findById(studentId)
       .populate({
-        path: 'appliedInternships', // Populate the internships the student applied to
+        path: 'appliedInternships.internship', // Populate the internships the student applied to
         populate: {
           path: 'recruiter', // Further populate the recruiter details within each internship
           select: 'firstname lastname email', // Select specific fields of the recruiter
@@ -45,9 +53,10 @@ router.get('/:studentId/applied-internships',async(req,res)=>{
         return res.status(404).json({ message: 'Student not found' });
       }
 
-      const internships = student.appliedInternships.map(internship => ({
-        ...internship._doc, // Include all the internship details
-        recruiter: internship.recruiter, // Include the recruiter details
+      const internships = student.appliedInternships.map(application => ({
+        internship: application.internship, // Internship details
+        recruiter: application.internship.recruiter, // Recruiter details
+        appliedAt: application.appliedAt, // Applied date
       }));
   
     res.status(200).json(internships);

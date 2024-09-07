@@ -15,6 +15,7 @@ const RecPosting = () => {
     internLocation: '',
     numberOfOpenings: '',
     stipend: '',
+    duration:'',
     description: '',
     skills: [],
   });
@@ -73,12 +74,13 @@ const RecPosting = () => {
       internLocation: formData.internLocation,
       numberOfOpenings: formData.numberOfOpenings,
       stipend: formData.stipend,
+      duration:formData.duration, 
       description: formData.description,
       skills: formData.skills,
 
     }
     console.log(postData);
-    if (!postData.internshipName || !postData.internshipType || !postData.stipend || !postData.numberOfOpenings || !postData.description || postData.skills.length == 0) {
+    if (!postData.internshipName || !postData.internshipType || !postData.stipend || !postData.duration || !postData.numberOfOpenings || !postData.description || postData.skills.length == 0) {
       toast.error('Please enter all fields');
       return;
     }
@@ -105,6 +107,7 @@ const RecPosting = () => {
           internLocation: '', // Reset internLocation
           numberOfOpenings: '',
           stipend: '',
+          duration:'',
           description: '',
           skills: [],
         });
@@ -197,6 +200,17 @@ const RecPosting = () => {
             onChange={handleChange}
             className="p-2 border border-gray-300 rounded-md"
             placeholder='Stipend'
+          />
+        </div>
+        <div className="flex flex-col">
+          {/* <label className="mb-2 font-medium">Stipend</label> */}
+          <input
+            type="number"
+            name="duration"
+            value={formData.duration}
+            onChange={handleChange}
+            className="p-2 border border-gray-300 rounded-md"
+            placeholder='Enter duration in months'
           />
         </div>
 
